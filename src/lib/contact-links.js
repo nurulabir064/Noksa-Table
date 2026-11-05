@@ -14,10 +14,10 @@ export function buildContactLinks({ phone = '', whatsapp = '', email = '', messa
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) && normalizedEmail.length <= 254
 
   return {
-    phone: validPhone ? { href: \`tel:+\${phoneDigits}\`, label: phone.trim() } : null,
+    phone: validPhone ? { href: 'tel:+' + phoneDigits, label: phone.trim() } : null,
     whatsapp: validWhatsApp
-      ? { href: \`https://wa.me/\${whatsappDigits}?text=\${encodeURIComponent(message)}\`, label: 'WhatsApp' }
+      ? { href: 'https://wa.me/' + whatsappDigits + '?text=' + encodeURIComponent(message), label: 'WhatsApp' }
       : null,
-    email: validEmail ? { href: \`mailto:\${normalizedEmail}\`, label: normalizedEmail } : null,
+    email: validEmail ? { href: 'mailto:' + normalizedEmail, label: normalizedEmail } : null,
   }
 }
