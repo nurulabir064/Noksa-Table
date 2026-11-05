@@ -13,14 +13,18 @@ A premium Bengali dining-house website concept built with React, Vite, React Rou
 - Menu listing with category filters and search across dish names, categories, and descriptions
 - Individual dish detail routes
 - About and illustrative gallery pages
-- Reservation-request and contact form preview states with native browser validation
+- Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
+- Contact form preview state with native browser validation
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-aware document titles and meta descriptions
 - Canonical URL, Open Graph and Twitter sharing metadata
 - XML sitemap, robots.txt, and custom SVG favicon
 - CSS-based interaction and entrance animations
 - Baseline security response headers and direct-route fallback
-- Automated menu-data integrity tests, executed before production build
+- PostgreSQL schema for reservation requests and request-rate tracking
+- Server-side validation, same-origin checks, honeypot, payload limits and database-backed rate limiting
+- Privacy consent requirement and disabled-by-default reservation feature flag
+- Automated menu-data, reservation validation and API guard tests, executed before production build
 
 ## Technology
 
@@ -28,6 +32,7 @@ A premium Bengali dining-house website concept built with React, Vite, React Rou
 - Vite 6
 - React Router DOM 7
 - Tailwind CSS 4 with the Vite plugin
+- Neon PostgreSQL serverless driver
 - Lucide React
 
 ## Run locally
@@ -57,7 +62,12 @@ The production output is generated in `dist/`.
 
 ```text
 .
-├── index.html
+├── api/
+│   ├── _lib/
+│   │   └── reservation-validation.js
+│   └── reservations.js
+├── db/
+│   └── schema.sql
 ├── public/
 │   ├── favicon.svg
 │   ├── robots.txt
@@ -68,7 +78,9 @@ The production output is generated in `dist/`.
 │   ├── main.jsx
 │   └── styles.css
 ├── test/
-│   └── data.test.js
+│   ├── data.test.js
+│   ├── reservation-api.test.js
+│   └── reservation-validation.test.js
 ├── package.json
 ├── vercel.json
 └── vite.config.js
@@ -88,20 +100,22 @@ Replace all fictional/sample content with client-approved assets and information
 
 ## Current limitations
 
-- No backend API or database is included.
-- Forms only demonstrate browser-side validation and a local confirmation preview; they do not transmit or store data.
+- The reservation API and PostgreSQL schema are included, but the live reservation feature is deliberately disabled by default.
+- The API has not been connected to a provisioned database in this project session; no customer data has been stored.
+- No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
+- The contact form remains a frontend-only preview and does not transmit or store data.
 - There is no admin dashboard, customer account, order processing, payment, table availability, or booking confirmation.
 - Sample menu data is stored locally in `src/data.js`.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
-- Automated tests currently validate menu data integrity only. They are not browser end-to-end, accessibility, or backend tests.
+- Automated tests cover menu data, reservation input validation, and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
 - The canonical and sitemap URLs currently point to the public demo domain and must be updated when a client-owned domain is connected.
 
-## Pre-delivery QA checklist
+## Reservation backend setup (keep disabled until launch approval)\n\n1. Create a Neon PostgreSQL project and copy its pooled connection string.\n2. Run `db/schema.sql` against the database.\n3. Add server-side Vercel environment variables: `DATABASE_URL`, `RATE_LIMIT_SECRET`, `PRIVACY_POLICY_URL`, and `RESERVATIONS_ENABLED=false`. Never prefix database secrets with `VITE_`.\n4. Add frontend build variables: `VITE_RESERVATIONS_ENABLED=false` and `VITE_PRIVACY_POLICY_URL=`.\n5. Before accepting real requests, publish and review the restaurant privacy notice, retention/deletion process, opening hours and booking rules; implement admin access and notifications; test the live database and recovery process.\n6. Only after those checks, set both reservation flags to `true`, set the public privacy URL in both environments, redeploy, and submit a controlled end-to-end test.\n\nThe API stores requests as `pending`; it does not confirm tables or send notifications. The database rate limiter stores a keyed hash of the request IP, not the raw address. Define a retention and cleanup policy for both reservation and rate-limit records before launch.\n\n## Pre-delivery QA checklist
 
 - [ ] Test every route and refresh each nested route directly on the production domain.
 - [ ] Test mobile menu open/close, keyboard navigation, skip link, and focus visibility.
 - [ ] Test menu category filters, empty search results, and search by description.
-- [ ] Test reservation date/time and all form validation states.
+- [ ] Test reservation date/time, consent, disabled state, API validation, rate limiting and all error states.\n- [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
 - [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
 - [ ] Check images, font loading, broken links, console errors, and network failures.
 - [ ] Run `npm test` and a production build; verify the deployed commit and domain.
