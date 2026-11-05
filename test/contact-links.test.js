@@ -10,7 +10,7 @@ test('builds safe phone, WhatsApp and email links from verified public details',
     message: 'Hello from the website',
   })
   assert.equal(links.phone.href, 'tel:+8801712345678')
-  assert.match(links.whatsapp.href, /^https:\\/\\/wa\\.me\\/8801712345678\\?text=/)
+  assert.match(links.whatsapp.href, /^https:\/\/wa\.me\/8801712345678\?text=/)
   assert.ok(links.whatsapp.href.endsWith('Hello%20from%20the%20website'))
   assert.equal(links.email.href, 'mailto:hello@example.com')
 })
