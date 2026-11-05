@@ -110,12 +110,24 @@ Replace all fictional/sample content with client-approved assets and information
 - Automated tests cover menu data, reservation input validation, and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
 - The canonical and sitemap URLs currently point to the public demo domain and must be updated when a client-owned domain is connected.
 
-## Reservation backend setup (keep disabled until launch approval)\n\n1. Create a Neon PostgreSQL project and copy its pooled connection string.\n2. Run `db/schema.sql` against the database.\n3. Add server-side Vercel environment variables: `DATABASE_URL`, `RATE_LIMIT_SECRET`, `PRIVACY_POLICY_URL`, and `RESERVATIONS_ENABLED=false`. Never prefix database secrets with `VITE_`.\n4. Add frontend build variables: `VITE_RESERVATIONS_ENABLED=false` and `VITE_PRIVACY_POLICY_URL=`.\n5. Before accepting real requests, publish and review the restaurant privacy notice, retention/deletion process, opening hours and booking rules; implement admin access and notifications; test the live database and recovery process.\n6. Only after those checks, set both reservation flags to `true`, set the public privacy URL in both environments, redeploy, and submit a controlled end-to-end test.\n\nThe API stores requests as `pending`; it does not confirm tables or send notifications. The database rate limiter stores a keyed hash of the request IP, not the raw address. Old rate-limit hashes are pruned during new requests; define and document the retention and deletion process for reservation records before launch.\n\n## Pre-delivery QA checklist
+## Reservation backend setup (keep disabled until launch approval)
+
+1. Create a Neon PostgreSQL project and copy its pooled connection string.
+2. Run `db/schema.sql` against the database.
+3. Add server-side Vercel environment variables: `DATABASE_URL`, `RATE_LIMIT_SECRET`, `PRIVACY_POLICY_URL`, and `RESERVATIONS_ENABLED=false`. Never prefix database secrets with `VITE_`.
+4. Add frontend build variables: `VITE_RESERVATIONS_ENABLED=false` and `VITE_PRIVACY_POLICY_URL=`.
+5. Before accepting real requests, publish and review the restaurant privacy notice, retention/deletion process, opening hours and booking rules; implement admin access and notifications; test the live database and recovery process.
+6. Only after those checks, set both reservation flags to `true`, set the public privacy URL in both environments, redeploy, and submit a controlled end-to-end test.
+
+The API stores requests as `pending`; it does not confirm tables or send notifications. The database rate limiter stores a keyed hash of the request IP, not the raw address. Old rate-limit hashes are pruned during new requests; define and document the retention and deletion process for reservation records before launch.
+
+## Pre-delivery QA checklist
 
 - [ ] Test every route and refresh each nested route directly on the production domain.
 - [ ] Test mobile menu open/close, keyboard navigation, skip link, and focus visibility.
 - [ ] Test menu category filters, empty search results, and search by description.
-- [ ] Test reservation date/time, consent, disabled state, API validation, rate limiting and all error states.\n- [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
+- [ ] Test reservation date/time, consent, disabled state, API validation, rate limiting and all error states.
+- [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
 - [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
 - [ ] Check images, font loading, broken links, console errors, and network failures.
 - [ ] Run `npm test` and a production build; verify the deployed commit and domain.
