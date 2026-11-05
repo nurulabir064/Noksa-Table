@@ -16,11 +16,11 @@ A premium Bengali dining-house website concept built with React, Vite, React Rou
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
 - Contact form preview state with native browser validation
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
-- Route-aware document titles and meta descriptions
+- Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
 - Canonical URL, Open Graph and Twitter sharing metadata
 - XML sitemap, robots.txt, and custom SVG favicon
 - CSS-based interaction and entrance animations
-- Baseline security response headers and direct-route fallback
+- Baseline security response headers and explicit direct-route rewrites to prerendered HTML
 - PostgreSQL schema for reservation requests and request-rate tracking
 - Server-side validation, same-origin checks, honeypot, payload limits and database-backed rate limiting
 - Privacy consent requirement and disabled-by-default reservation feature flag
