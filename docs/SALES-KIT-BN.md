@@ -1,0 +1,110 @@
+# NOKSHA TABLE — Client Sales Kit
+
+> এই নথিটি একটি বিক্রয়যোগ্য restaurant website starter/concept-এর প্রস্তাবনা তৈরিতে ব্যবহার করুন। NOKSHA TABLE নিজেই একটি fictional demo brand; এটি কোনো বাস্তব রেস্টুরেন্টের পরিচয় নয়।
+
+## 1. এক বাক্যে প্রস্তাব
+
+আপনার রেস্টুরেন্টের জন্য একটি আধুনিক, mobile-friendly website—যেখানে গ্রাহক সহজে আপনার খাবার, মেনু, রেস্টুরেন্টের গল্প, ছবি, যোগাযোগের তথ্য এবং ভিজিটের নির্দেশনা দেখতে পারবেন।
+
+## 2. কার জন্য
+
+- ঢাকার ছোট ও মাঝারি রেস্টুরেন্ট, ক্যাফে ও Bengali dining business
+- যাদের Facebook/Instagram page আছে, কিন্তু নিজস্ব website নেই
+- যারা menu, location, opening hours, contact এবং brand presentation এক জায়গায় রাখতে চান
+
+## 3. Starter Website — প্রস্তাবিত প্রাথমিক প্যাকেজ
+
+**প্রস্তাবিত quote: ৳৮,০০০–৳১২,০০০**
+
+এটি আপনার প্রাথমিক বিক্রয়-পরামর্শমূলক মূল্যসীমা; বাংলাদেশের যাচাইকৃত বাজার-গড় বা নিশ্চিত client willingness-to-pay নয়। Client-এর content, page count, revisions, assets এবং delivery deadline দেখে fixed quotation দিন।
+
+### অন্তর্ভুক্ত
+
+- Responsive Home page
+- Menu page with category filter and search
+- Individual menu item detail pages
+- About / Story page
+- Gallery page
+- Contact page with client-approved phone, address, hours and social links
+- WhatsApp click-to-chat link (client's verified number)
+- Mobile navigation and basic accessibility features
+- Basic page metadata and deployment to an agreed hosting account
+- One production handover and short owner walkthrough
+
+### অন্তর্ভুক্ত নয়
+
+- Online payment, checkout, food delivery or ordering
+- Live table availability or confirmed reservations
+- Admin dashboard / CMS
+- Customer database or CRM
+- SMS/email/WhatsApp automated notifications
+- Copywriting, professional photography, logo design or paid stock assets unless separately quoted
+- Domain, hosting, paid email, third-party subscriptions and ongoing maintenance
+- Unlimited revisions or new pages/features outside the agreed scope
+
+## 4. Optional add-ons — আগে estimate, পরে commitment
+
+| Add-on | কী দিতে হবে |
+|---|---|
+| Menu update support | নির্দিষ্ট সংখ্যক menu edits/month; scope লিখিতভাবে নির্ধারণ |
+| Google Maps / directions | Client-verified business location and map link |
+| Analytics setup | Account ownership, consent/privacy decision and configuration |
+| CMS / admin dashboard | আলাদা discovery, database, roles, security and testing |
+| Reservation request workflow | Database, privacy notice, staff workflow, notifications, abuse protection and end-to-end testing |
+| Online ordering | Cart, order rules, payment provider, fulfilment workflow, refunds and operational testing |
+
+কোনো add-on-কে “ready” বলবেন না যতক্ষণ সেটি implement, test এবং client environment-এ verify করা হয়নি।
+
+## 5. কাজের ধাপ
+
+1. **Discovery:** ব্যবসা, customer journey, pages, content এবং success criteria বুঝে নেওয়া।
+2. **Scope & quote:** deliverables, exclusions, timeline, revisions, payment এবং ownership লিখিতভাবে অনুমোদন।
+3. **Content collection:** logo, menu, price, contact, hours, photos এবং policy client থেকে নেওয়া।
+4. **Build & review:** agreed scope অনুযায়ী website তৈরি; staging/demo link-এ feedback।
+5. **QA & launch:** mobile/desktop, links, forms, content, route refresh, accessibility basics এবং deployment পরীক্ষা।
+6. **Handover:** source code/access, credentials transfer method, documentation এবং maintenance option।
+
+## 6. Payment ও revision terms — প্রস্তাবিত
+
+- কাজ শুরুর আগে ৫০% advance; বাকি ৫০% final approval ও handover-এর আগে।
+- Quote-এ নির্দিষ্ট সংখ্যক revision round লিখুন (যেমন ২ round)। Revision মানে agreed design/content-এর adjustment; নতুন feature বা page নয়।
+- Client content বা approval দেরি হলে timeline সমন্বয় হবে।
+- Scope change হলে আগে লিখিত estimate ও approval নিতে হবে।
+- Third-party charges client সরাসরি provider-কে দেবেন, অথবা invoice-এ আলাদা line item হবে।
+- Final payment-এর পর agreed source code এবং project access handover হবে। Third-party licences তাদের নিজস্ব terms অনুযায়ী থাকবে।
+
+এগুলো আলোচনার জন্য প্রস্তাবিত terms; কাজ শুরুর আগে উভয় পক্ষের লিখিত agreement প্রয়োজন।
+
+## 7. Client-এর কাছ থেকে যা নিতে হবে
+
+- Business-এর legal/public name এবং logo files
+- Verified address, map pin, phone, email, social links
+- Opening hours এবং weekly closing day
+- Menu: dish name, description, price, category, availability, allergen/dietary information
+- নিজের তোলা বা licensed photos; ব্যবহারের অনুমতি
+- Brand colours / references (থাকলে)
+- WhatsApp business number (যদি click-to-chat চান)
+- Website/domain/hosting account-এর owner এবং authorized contact
+- Privacy notice এবং reservation/order policy (যদি প্রযোজ্য হয়)
+
+## 8. Client-কে কীভাবে demo দেখাবেন
+
+Demo: https://noksa-table.vercel.app
+
+Demo-টি fictional concept. Sample menu, price, venue imagery এবং Dhaka reference illustrative. Live demo-তে reservation service disabled; contact form message পাঠায় বা সংরক্ষণ করে না। তাই client-কে স্পষ্টভাবে বলুন: এটি design ও frontend capability দেখানোর demo, production-ready restaurant booking/order platform নয়।
+
+## 9. Proposal message template
+
+আসসালামু আলাইকুম। আপনার রেস্টুরেন্টের জন্য একটি professional, mobile-friendly website তৈরি করে দিতে পারি। এতে customer-রা menu, খাবারের ছবি, restaurant information, location, opening hours এবং যোগাযোগের তথ্য সহজে দেখতে পারবেন। আপনার বর্তমান business details অনুযায়ী scope ও fixed quotation দেব। Demo concept: https://noksa-table.vercel.app
+
+প্রথমে আপনার প্রয়োজন ও content বুঝে একটি পরিষ্কার proposal দেব—কোন কাজ included, কোনটি optional এবং delivery timeline কত হবে সব লিখিত থাকবে।
+
+## 10. Quote পাঠানোর আগে নিজের যাচাই
+
+- [ ] Client-এর business ও decision-maker যাচাই করেছি
+- [ ] সব deliverables ও exclusions লিখেছি
+- [ ] Content/assets client দেবে নাকি আমি তৈরি করব—স্পষ্ট করেছি
+- [ ] Timeline, revision count, payment milestone লিখেছি
+- [ ] Domain/hosting/third-party cost আলাদা করেছি
+- [ ] Form, booking, ordering-এর বাস্তব functionality সম্পর্কে সত্য বলেছি
+- [ ] কোনো fake testimonial, award, client logo বা business result ব্যবহার করিনি
