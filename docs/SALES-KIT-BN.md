@@ -49,7 +49,8 @@
 | Add-on | কী দিতে হবে |
 |---|---|
 | Menu update support | নির্দিষ্ট সংখ্যক menu edits/month; scope লিখিতভাবে নির্ধারণ |
-| WhatsApp / call / email CTA | Verified client contact details, click-to-chat/call/email implementation and device testing |\n| Google Maps / directions | Client-verified business location and map link |
+| WhatsApp / call / email CTA | Verified client contact details, click-to-chat/call/email implementation and device testing |
+| Google Maps / directions | Client-verified business location and map link |
 | Analytics setup | Account ownership, consent/privacy decision and configuration |
 | CMS / admin dashboard | আলাদা discovery, database, roles, security and testing |
 | Reservation request workflow | Database, privacy notice, staff workflow, notifications, abuse protection and end-to-end testing |
