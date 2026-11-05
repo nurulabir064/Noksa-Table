@@ -40,7 +40,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - PostgreSQL schema for reservation requests and request-rate tracking
 - Server-side validation, same-origin checks, honeypot, payload limits and database-backed rate limiting
 - Privacy consent requirement and disabled-by-default reservation feature flag
-- Automated menu-data, reservation validation and API guard tests, executed before production build
+- Automated menu-data, contact-link, reservation validation and API guard tests, executed before production build
 
 ## Technology
 
