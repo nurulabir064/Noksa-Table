@@ -25,11 +25,13 @@
 - Individual menu item detail pages
 - About / Story page
 - Gallery page
-- Contact page with client-approved phone, address, hours and social links
-- WhatsApp click-to-chat link (client's verified number)
+- Contact page populated with client-approved public contact details (requires client-specific content configuration)
+- Contact actions such as call, email or WhatsApp only when the verified client details are supplied and the links are separately implemented and tested; WhatsApp is not currently part of this starter demo
 - Mobile navigation and basic accessibility features
 - Basic page metadata and deployment to an agreed hosting account
-- One production handover and short owner walkthrough\n\n**Template status:** the current NOKSHA TABLE repository is a visual/code starter. Client-specific contact details, real links, content, domain, and any requested integrations must be configured and tested before delivery. The current demo's Contact form is a preview only; it does not send or store messages. The Reservation page is a disabled UI preview; it does not accept real bookings.
+- One production handover and short owner walkthrough
+
+**Template status:** the current NOKSHA TABLE repository is a visual/code starter. Client-specific contact details, real links, content, domain, and any requested integrations must be configured and tested before delivery. The current demo's Contact form is a preview only; it does not send or store messages. The Reservation page is a disabled UI preview; it does not accept real bookings.
 
 ### অন্তর্ভুক্ত নয়
 
