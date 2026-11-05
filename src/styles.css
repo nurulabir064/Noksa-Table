@@ -98,3 +98,46 @@ html{scroll-behavior:smooth;scroll-padding-top:90px}
   .menu-tools,.menu-grid .dish-card,.gallery-grid img,.story-grid>*,.contact-form>*,.success,.empty,.nav.open{animation:none!important}
   .hero-bg{transform:none!important}
 }
+
+
+/* Final interaction fix: entrance animations must never own hover transforms. */
+@keyframes reveal-opacity-only {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.dish-card,
+.menu-grid .dish-card {
+  animation-name: reveal-opacity-only;
+}
+.gallery-grid img,
+.story-grid > * {
+  animation-name: reveal-opacity-only;
+}
+.gallery-grid img {
+  cursor: default;
+}
+@media (hover: hover) and (pointer: fine) {
+  .dish-card:hover { transform: translateY(-7px); }
+  .dish-card:hover .dish-image img { transform: scale(1.075); }
+  .gallery-grid img:hover { transform: scale(1.045); filter: saturate(1.12); }
+  .story-grid img:hover,
+  .visit img:hover,
+  .detail > img:hover { transform: scale(1.025); filter: saturate(1.08); }
+}
+@media (hover: none), (pointer: coarse) {
+  .dish-card:hover,
+  .dish-card:hover .dish-image img,
+  .gallery-grid img:hover,
+  .story-grid img:hover,
+  .visit img:hover,
+  .detail > img:hover {
+    transform: none;
+    filter: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dish-card,
+  .menu-grid .dish-card,
+  .gallery-grid img,
+  .story-grid > * { animation: none !important; }
+}
