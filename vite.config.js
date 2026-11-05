@@ -2,50 +2,51 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { dishes } from './src/data.js'
+import { siteConfig } from './src/config/site.js'
 
-const siteUrl = 'https://noksa-table.vercel.app'
+const siteUrl = siteConfig.siteUrl.replace(/\\/$/,'')
 const defaultImage = 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&h=630&q=85'
 
 const pages = [
   {
     route: '/',
-    title: 'Noksha Table | Bengali Dining House',
-    description: 'Discover Noksha Table, a fictional Bengali dining house concept celebrating familiar flavours with a contemporary point of view.',
+    title: '' + siteConfig.brandName + ' | Bengali Dining House',
+    description: siteConfig.tagline,
     image: defaultImage,
   },
   {
     route: '/menu',
-    title: 'Menu | Noksha Table',
-    description: 'Explore the illustrative Bengali menu at Noksha Table, from biryani and traditional dishes to drinks.',
+    title: 'Menu | ' + siteConfig.brandName + '',
+    description: 'Explore the illustrative Bengali menu at ' + siteConfig.brandName + ', from biryani and traditional dishes to drinks.',
     image: defaultImage,
   },
   {
     route: '/about',
-    title: 'Our Story | Noksha Table',
-    description: 'Learn about the fictional Bengali dining house concept and its contemporary take on familiar flavours.',
+    title: 'Our Story | ' + siteConfig.brandName + '',
+    description: 'Learn about ' + siteConfig.brandName + ' and its approach to food and hospitality.',
     image: defaultImage,
   },
   {
     route: '/gallery',
-    title: 'Gallery | Noksha Table',
-    description: 'Explore the visual moodboard for the Noksha Table Bengali dining experience.',
+    title: 'Gallery | ' + siteConfig.brandName + '',
+    description: 'Explore the gallery for ' + siteConfig.brandName + '.',
     image: defaultImage,
   },
   {
     route: '/reservation',
-    title: 'Reservation | Noksha Table',
-    description: 'View reservation request information for the Noksha Table concept restaurant. Online booking is not active.',
+    title: 'Reservation | ' + siteConfig.brandName + '',
+    description: 'View reservation request information for ' + siteConfig.brandName + '. Online booking is not active.',
     image: defaultImage,
   },
   {
     route: '/contact',
-    title: 'Contact | Noksha Table',
-    description: 'Contact information for the Noksha Table concept restaurant.',
+    title: 'Contact | ' + siteConfig.brandName + '',
+    description: 'Contact information for ' + siteConfig.brandName + '.',
     image: defaultImage,
   },
   ...dishes.map(dish => ({
     route: `/menu/${dish.id}`,
-    title: `${dish.name} | Noksha Table`,
+    title: `${dish.name} | ' + siteConfig.brandName + '`,
     description: `${dish.description} Illustrative menu item and price.`,
     image: dish.image,
   })),
@@ -87,6 +88,7 @@ function routeMetadataPages() {
         }
 
         const baseHtml = String(entry.source)
+        entry.source = withPageMetadata(baseHtml, pages.find(page => page.route === '/'))
         for (const page of pages) {
           if (page.route === '/') continue
           const fileName = `${page.route.slice(1)}/index.html`
