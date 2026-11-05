@@ -19,6 +19,8 @@ A premium Bengali dining-house website concept built with React, Vite, React Rou
 - Canonical URL, Open Graph and Twitter sharing metadata
 - XML sitemap, robots.txt, and custom SVG favicon
 - CSS-based interaction and entrance animations
+- Baseline security response headers and direct-route fallback
+- Automated menu-data integrity tests, executed before production build
 
 ## Technology
 
@@ -44,6 +46,7 @@ Open the local URL printed by Vite.
 ## Production build
 
 ```bash
+npm test
 npm run build
 npm run preview
 ```
@@ -56,15 +59,18 @@ The production output is generated in `dist/`.
 .
 ├── index.html
 ├── public/
-│   └── favicon.svg
-├── robots.txt
-├── sitemap.xml
+│   ├── favicon.svg
+│   ├── robots.txt
+│   └── sitemap.xml
 ├── src/
 │   ├── App.jsx
 │   ├── data.js
 │   ├── main.jsx
 │   └── styles.css
+├── test/
+│   └── data.test.js
 ├── package.json
+├── vercel.json
 └── vite.config.js
 ```
 
@@ -86,7 +92,8 @@ Replace all fictional/sample content with client-approved assets and information
 - Forms only demonstrate browser-side validation and a local confirmation preview; they do not transmit or store data.
 - There is no admin dashboard, customer account, order processing, payment, table availability, or booking confirmation.
 - Sample menu data is stored locally in `src/data.js`.
-- Images are remote Unsplash URLs and must be replaced or explicitly licensed/approved for a commercial client.
+- Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
+- Automated tests currently validate menu data integrity only. They are not browser end-to-end, accessibility, or backend tests.
 - The canonical and sitemap URLs currently point to the public demo domain and must be updated when a client-owned domain is connected.
 
 ## Pre-delivery QA checklist
@@ -97,7 +104,7 @@ Replace all fictional/sample content with client-approved assets and information
 - [ ] Test reservation date/time and all form validation states.
 - [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
 - [ ] Check images, font loading, broken links, console errors, and network failures.
-- [ ] Run a production build and verify the deployed commit and domain.
+- [ ] Run `npm test` and a production build; verify the deployed commit and domain.
 - [ ] Measure real Core Web Vitals and accessibility with browser tooling before claiming performance or accessibility compliance.
 - [ ] Obtain client approval for content, images, policies, and legal/privacy text.
 
