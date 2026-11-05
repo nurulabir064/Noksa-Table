@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://noksa-table.vercel.app/sitemap.xml
