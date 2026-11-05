@@ -188,3 +188,10 @@ html.js-enabled [data-reveal]{opacity:0;transform:translateY(24px);transition:op
 @media (prefers-reduced-motion: reduce) {
   .gallery-item img { animation: none !important; }
 }
+
+.reservation-honeypot{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.consent-field{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.6}
+.consent-field input{width:16px;min-width:16px;margin-top:4px}
+.consent-field a{text-decoration:underline;text-underline-offset:3px}
+.form-error{padding:12px 14px;border-left:3px solid #a65d42;background:#f7eee8;color:#713d2e;font-size:14px}
+.contact-form button:disabled{opacity:.55;cursor:not-allowed;transform:none}
