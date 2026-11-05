@@ -1,6 +1,30 @@
 {
   "rewrites": [
     {
+      "source": "/menu",
+      "destination": "/menu/index.html"
+    },
+    {
+      "source": "/menu/:id",
+      "destination": "/menu/:id/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about/index.html"
+    },
+    {
+      "source": "/gallery",
+      "destination": "/gallery/index.html"
+    },
+    {
+      "source": "/reservation",
+      "destination": "/reservation/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
