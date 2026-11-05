@@ -89,11 +89,18 @@ The production output is generated in `dist/`.
 │   ├── robots.txt
 │   └── sitemap.xml
 ├── src/
+│   ├── components/
+│   │   └── ContactActions.jsx
+│   ├── config/
+│   │   └── site.js
+│   ├── lib/
+│   │   └── contact-links.js
 │   ├── App.jsx
 │   ├── data.js
 │   ├── main.jsx
 │   └── styles.css
 ├── test/
+│   ├── contact-links.test.js
 │   ├── data.test.js
 │   ├── reservation-api.test.js
 │   └── reservation-validation.test.js
