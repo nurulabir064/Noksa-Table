@@ -47,3 +47,10 @@ test('uses the Dhaka calendar date rather than the server timezone', () => {
   const instant = new Date('2027-01-01T19:00:00.000Z');
   assert.equal(getDhakaToday(instant), '2027-01-02');
 });
+
+test('rejects a time that has already passed today in Dhaka', () => {
+  const past = validateReservation({ ...validReservation, date: '2027-01-01', time: '17:59' }, '2027-01-01', '18:00');
+  const current = validateReservation({ ...validReservation, date: '2027-01-01', time: '18:00' }, '2027-01-01', '18:00');
+  assert.ok(past.errors.time);
+  assert.equal(current.success, true);
+});
