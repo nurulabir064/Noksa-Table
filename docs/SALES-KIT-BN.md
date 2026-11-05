@@ -14,9 +14,9 @@
 
 ## 3. Starter Website — প্রস্তাবিত প্রাথমিক প্যাকেজ
 
-**প্রস্তাবিত quote: ৳৮,০০০–৳১২,০০০**
+**প্রথম দিকের client-এর জন্য প্রস্তাবিত introductory quote: ৳১০,০০০–৳১৫,০০০**
 
-এটি আপনার প্রাথমিক বিক্রয়-পরামর্শমূলক মূল্যসীমা; বাংলাদেশের যাচাইকৃত বাজার-গড় বা নিশ্চিত client willingness-to-pay নয়। Client-এর content, page count, revisions, assets এবং delivery deadline দেখে fixed quotation দিন।
+এটি একটি সীমিত-scope, introductory quotation recommendation—বাজারের গড় বা নিশ্চিত client willingness-to-pay নয়। ২০২৬ সালের প্রকাশিত বাংলাদেশি price pages-এ basic/static website-এর starting price প্রায় ৳১০,০০০–৳১৫,০০০ এবং freelancer small-business site-এর indicative range প্রায় ৳৮,০০০–৳২৫,০০০ দেখা যায়; তবে এগুলো provider-published asking/guide prices, completed transaction data নয়। Scope, quality, platform, content, revisions, hosting ও support আলাদা হওয়ায় সরাসরি তুলনা করা যায় না। প্রথম client-এর জন্য quote দেওয়ার আগে requirements যাচাই করে fixed scope লিখুন। Sources: https://www.dhakasolution.com/ ; https://itservices.com.bd/pricing/ ; https://viserx.com/blog/web-development/small-business-website-cost-in-bangladesh ; https://tripleatechbd.com/blog/how-much-does-a-website-cost-in-bangladesh/
 
 ### অন্তর্ভুক্ত
 
@@ -29,7 +29,7 @@
 - WhatsApp click-to-chat link (client's verified number)
 - Mobile navigation and basic accessibility features
 - Basic page metadata and deployment to an agreed hosting account
-- One production handover and short owner walkthrough
+- One production handover and short owner walkthrough\n\n**Template status:** the current NOKSHA TABLE repository is a visual/code starter. Client-specific contact details, real links, content, domain, and any requested integrations must be configured and tested before delivery. The current demo's Contact form is a preview only; it does not send or store messages. The Reservation page is a disabled UI preview; it does not accept real bookings.
 
 ### অন্তর্ভুক্ত নয়
 
@@ -47,7 +47,7 @@
 | Add-on | কী দিতে হবে |
 |---|---|
 | Menu update support | নির্দিষ্ট সংখ্যক menu edits/month; scope লিখিতভাবে নির্ধারণ |
-| Google Maps / directions | Client-verified business location and map link |
+| WhatsApp / call / email CTA | Verified client contact details, click-to-chat/call/email implementation and device testing |\n| Google Maps / directions | Client-verified business location and map link |
 | Analytics setup | Account ownership, consent/privacy decision and configuration |
 | CMS / admin dashboard | আলাদা discovery, database, roles, security and testing |
 | Reservation request workflow | Database, privacy notice, staff workflow, notifications, abuse protection and end-to-end testing |
@@ -108,3 +108,15 @@ Demo-টি fictional concept. Sample menu, price, venue imagery এবং Dhaka
 - [ ] Domain/hosting/third-party cost আলাদা করেছি
 - [ ] Form, booking, ordering-এর বাস্তব functionality সম্পর্কে সত্য বলেছি
 - [ ] কোনো fake testimonial, award, client logo বা business result ব্যবহার করিনি
+
+
+## 11. Public price references — checked 6 November 2026
+
+These pages publish provider prices or market guides; they are not audited sales records and do not prove what clients actually paid. Use them as a rough comparison only.
+
+- Dhaka Solution: static website starting at BDT 10,000; https://www.dhakasolution.com/
+- iT Services BD: website Starter listed at BDT 15,000; https://itservices.com.bd/pricing/
+- ViserX: published 2026 guide gives freelancer brochure-site range; https://viserx.com/blog/web-development/small-business-website-cost-in-bangladesh
+- Triple A Tech: published 2026 guide discusses freelancer and agency ranges; https://tripleatechbd.com/blog/how-much-does-a-website-cost-in-bangladesh/
+
+**Pricing recommendation:** start with a tightly scoped BDT 10,000–15,000 introductory package only if the client supplies approved copy, menu data and usable images, and the delivery excludes CMS, real booking, ordering, payment and ongoing content updates. Increase the quote for content production, custom integrations, CMS, admin tools, booking workflows, or extensive revisions. Do not promise a fixed delivery date until scope and client content are confirmed.
