@@ -54,3 +54,8 @@ test('rejects a time that has already passed today in Dhaka', () => {
   assert.ok(past.errors.time);
   assert.equal(current.success, true);
 });
+
+test('rejects boolean guest counts instead of coercing them to numbers', () => {
+  const result = validateReservation({ ...validReservation, guestCount: true }, '2027-01-01');
+  assert.ok(result.errors.guestCount);
+});
