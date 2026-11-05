@@ -39,7 +39,11 @@ export function validateReservation(input, today = getDhakaToday(), currentTime 
   const phone = typeof value.phone === 'string' ? value.phone.trim() : '';
   const date = typeof value.date === 'string' ? value.date : '';
   const time = typeof value.time === 'string' ? value.time : '';
-  const guestCount = Number(value.guestCount);
+  const guestCount = typeof value.guestCount === 'number'
+    ? value.guestCount
+    : typeof value.guestCount === 'string' && /^[1-6]$/.test(value.guestCount)
+      ? Number(value.guestCount)
+      : Number.NaN;
   const message = typeof value.message === 'string' ? value.message.trim() : '';
   const website = typeof value.website === 'string' ? value.website.trim() : '';
 
