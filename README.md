@@ -5,7 +5,7 @@ A premium Bengali dining-house website concept built with React, Vite, React Rou
 **Live demo:** https://noksa-table.vercel.app  
 **Repository:** https://github.com/nurulabir064/Noksa-Table
 
-> **Important:** Noksha Table is a fictional concept project, not a real restaurant. Menu items, prices, venue imagery, and Dhaka references are illustrative. The reservation and contact forms are frontend-only previews. They do not submit, email, or persist personal information. No real booking is created.
+> **Important:** Noksha Table is a fictional concept project, not a real restaurant. Menu items, prices, venue imagery, and Dhaka references are illustrative. The reservation API is included but disabled by default; no real booking is accepted. The contact form is a frontend-only preview and does not send or store messages.
 
 ## Features
 
@@ -104,13 +104,13 @@ Replace all fictional/sample content with client-approved assets and information
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
 - The contact form remains a frontend-only preview and does not transmit or store data.
-- There is no admin dashboard, customer account, order processing, payment, table availability, or booking confirmation.
+- There is no admin dashboard, customer account, order processing, payment, table availability, or automatic booking confirmation.
 - Sample menu data is stored locally in `src/data.js`.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
 - Automated tests cover menu data, reservation input validation, and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
 - The canonical and sitemap URLs currently point to the public demo domain and must be updated when a client-owned domain is connected.
 
-## Reservation backend setup (keep disabled until launch approval)\n\n1. Create a Neon PostgreSQL project and copy its pooled connection string.\n2. Run `db/schema.sql` against the database.\n3. Add server-side Vercel environment variables: `DATABASE_URL`, `RATE_LIMIT_SECRET`, `PRIVACY_POLICY_URL`, and `RESERVATIONS_ENABLED=false`. Never prefix database secrets with `VITE_`.\n4. Add frontend build variables: `VITE_RESERVATIONS_ENABLED=false` and `VITE_PRIVACY_POLICY_URL=`.\n5. Before accepting real requests, publish and review the restaurant privacy notice, retention/deletion process, opening hours and booking rules; implement admin access and notifications; test the live database and recovery process.\n6. Only after those checks, set both reservation flags to `true`, set the public privacy URL in both environments, redeploy, and submit a controlled end-to-end test.\n\nThe API stores requests as `pending`; it does not confirm tables or send notifications. The database rate limiter stores a keyed hash of the request IP, not the raw address. Define a retention and cleanup policy for both reservation and rate-limit records before launch.\n\n## Pre-delivery QA checklist
+## Reservation backend setup (keep disabled until launch approval)\n\n1. Create a Neon PostgreSQL project and copy its pooled connection string.\n2. Run `db/schema.sql` against the database.\n3. Add server-side Vercel environment variables: `DATABASE_URL`, `RATE_LIMIT_SECRET`, `PRIVACY_POLICY_URL`, and `RESERVATIONS_ENABLED=false`. Never prefix database secrets with `VITE_`.\n4. Add frontend build variables: `VITE_RESERVATIONS_ENABLED=false` and `VITE_PRIVACY_POLICY_URL=`.\n5. Before accepting real requests, publish and review the restaurant privacy notice, retention/deletion process, opening hours and booking rules; implement admin access and notifications; test the live database and recovery process.\n6. Only after those checks, set both reservation flags to `true`, set the public privacy URL in both environments, redeploy, and submit a controlled end-to-end test.\n\nThe API stores requests as `pending`; it does not confirm tables or send notifications. The database rate limiter stores a keyed hash of the request IP, not the raw address. Old rate-limit hashes are pruned during new requests; define and document the retention and deletion process for reservation records before launch.\n\n## Pre-delivery QA checklist
 
 - [ ] Test every route and refresh each nested route directly on the production domain.
 - [ ] Test mobile menu open/close, keyboard navigation, skip link, and focus visibility.
