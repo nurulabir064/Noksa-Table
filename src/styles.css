@@ -195,3 +195,8 @@ html.js-enabled [data-reveal]{opacity:0;transform:translateY(24px);transition:op
 .consent-field a{text-decoration:underline;text-underline-offset:3px}
 .form-error{padding:12px 14px;border-left:3px solid #a65d42;background:#f7eee8;color:#713d2e;font-size:14px}
 .contact-form button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+
+.contact-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.contact-actions a{color:#8d513b;text-decoration:underline;text-underline-offset:3px}
+.contact-actions a:focus-visible{outline:2px solid #a65d42;outline-offset:4px}
+@media(max-width:800px){.contact-actions{align-items:flex-start;flex-direction:column;gap:14px}}
