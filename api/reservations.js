@@ -5,62 +5,71 @@ import { validateReservation } from './_lib/reservation-validation.js';
 const MAX_BODY_BYTES = 8 * 1024;
 const RATE_LIMIT_MAX_REQUESTS = 5;
 
-function json(data, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'no-store',
-      'X-Content-Type-Options': 'nosniff',
-    },
-  });
+function respond(res, status, body) {
+  res.status(status);
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  if (status === 405) res.setHeader('Allow', 'POST');
+  return res.json(body);
 }
 
-export async function POST(request) {
-  const origin = request.headers.get('origin');
-  const requestOrigin = new URL(request.url).origin;
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return respond(res, 405, { error: 'Method not allowed.' });
+  }
 
+  const origin = req.headers.origin;
+  const requestOrigin = `${req.headers['x-forwarded-proto'] || 'https'}://${req.headers.host}`;
   if (!origin || origin !== requestOrigin) {
-    return json({ error: 'Request origin is not allowed.' }, 403);
+    return respond(res, 403, { error: 'Request origin is not allowed.' });
   }
 
-  if (!request.headers.get('content-type')?.toLowerCase().includes('application/json')) {
-    return json({ error: 'Content-Type must be application/json.' }, 415);
+  if (!req.headers['content-type']?.toLowerCase().includes('application/json')) {
+    return respond(res, 415, { error: 'Content-Type must be application/json.' });
   }
 
-  const declaredLength = Number(request.headers.get('content-length') || 0);
+  const declaredLength = Number(req.headers['content-length'] || 0);
   if (declaredLength > MAX_BODY_BYTES) {
-    return json({ error: 'Request body is too large.' }, 413);
+    return respond(res, 413, { error: 'Request body is too large.' });
   }
 
-  let rawBody;
   let input;
   try {
-    rawBody = await request.text();
-    if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
-      return json({ error: 'Request body is too large.' }, 413);
+    input = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    const bodySize = Buffer.byteLength(JSON.stringify(input ?? null));
+    if (bodySize > MAX_BODY_BYTES) {
+      return respond(res, 413, { error: 'Request body is too large.' });
     }
-    input = JSON.parse(rawBody);
   } catch {
-    return json({ error: 'Request body must be valid JSON.' }, 400);
+    return respond(res, 400, { error: 'Request body must be valid JSON.' });
+  }
+
+  if (!input || typeof input !== 'object' || Array.isArray(input)) {
+    return respond(res, 400, { error: 'Request body must be a JSON object.' });
+  }
+
+  if (input.consent !== true) {
+    return respond(res, 422, { error: 'Please confirm the privacy notice before submitting.' });
   }
 
   const validation = validateReservation(input);
-  if (input?.consent !== true) {
-    return json({ error: 'Please confirm the privacy notice before submitting.' }, 422);
-  }
   if (!validation.success) {
-    return json({ error: 'Please check the highlighted reservation details.', fields: validation.errors }, 422);
+    return respond(res, 422, {
+      error: 'Please check the reservation details.',
+      fields: validation.errors,
+    });
   }
 
   if (process.env.RESERVATIONS_ENABLED !== 'true') {
-    return json({ error: 'Online reservation requests are not enabled yet.' }, 503);
+    return respond(res, 503, { error: 'Online reservation requests are not enabled yet.' });
   }
 
   const databaseUrl = process.env.DATABASE_URL;
   const rateLimitSecret = process.env.RATE_LIMIT_SECRET;
   const privacyPolicyUrl = process.env.PRIVACY_POLICY_URL;
   let hasApprovedPrivacyPolicy = false;
+
   try {
     hasApprovedPrivacyPolicy = new URL(privacyPolicyUrl).protocol === 'https:';
   } catch {
@@ -68,18 +77,16 @@ export async function POST(request) {
   }
 
   if (!databaseUrl || !rateLimitSecret || !hasApprovedPrivacyPolicy) {
-    return json({ error: 'Reservation service is not configured.' }, 503);
+    return respond(res, 503, { error: 'Reservation service is not configured.' });
   }
 
-  const forwardedIp = request.headers.get('x-real-ip')
-    || request.headers.get('x-forwarded-for')?.split(',').at(-1)?.trim();
-
-  if (!forwardedIp) {
-    return json({ error: 'Unable to verify this request. Please try again.' }, 400);
+  const clientIp = req.headers['x-real-ip'];
+  if (typeof clientIp !== 'string' || !clientIp.trim()) {
+    return respond(res, 400, { error: 'Unable to verify this request. Please try again.' });
   }
 
   const ipHash = createHash('sha256')
-    .update(`${rateLimitSecret}:${forwardedIp}`)
+    .update(`${rateLimitSecret}:${clientIp.trim()}`)
     .digest('hex');
 
   try {
@@ -104,7 +111,7 @@ export async function POST(request) {
     `;
 
     if (rate.request_count > RATE_LIMIT_MAX_REQUESTS) {
-      return json({ error: 'Too many requests. Please try again in 15 minutes.' }, 429);
+      return respond(res, 429, { error: 'Too many requests. Please try again in 15 minutes.' });
     }
 
     const requestCode = randomUUID();
@@ -119,20 +126,13 @@ export async function POST(request) {
       )
     `;
 
-    return json({
+    return respond(res, 201, {
       message: 'Your reservation request was received. It is not confirmed until the restaurant contacts you.',
       reference: requestCode,
       status: 'pending',
-    }, 201);
+    });
   } catch {
     console.error('Reservation request could not be saved.');
-    return json({ error: 'We could not process your request right now. Please try again later.' }, 500);
+    return respond(res, 500, { error: 'We could not process your request right now. Please try again later.' });
   }
 }
-
-export default {
-  fetch(request) {
-    if (request.method === 'POST') return POST(request);
-    return Promise.resolve(json({ error: 'Method not allowed.' }, 405));
-  },
-};
