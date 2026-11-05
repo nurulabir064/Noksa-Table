@@ -21,7 +21,16 @@ function isValidDate(value) {
     && date.getUTCDate() === day;
 }
 
-export function validateReservation(input, today = getDhakaToday()) {
+export function getDhakaTime(now = new Date()) {
+  return new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Dhaka',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).format(now);
+}
+
+export function validateReservation(input, today = getDhakaToday(), currentTime = getDhakaTime()) {
   const errors = {};
   const value = input && typeof input === 'object' && !Array.isArray(input) ? input : {};
 
