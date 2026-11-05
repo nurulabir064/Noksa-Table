@@ -65,6 +65,7 @@ function withPageMetadata(html, page) {
   meta(/<title>[^<]*<\/title>/, '<title>' + escapeAttribute(page.title) + '</title>')
   meta(/<meta name="description" content="[^"]*" \/>/, '<meta name="description" content="' + escapeAttribute(page.description) + '" />')
   meta(/<link rel="canonical" href="[^"]*" \/>/, '<link rel="canonical" href="' + escapeAttribute(canonical) + '" />')
+  meta(/<meta property="og:site_name" content="[^"]*" \/>/, '<meta property="og:site_name" content="' + escapeAttribute(siteConfig.brandName) + '" />')
   meta(/<meta property="og:title" content="[^"]*" \/>/, '<meta property="og:title" content="' + escapeAttribute(page.title) + '" />')
   meta(/<meta property="og:description" content="[^"]*" \/>/, '<meta property="og:description" content="' + escapeAttribute(page.description) + '" />')
   meta(/<meta property="og:url" content="[^"]*" \/>/, '<meta property="og:url" content="' + escapeAttribute(canonical) + '" />')
