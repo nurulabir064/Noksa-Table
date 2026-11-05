@@ -72,7 +72,7 @@ export async function POST(request) {
   }
 
   const forwardedIp = request.headers.get('x-real-ip')
-    || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
+    || request.headers.get('x-forwarded-for')?.split(',').at(-1)?.trim();
 
   if (!forwardedIp) {
     return json({ error: 'Unable to verify this request. Please try again.' }, 400);
