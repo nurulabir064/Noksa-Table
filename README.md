@@ -16,6 +16,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - [Quotation template](docs/QUOTE-TEMPLATE-BN.md) — fixed scope, itemized fees, milestones, revisions and acceptance.
 - [Bengali sales kit](docs/SALES-KIT-BN.md) — positioning, starter package, pricing context and honest demo positioning.
 - [Client onboarding brief](docs/CLIENT-ONBOARDING-BN.md) — business details, content, goals and booking/order discovery.
+- [Client customization workflow](docs/CLIENT-CUSTOMIZATION-WORKFLOW-BN.md) — replace demo branding, configure verified contact links, content, SEO and deployment safely.
 - [Service agreement draft](docs/SERVICE-AGREEMENT-DRAFT-BN.md) — plain-language working draft; obtain local legal review before signing.
 - [Invoice template](docs/INVOICE-TEMPLATE-BN.md) — BDT invoice layout and payment tracking.
 - [QA and handover checklist](docs/DELIVERY-CHECKLIST-BN.md) — functional, responsive, security, privacy, launch and acceptance checks.
@@ -28,6 +29,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - Individual dish detail routes
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
+- Reusable, optional phone / WhatsApp / email / directions links driven by verified public client configuration
 - Contact form preview state with native browser validation
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
