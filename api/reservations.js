@@ -47,17 +47,28 @@ export async function POST(request) {
   }
 
   const validation = validateReservation(input);
+  if (input?.consent !== true) {
+    return json({ error: 'Please confirm the privacy notice before submitting.' }, 422);
+  }
   if (!validation.success) {
     return json({ error: 'Please check the highlighted reservation details.', fields: validation.errors }, 422);
   }
 
-  if (!process.env.RESERVATIONS_ENABLED || process.env.RESERVATIONS_ENABLED !== 'true') {
+  if (process.env.RESERVATIONS_ENABLED !== 'true') {
     return json({ error: 'Online reservation requests are not enabled yet.' }, 503);
   }
 
   const databaseUrl = process.env.DATABASE_URL;
   const rateLimitSecret = process.env.RATE_LIMIT_SECRET;
-  if (!databaseUrl || !rateLimitSecret) {
+  const privacyPolicyUrl = process.env.PRIVACY_POLICY_URL;
+  let hasApprovedPrivacyPolicy = false;
+  try {
+    hasApprovedPrivacyPolicy = new URL(privacyPolicyUrl).protocol === 'https:';
+  } catch {
+    hasApprovedPrivacyPolicy = false;
+  }
+
+  if (!databaseUrl || !rateLimitSecret || !hasApprovedPrivacyPolicy) {
     return json({ error: 'Reservation service is not configured.' }, 503);
   }
 
