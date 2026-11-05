@@ -11,6 +11,7 @@ A premium Bengali dining-house website concept built with React, Vite, React Rou
 
 All client-facing documents are templates. Fill in the actual scope and have both parties approve them before work starts.
 
+- [Client outreach scripts](docs/CLIENT-OUTREACH-SCRIPTS-BN.md) — respectful first contact, discovery questions, demo walkthrough and objection handling.
 - [Client proposal template](docs/CLIENT-PROPOSAL-TEMPLATE-BN.md) — solution, pages, outcomes, exclusions and next steps.
 - [Quotation template](docs/QUOTE-TEMPLATE-BN.md) — fixed scope, itemized fees, milestones, revisions and acceptance.
 - [Bengali sales kit](docs/SALES-KIT-BN.md) — positioning, starter package, pricing context and honest demo positioning.
