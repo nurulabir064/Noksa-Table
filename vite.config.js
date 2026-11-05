@@ -78,22 +78,25 @@ function withPageMetadata(html, page) {
 function routeMetadataPages() {
   return {
     name: 'noksha-route-metadata',
-    generateBundle(_, bundle) {
-      const entry = bundle['index.html']
-      if (!entry || entry.type !== 'asset') {
-        this.error('Expected Vite to emit index.html before generating route metadata.')
-      }
+    generateBundle: {
+      order: 'post',
+      handler(_, bundle) {
+        const entry = bundle['index.html']
+        if (!entry || entry.type !== 'asset') {
+          this.error('Expected Vite to emit index.html before generating route metadata.')
+        }
 
-      const baseHtml = String(entry.source)
-      for (const page of pages) {
-        if (page.route === '/') continue
-        const fileName = `${page.route.slice(1)}/index.html`
-        this.emitFile({
-          type: 'asset',
-          fileName,
-          source: withPageMetadata(baseHtml, page),
-        })
-      }
+        const baseHtml = String(entry.source)
+        for (const page of pages) {
+          if (page.route === '/') continue
+          const fileName = `${page.route.slice(1)}/index.html`
+          this.emitFile({
+            type: 'asset',
+            fileName,
+            source: withPageMetadata(baseHtml, page),
+          })
+        }
+      },
     },
   }
 }
