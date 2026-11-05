@@ -56,3 +56,32 @@ test('requires privacy consent before reservation processing', async () => {
   }));
   assert.equal(response.status, 422);
 });
+
+test('keeps reservation processing disabled without explicit launch approval', async () => {
+  const previous = process.env.RESERVATIONS_ENABLED;
+  process.env.RESERVATIONS_ENABLED = 'false';
+  try {
+    const response = await handler.fetch(new Request(endpoint, {
+      method: 'POST',
+      headers: {
+        origin: 'https://noksa-table.example',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: 'Test Customer',
+        email: 'test@example.com',
+        phone: '+8801712345678',
+        date: '2099-01-01',
+        time: '19:00',
+        guestCount: 2,
+        message: '',
+        website: '',
+        consent: true,
+      }),
+    }));
+    assert.equal(response.status, 503);
+  } finally {
+    if (previous === undefined) delete process.env.RESERVATIONS_ENABLED;
+    else process.env.RESERVATIONS_ENABLED = previous;
+  }
+});
