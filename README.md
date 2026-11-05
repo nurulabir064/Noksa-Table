@@ -9,9 +9,15 @@ A premium Bengali dining-house website concept built with React, Vite, React Rou
 
 ## Sales and client delivery documents
 
-- [Bengali client sales kit](docs/SALES-KIT-BN.md) — packages, scope, suggested pricing, payment/revision terms, proposal message, and honest demo positioning.
-- [Client onboarding brief](docs/CLIENT-ONBOARDING-BN.md) — business details, goals, content collection, and reservation discovery.
-- [QA and handover checklist](docs/DELIVERY-CHECKLIST-BN.md) — functional, responsive, security, privacy, launch, and acceptance checks.
+All client-facing documents are templates. Fill in the actual scope and have both parties approve them before work starts.
+
+- [Client proposal template](docs/CLIENT-PROPOSAL-TEMPLATE-BN.md) — solution, pages, outcomes, exclusions and next steps.
+- [Quotation template](docs/QUOTE-TEMPLATE-BN.md) — fixed scope, itemized fees, milestones, revisions and acceptance.
+- [Bengali sales kit](docs/SALES-KIT-BN.md) — positioning, starter package, pricing context and honest demo positioning.
+- [Client onboarding brief](docs/CLIENT-ONBOARDING-BN.md) — business details, content, goals and booking/order discovery.
+- [Service agreement draft](docs/SERVICE-AGREEMENT-DRAFT-BN.md) — plain-language working draft; obtain local legal review before signing.
+- [Invoice template](docs/INVOICE-TEMPLATE-BN.md) — BDT invoice layout and payment tracking.
+- [QA and handover checklist](docs/DELIVERY-CHECKLIST-BN.md) — functional, responsive, security, privacy, launch and acceptance checks.
 - [Maintenance terms](docs/MAINTENANCE-TERMS-BN.md) — optional ongoing support scope and boundaries.
 
 ## Features
