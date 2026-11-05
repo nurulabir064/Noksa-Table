@@ -7,6 +7,13 @@ A premium Bengali dining-house website concept built with React, Vite, React Rou
 
 > **Important:** Noksha Table is a fictional concept project, not a real restaurant. Menu items, prices, venue imagery, and Dhaka references are illustrative. The reservation API is included but disabled by default; no real booking is accepted. The contact form is a frontend-only preview and does not send or store messages.
 
+## Sales and client delivery documents
+
+- [Bengali client sales kit](docs/SALES-KIT-BN.md) — packages, scope, suggested pricing, payment/revision terms, proposal message, and honest demo positioning.
+- [Client onboarding brief](docs/CLIENT-ONBOARDING-BN.md) — business details, goals, content collection, and reservation discovery.
+- [QA and handover checklist](docs/DELIVERY-CHECKLIST-BN.md) — functional, responsive, security, privacy, launch, and acceptance checks.
+- [Maintenance terms](docs/MAINTENANCE-TERMS-BN.md) — optional ongoing support scope and boundaries.
+
 ## Features
 
 - Responsive restaurant landing page and mobile navigation
