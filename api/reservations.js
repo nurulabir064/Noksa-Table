@@ -3,7 +3,6 @@ import { neon } from '@neondatabase/serverless';
 import { validateReservation } from './_lib/reservation-validation.js';
 
 const MAX_BODY_BYTES = 8 * 1024;
-const RATE_LIMIT_WINDOW_MINUTES = 15;
 const RATE_LIMIT_MAX_REQUESTS = 5;
 
 function json(data, status = 200) {
@@ -85,6 +84,7 @@ export async function POST(request) {
 
   try {
     const sql = neon(databaseUrl);
+    await sql`DELETE FROM reservation_rate_limits WHERE window_started_at < NOW() - INTERVAL '1 day'`;
 
     const [rate] = await sql`
       INSERT INTO reservation_rate_limits (ip_hash, window_started_at, request_count)
