@@ -62,6 +62,8 @@ export function validateReservation(input, today = getDhakaToday(), currentTime 
 
   if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) {
     errors.time = 'Choose a valid time.';
+  } else if (isValidDate(date) && date === today && time < currentTime) {
+    errors.time = 'Choose a time that has not passed yet.';
   }
 
   if (!Number.isInteger(guestCount) || guestCount < 1 || guestCount > 6) {
