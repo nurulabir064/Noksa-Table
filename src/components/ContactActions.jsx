@@ -23,10 +23,10 @@ export default function ContactActions() {
       )}
       {siteConfig.locationLabel && <span>{siteConfig.locationLabel}</span>}
       {siteConfig.openingHoursLabel && <span>{siteConfig.openingHoursLabel}</span>}
-      {siteConfig.mapUrl && /^https:\\/\\//.test(siteConfig.mapUrl) && (
+      {siteConfig.mapUrl?.startsWith('https://') && (
         <a href={siteConfig.mapUrl} target="_blank" rel="noopener noreferrer">Directions</a>
       )}
-      {siteConfig.instagramUrl && /^https:\\/\\//.test(siteConfig.instagramUrl) && (
+      {siteConfig.instagramUrl?.startsWith('https://') && (
         <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>
       )}
     </div>
