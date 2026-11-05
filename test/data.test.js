@@ -14,7 +14,11 @@ test('menu contains dishes with complete required fields', () => {
     assert.ok(Number.isInteger(dish.price) && dish.price > 0);
     assert.equal(typeof dish.description, 'string');
     assert.ok(dish.description.trim().length > 0);
-    assert.ok(dish.image.startsWith('https://images.unsplash.com/'));
+    assert.ok(dish.image.startsWith('https://'), 'dish image must use HTTPS');
+    if (dish.imageCredit) {
+      assert.ok(dish.imageCredit.url.startsWith('https://'));
+      assert.ok(dish.imageCredit.licenseUrl.startsWith('https://'));
+    }
   }
 });
 
