@@ -37,7 +37,7 @@ A premium Bengali dining-house website concept built with React, Vite, React Rou
 
 ## Run locally
 
-Requirements: Node.js 20 or newer and npm.
+Requirements: Node.js 24.x and npm.
 
 ```bash
 git clone https://github.com/nurulabir064/Noksa-Table.git
@@ -104,7 +104,6 @@ Replace all fictional/sample content with client-approved assets and information
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
 - The contact form remains a frontend-only preview and does not transmit or store data.
-- There is no admin dashboard, customer account, order processing, payment, table availability, or automatic booking confirmation.
 - Sample menu data is stored locally in `src/data.js`.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
 - Automated tests cover menu data, reservation input validation, and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
