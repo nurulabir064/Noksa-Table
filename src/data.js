@@ -1,0 +1,9 @@
+export const dishes = [
+ {id:'dhaka-kacchi',name:'Dhaka Kacchi Biryani',category:'Rice & Biryani',price:590,description:'Fragrant basmati rice, tender mutton and the slow-cooked depth of a Dhaka classic.',image:'https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=1000&q=85',tag:'Signature'},
+ {id:'morog-polao',name:'Morog Polao',category:'Rice & Biryani',price:480,description:'Aromatic polao served with gently spiced chicken and traditional accompaniments.',image:'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=1000&q=85'},
+ {id:'beef-khichuri',name:'Beef Bhuna Khichuri',category:'Traditional',price:420,description:'Comforting rice and lentils paired with slow-braised beef bhuna.',image:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=85'},
+ {id:'shorshe-ilish',name:'Shorshe Ilish',category:'Traditional',price:680,description:'Hilsa in a mustard-forward Bengali sauce, served with steamed rice.',image:'https://images.unsplash.com/photo-1515003197210-e0cd7184f8b5?auto=format&fit=crop&w=1000&q=85'},
+ {id:'chicken-roast',name:'Charcoal Chicken Roast',category:'From the Grill',price:390,description:'A smoky, gently spiced roast with a rich, balanced finish.',image:'https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=1000&q=85'},
+ {id:'borhani',name:'House Borhani',category:'Drinks',price:120,description:'A chilled, savoury yoghurt drink with mint and toasted spices.',image:'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1000&q=85'}
+]
+export const categories = ['All','Rice & Biryani','Traditional','From the Grill','Drinks']
