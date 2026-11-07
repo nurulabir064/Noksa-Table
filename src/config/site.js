@@ -7,9 +7,9 @@ export const siteConfig = Object.freeze({
   locationLabel: 'Dhaka, Bangladesh · Concept location',
   openingHoursLabel: 'Opening hours not yet specified',
   publicPhone: '',
-  whatsappNumber: '',
+  whatsappNumber: '+8801304302201',
   publicEmail: '',
-  whatsappMessage: 'Hello, I would like to know more about your restaurant.',
+  whatsappMessage: 'Hello, I found NOKSHA TABLE online and would like to know more about the menu.',
   mapUrl: '',
   instagramUrl: '',
 })
