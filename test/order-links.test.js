@@ -19,3 +19,14 @@ test('rejects missing dish details, invalid quantities and malformed phone numbe
   assert.equal(buildWhatsAppOrderLink({ name: 'Dish', price: 10 }, '+8801304302201', 100), null)
   assert.equal(buildWhatsAppOrderLink({ name: 'Dish', price: 10 }, 'not-a-number'), null)
 })
+
+test('uses the selected restaurant brand in the WhatsApp draft', () => {
+  const url = buildWhatsAppOrderLink(
+    { name: 'Kacchi', price: 590 },
+    '+8801304302201',
+    1,
+    'River & Rice',
+  )
+  const message = new URL(url).searchParams.get('text')
+  assert.match(message, /Hello River & Rice/)
+})
