@@ -25,7 +25,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 ## Features
 
 - Responsive restaurant landing page and mobile navigation
-- Multi-cuisine menu with Thai, Chinese, Indian, Continental, Seafood, Bengali Classics, and mocktail categories; includes search and filters
+- Multi-cuisine menu with Thai, Chinese, Indian, Continental, Seafood, Bengali Classics, Asian, and mocktail categories; includes search and filters
 - Individual dish detail routes
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
