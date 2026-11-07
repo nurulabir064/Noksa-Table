@@ -21,6 +21,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - [Invoice template](docs/INVOICE-TEMPLATE-BN.md) — BDT invoice layout and payment tracking.
 - [QA and handover checklist](docs/DELIVERY-CHECKLIST-BN.md) — functional, responsive, security, privacy, launch and acceptance checks.
 - [Maintenance terms](docs/MAINTENANCE-TERMS-BN.md) — optional ongoing support scope and boundaries.
+- [Restaurant profile configuration](docs/RESTAURANT-CONFIGURATION-BN.md) — configure one reusable template for each client deployment.
 
 ## Features
 
@@ -29,6 +30,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - Individual dish detail routes
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
+- Build-time restaurant profile selection with client-aware branding, WhatsApp message text, demo/live content mode and feature switches
 - Reusable, optional phone / WhatsApp / email / directions links driven by verified public client configuration
 - Contact form preview state with native browser validation
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
@@ -127,7 +129,7 @@ Replace all fictional/sample content with client-approved assets and information
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
 - The contact form remains a frontend-only preview and does not transmit or store data.
-- Sample menu data is stored locally in `src/data.js`.
+- Sample menu data is stored locally in `src/data.js`. Each client deployment still needs its own approved menu content; profile selection does not automatically create a multi-tenant menu CMS.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
 - Automated tests cover menu data, reservation input validation, and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
 - The canonical and sitemap URLs currently point to the public demo domain and must be updated when a client-owned domain is connected.
