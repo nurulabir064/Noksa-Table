@@ -29,6 +29,7 @@ export const dishes = [
 ]
 
 export const categories = [
+  'All',
   'Starters & Appetizers',
   'Soups',
   'Bangladeshi & Traditional',
