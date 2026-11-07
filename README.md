@@ -1,6 +1,6 @@
 # NOKSHA TABLE
 
-A premium Bengali dining-house website concept built with React, Vite, React Router, Tailwind CSS 4, and Lucide icons.
+A premium multi-cuisine restaurant website concept built with React, Vite, React Router, Tailwind CSS 4, and Lucide icons.
 
 **Live demo:** https://noksa-table.vercel.app  
 **Repository:** https://github.com/nurulabir064/Noksa-Table
@@ -25,7 +25,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 ## Features
 
 - Responsive restaurant landing page and mobile navigation
-- Menu listing with category filters and search across dish names, categories, and descriptions
+- Multi-cuisine menu with Thai, Chinese, Indian, Continental, Seafood, Bengali Classics, and mocktail categories; includes search and filters
 - Individual dish detail routes
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
