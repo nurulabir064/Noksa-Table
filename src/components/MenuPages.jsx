@@ -20,7 +20,6 @@ export const categoryDetails = [
 
 function CategoryDish({ dish }) {
   const [quantity, setQuantity] = useState(1)
-  const [showOrder, setShowOrder] = useState(false)
   const orderUrl = buildWhatsAppOrderLink(dish, siteConfig.whatsappNumber, quantity)
   const total = dish.price * quantity
 
@@ -40,13 +39,13 @@ function CategoryDish({ dish }) {
       <div className="premium-quantity-label"><span>QUANTITY</span><small>Choose how many you need</small></div>
       <div className="premium-order-controls">
         <div className="premium-quantity-control" aria-label={dish.name + ' quantity'}>
-          <button type="button" onClick={() => { setQuantity(value => Math.max(1, value - 1)); setShowOrder(false) }} aria-label={'Decrease ' + dish.name + ' quantity'} disabled={quantity <= 1}>−</button>
+          <button type="button" onClick={() => { setQuantity(value => Math.max(1, value - 1)) }} aria-label={'Decrease ' + dish.name + ' quantity'} disabled={quantity <= 1}>−</button>
           <output aria-live="polite" aria-label="Selected quantity">{quantity}</output>
-          <button type="button" onClick={() => { setQuantity(value => Math.min(99, value + 1)); setShowOrder(false) }} aria-label={'Increase ' + dish.name + ' quantity'} disabled={quantity >= 99}>+</button>
+          <button type="button" onClick={() => { setQuantity(value => Math.min(99, value + 1)) }} aria-label={'Increase ' + dish.name + ' quantity'} disabled={quantity >= 99}>+</button>
         </div>
         <div className="premium-total-price"><span>ESTIMATED TOTAL</span><strong>৳{total.toLocaleString('en-BD')}</strong></div>
       </div>
-      {orderUrl && <a className="premium-order-link" href={orderUrl} target="_blank" rel="noopener noreferrer" onClick={() => setShowOrder(true)}>Order {quantity} on WhatsApp <ArrowUpRight size={15}/></a>}
+      {orderUrl && <a className="premium-order-link" href={orderUrl} target="_blank" rel="noopener noreferrer">Order {quantity} on WhatsApp <ArrowUpRight size={15}/></a>}
     </div>
     <p className="premium-dish-note">Illustrative price only · Final price and availability to be confirmed</p>
   </article>
