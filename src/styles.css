@@ -415,3 +415,70 @@ html.js-enabled [data-reveal]{opacity:0;transform:translateY(24px);transition:op
 @media(prefers-reduced-motion:reduce){
  .home-hero-image,.home-category-tile img,.home-food-image img,.home-atmosphere-grid img{transition:none;animation:none;transform:none}
 }
+
+
+/* Premium menu cards: large food photography, clear price and quantity totals */
+.premium-category-content{max-width:1440px;margin:0 auto;padding:76px clamp(20px,6vw,88px) 90px}
+.premium-section-title{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:30px}
+.premium-section-title h2{font:500 clamp(34px,4.5vw,54px)/1.12 'Playfair Display',Georgia,serif;color:#f3eee4;margin:10px 0}
+.premium-section-title h2 em{color:#d5b779;font-weight:500}
+.premium-section-title>p{color:#c7bba6;font-size:12px}
+.premium-dish-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.premium-dish{padding:14px;background:linear-gradient(145deg,#28251f,#1d1c18);border:1px solid rgba(198,166,104,.28);box-shadow:0 12px 35px rgba(0,0,0,.12);min-width:0}
+.premium-dish-image{aspect-ratio:16/10;display:block;overflow:hidden;background:#302c24}
+.premium-dish-image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s ease}
+.premium-dish:hover .premium-dish-image img{transform:scale(1.035)}
+.premium-dish-copy{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:16px;padding:20px 4px 14px}
+.premium-dish-description h3{font:500 clamp(20px,2.2vw,25px)/1.2 'Playfair Display',Georgia,serif;color:#f5f0e6;margin:0 0 9px}
+.premium-dish-description h3 a{color:inherit;text-decoration:none}
+.premium-dish-description p{font-size:12px;line-height:1.7;color:#c4bcaf;margin:0;max-width:48ch}
+.premium-price-block{display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-width:100px;padding:9px 12px;background:rgba(194,160,99,.12);border:1px solid rgba(194,160,99,.3);border-radius:3px}
+.premium-price-label,.premium-price-unit{font-size:8px;letter-spacing:.12em;color:#d3b77e;text-transform:uppercase}
+.premium-price-block strong{font:600 19px 'DM Sans',sans-serif;color:#f1d69e}
+.premium-price-unit{color:#b8aa91;letter-spacing:.05em;text-transform:none}
+.premium-dish-order{border-top:1px solid rgba(198,166,104,.2);padding:14px 4px 8px}
+.premium-quantity-label{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.premium-quantity-label>span,.premium-total-price>span{font-size:8px;letter-spacing:.14em;color:#c7a76e;font-weight:700}
+.premium-quantity-label small{font-size:9px;color:#9f9789}
+.premium-order-controls{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.premium-quantity-control{display:inline-flex;align-items:center;border:1px solid rgba(211,183,126,.45);background:#181713}
+.premium-quantity-control button{width:36px;height:36px;border:0;background:transparent;color:#e7ca8e;font-size:21px;cursor:pointer}
+.premium-quantity-control button:disabled{opacity:.35;cursor:not-allowed}
+.premium-quantity-control button:focus-visible,.premium-order-link:focus-visible{outline:2px solid #f1d69e;outline-offset:3px}
+.premium-quantity-control output{min-width:34px;text-align:center;color:#fff;font-size:13px;font-variant-numeric:tabular-nums}
+.premium-total-price{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.premium-total-price strong{font-size:18px;color:#f1d69e;font-variant-numeric:tabular-nums}
+.premium-order-link{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:13px;padding:12px 14px;background:#c3a36c;color:#211f1a;font-size:11px;font-weight:700;text-decoration:none;transition:background .2s ease}
+.premium-order-link:hover{background:#dfc28e;color:#211f1a}
+.premium-dish-note{margin:9px 4px 0;color:#a49a88;font-size:9px;line-height:1.5}
+.contact-whatsapp-card{grid-template-columns:auto minmax(0,1fr) auto;gap:22px}
+.contact-whatsapp-button{white-space:nowrap}
+@media(max-width:900px){
+ .premium-category-content{padding:58px 24px 72px}
+ .premium-dish-grid{gap:16px}
+ .premium-dish-copy{grid-template-columns:1fr;gap:12px}
+ .premium-price-block{align-items:flex-start;width:max-content;min-width:0}
+ .premium-order-controls{gap:10px}
+}
+@media(max-width:620px){
+ .premium-category-content{padding:44px 16px 60px}
+ .premium-section-title{display:block}
+ .premium-section-title>p{margin-top:8px}
+ .premium-dish-grid{grid-template-columns:1fr;gap:18px}
+ .premium-dish{padding:11px}
+ .premium-dish-image{aspect-ratio:4/3}
+ .premium-dish-copy{grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:16px 2px 12px}
+ .premium-price-block{align-items:flex-end;width:auto;min-width:88px;padding:7px 9px}
+ .premium-price-block strong{font-size:17px}
+ .premium-dish-description h3{font-size:20px}
+ .premium-dish-description p{font-size:11px}
+ .premium-quantity-label{align-items:flex-start;flex-direction:column;gap:4px}
+ .premium-order-controls{align-items:flex-end}
+ .premium-total-price strong{font-size:16px}
+ .contact-whatsapp-card{grid-template-columns:1fr}
+ .contact-whatsapp-button{grid-column:auto;justify-self:start}
+}
+@media(prefers-reduced-motion:reduce){
+ .premium-dish-image img,.premium-order-link{transition:none}
+ .premium-dish:hover .premium-dish-image img{transform:none}
+}
