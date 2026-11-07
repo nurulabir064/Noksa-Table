@@ -20,11 +20,8 @@ const restaurantProfiles = {
     instagramUrl: '',
     contentMode: 'demo',
     features: {
-      menu: true,
       whatsappOrdering: true,
-      gallery: true,
-      story: true,
-      contact: true,
+      whatsappContact: true,
       reservationRequests: false,
     },
   },
