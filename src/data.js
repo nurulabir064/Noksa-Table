@@ -15,7 +15,7 @@ export const dishes = [
   { id: 'mango-mojito', name: 'Mango Mint Cooler', category: 'Drinks & Mocktails', price: 230, description: 'A tropical mango and mint-inspired cooler, made for a sunny afternoon.', image: 'https://images.unsplash.com/photo-1562828070-98e5093fa303?auto=format&fit=crop&w=1000&q=85' },
   { id: 'dhaka-kacchi', name: 'Dhaka Kacchi Biryani', category: 'Bengali Classics', price: 590, description: 'Layered aromatic rice, tender mutton and the comforting richness of a Dhaka-style kacchi—made for the centre of your table.', image: 'https://images.unsplash.com/photo-1772469597765-ff29d5616fb7?auto=format&fit=crop&w=1000&q=85', tag: 'Bengali favourite' },
   { id: 'morog-polao', name: 'Morog Polao', category: 'Bengali Classics', price: 480, description: 'Fragrant polao meets tender, gently spiced chicken in a comforting pairing that turns an ordinary meal into a proper feast.', image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=1000&q=85' },
-  { id: 'beef-khichuri', name: 'Beef Bhuna Khichuri', category: 'Bengali Classics', price: 420, description: 'A hearty bowl of rice and lentils crowned with slow-braised beef bhuna—deep, warming flavours in every spoonful.', image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=85' },
+  { id: 'beef-curry-rice-bowl', name: 'Beef Curry Rice Bowl', category: 'Asian', price: 420, description: 'A comforting rice bowl topped with savoury minced beef curry and finished with fresh spring onion.', image: 'https://images.unsplash.com/photo-1792731885088-a12c39a50130?auto=format&fit=crop&w=1000&q=85', imageCredit: { name: 'Junel Mujar', url: 'https://unsplash.com/@junelmujar', license: 'Unsplash License', licenseUrl: 'https://unsplash.com/license' } },
   { id: 'shorshe-ilish', name: 'Shorshe Ilish', category: 'Bengali Classics', price: 680, description: 'A Bengali favourite with bold mustard character and the distinctive richness of hilsa, served with steamed rice.', imageCredit: { name: 'Subrata Ghose', url: 'https://commons.wikimedia.org/wiki/File:Sorshe_Ilish.jpg', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/' }, image: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Sorshe_Ilish.jpg' },
   { id: 'chicken-roast', name: 'Charcoal Chicken Roast', category: 'Bengali Classics', price: 390, description: 'A beautifully browned roast with a gentle smoky note and a warmly spiced finish—an inviting pick for the grill lover.', image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=1000&q=85' },
   { id: 'borhani', name: 'House Borhani', category: 'Drinks & Mocktails', price: 120, description: 'Cool, tangy yoghurt blended with mint and toasted spices—the refreshing companion your Bengali meal deserves.', image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1000&q=85' },
@@ -29,5 +29,6 @@ export const categories = [
   'Continental',
   'Seafood',
   'Bengali Classics',
+  'Asian',
   'Drinks & Mocktails',
 ]
