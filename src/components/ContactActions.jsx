@@ -3,7 +3,7 @@ import { buildContactLinks } from '../lib/contact-links.js'
 import { MessageCircle, ArrowUpRight } from 'lucide-react'
 
 export default function ContactActions() {
-  if (!siteConfig.features.contact) return null
+  if (!siteConfig.features.whatsappContact) return null
 
   const link = buildContactLinks({
     whatsapp: siteConfig.whatsappNumber,
