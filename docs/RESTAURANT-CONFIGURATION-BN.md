@@ -22,7 +22,7 @@ Local development-এ `.env.local` তৈরি করে একই variable দ
 - `publicPhone`, `whatsappNumber`, `publicEmail`
 - `whatsappMessage`, `mapUrl`, `instagramUrl`
 - `contentMode`: `demo` অথবা `live`
-- `features`: menu, WhatsApp enquiry, gallery, story, contact, reservation request
+- `features`: WhatsApp order enquiry, WhatsApp contact action, reservation request
 
 Public Vite variables browser bundle-এ দেখা যায়। তাই এখানে API key, database password, secret token, private customer data রাখা যাবে না।
 
@@ -37,7 +37,7 @@ Home, story, gallery ও category copy-তে client-এর অনুমোদ�
 - `demo`: sample price/disclaimer দেখায়। NOKSHA TABLE এই mode-এ থাকে।
 - `live`: menu price label থেকে SAMPLE সরায় এবং sample disclaimer লুকায়। এটি content সত্য বা client-approved—এমন নিশ্চয়তা দেয় না। Launch-এর আগে owner-এর লিখিত approval নিতে হবে।
 
-WhatsApp enquiry feature `features.whatsappOrdering` দিয়ে চালু/বন্ধ হয়। নম্বরটি international format-এ দিন, যেমন `+8801XXXXXXXXX`; তারপর বাস্তব ফোনে link খুলে সঠিক business chat ও prefilled message যাচাই করুন।
+WhatsApp order enquiry `features.whatsappOrdering` এবং contact-page WhatsApp action `features.whatsappContact` দিয়ে চালু/বন্ধ হয়। নম্বরটি international format-এ দিন, যেমন `+8801XXXXXXXXX`; তারপর বাস্তব ফোনে link খুলে সঠিক business chat ও prefilled message যাচাই করুন।
 
 ## 5. Feature scope
 
