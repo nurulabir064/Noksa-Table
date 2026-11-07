@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
-import { categories, dishes } from '../data.js'
+import { dishes } from '../data.js'
 
 const categoryDetails = [
   { name: 'Starters & Appetizers', slug: 'starters-appetizers', note: 'A considered beginning', description: 'Small plates and first bites made for sharing.', image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85' },
