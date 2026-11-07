@@ -14,15 +14,12 @@ export default function ContactActions() {
     <section className="contact-whatsapp-card" aria-label="WhatsApp contact">
       <div className="contact-whatsapp-icon"><MessageCircle size={25}/></div>
       <div className="contact-whatsapp-copy">
-        <span className="premium-kicker">LET’S TALK</span>
-        <h2>One message away.</h2>
-        <p>For menu questions and order enquiries, reach NOKSHA TABLE on WhatsApp.</p>
-        <a className="contact-whatsapp-number" href={link.href} target="_blank" rel="noopener noreferrer">
-          +880 1304-302201 <ArrowUpRight size={16}/>
-        </a>
+        <span className="premium-kicker">WHATSAPP CONTACT</span>
+        <h2>Speak with our team.</h2>
+        <p>For menu questions and order enquiries, reach NOKSHA TABLE directly.</p>
       </div>
       <a className="contact-whatsapp-button" href={link.href} target="_blank" rel="noopener noreferrer">
-        <MessageCircle size={17}/> Chat on WhatsApp
+        <MessageCircle size={17}/> +880 1304-302201 <ArrowUpRight size={16}/>
       </a>
     </section>
   )
