@@ -2,8 +2,8 @@
 export const siteConfig = Object.freeze({
   brandName: 'NOKSHA TABLE',
   siteUrl: 'https://noksa-table.vercel.app',
-  descriptor: 'BENGALI DINING HOUSE',
-  tagline: 'A taste of Bengal, thoughtfully reimagined.',
+  descriptor: 'MULTI-CUISINE DINING HOUSE',
+  tagline: 'A world of flavour, thoughtfully brought to your table.',
   locationLabel: 'Dhaka, Bangladesh · Concept location',
   openingHoursLabel: 'Opening hours not yet specified',
   publicPhone: '',
