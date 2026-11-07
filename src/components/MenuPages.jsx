@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { dishes } from '../data.js'
-import { siteConfig } from '../config/site.js'
+import { siteConfig, isDemoContent } from '../config/site.js'
 import { buildWhatsAppOrderLink } from '../lib/order-links.js'
 
 export const categoryDetails = [
@@ -20,7 +20,7 @@ export const categoryDetails = [
 
 function CategoryDish({ dish }) {
   const [quantity, setQuantity] = useState(1)
-  const orderUrl = buildWhatsAppOrderLink(dish, siteConfig.whatsappNumber, quantity)
+  const orderUrl = siteConfig.features.whatsappOrdering ? buildWhatsAppOrderLink(dish, siteConfig.whatsappNumber, quantity, siteConfig.brandName) : null
   const total = dish.price * quantity
 
   return <article className="premium-dish">
@@ -30,7 +30,7 @@ function CategoryDish({ dish }) {
     <div className="premium-dish-copy">
       <div className="premium-dish-description"><h3><Link to={'/menu/' + dish.id}>{dish.name}</Link></h3><p>{dish.description}</p></div>
       <div className="premium-price-block">
-        <span className="premium-price-label">SAMPLE PRICE</span>
+        <span className="premium-price-label">{isDemoContent ? 'SAMPLE PRICE' : 'PRICE'}</span>
         <strong>৳{dish.price}</strong>
         <span className="premium-price-unit">per item</span>
       </div>
@@ -47,14 +47,14 @@ function CategoryDish({ dish }) {
       </div>
       {orderUrl && <a className="premium-order-link" href={orderUrl} target="_blank" rel="noopener noreferrer">Order {quantity} on WhatsApp <ArrowUpRight size={15}/></a>}
     </div>
-    <p className="premium-dish-note">Illustrative price only · Final price and availability to be confirmed</p>
+    {isDemoContent&&<p className="premium-dish-note">Illustrative price only · Final price and availability to be confirmed</p>}
   </article>
 }
 
 export function MenuLanding() {
   return <main id="main-content" className="premium-menu-page">
     <header className="premium-menu-heading">
-      <span className="premium-kicker">NOKSHA TABLE · A WORLD OF FLAVOUR</span>
+      <span className="premium-kicker">{siteConfig.brandName} · A WORLD OF FLAVOUR</span>
       <h1>Our <em>menu</em></h1>
       <p>Ten thoughtful chapters. Familiar favourites and flavours from around the world.</p>
       <span className="premium-rule" />
@@ -71,7 +71,7 @@ export function MenuLanding() {
         </Link>
       })}
     </section>
-    <p className="premium-disclaimer">All dishes, descriptions and BDT prices on this concept website are illustrative samples, not a live restaurant menu.</p>
+    {isDemoContent&&<p className="premium-disclaimer">All dishes, descriptions and BDT prices on this concept website are illustrative samples, not a live restaurant menu.</p>}
   </main>
 }
 
@@ -90,7 +90,7 @@ export function MenuCategoryPage() {
     <section className="premium-category-content">
       <div className="premium-section-title"><span className="premium-kicker">THE NOKSHA SELECTION</span><h2>Selected for <em>your table</em></h2><p>{items.length} menu {items.length === 1 ? 'item' : 'items'}</p></div>
       {items.length ? <div className="premium-dish-grid">{items.map(dish => <CategoryDish key={dish.id} dish={dish}/>)}</div> : <p className="premium-empty">This category is being curated. Please check back soon.</p>}
-      <p className="premium-disclaimer">Illustrative sample dishes and prices. Replace with restaurant-approved menu information before launch.</p>
+      {isDemoContent&&<p className="premium-disclaimer">Illustrative sample dishes and prices. Replace with restaurant-approved menu information before launch.</p>}
       <Link className="premium-back-bottom" to="/menu">Explore all ten categories <ArrowUpRight size={16}/></Link>
     </section>
   </main>
