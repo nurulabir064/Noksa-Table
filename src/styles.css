@@ -224,3 +224,5 @@ html.js-enabled [data-reveal]{opacity:0;transform:translateY(24px);transition:op
 .order-total{display:flex;justify-content:space-between;align-items:center;padding-top:20px;font-size:14px}
 .order-total strong{font-size:22px}
 @media(max-width:480px){.order-summary{padding:22px 18px;margin-top:45px}.dish-meta{gap:8px}.dish-meta h3{font-size:18px}}
+
+.whatsapp-order-button{margin-top:22px}.order-summary .sample-note{max-width:720px;line-height:1.7}

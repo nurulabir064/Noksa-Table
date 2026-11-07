@@ -25,16 +25,18 @@
 | About | Restaurant story | |
 | Gallery | Client-approved photos | |
 | Contact | Verified phone, address, hours and links | |
-| Reservation / ordering | Only if separately scoped and implemented | |
+| WhatsApp ordering from menu | Selected dishes, quantities and subtotal sent to the restaurant's verified WhatsApp number | Included |
+| Reservation / advanced ordering | Live booking, order database, staff dashboard or order status workflow | Separate scope | |
 
 ## 4. Expected customer journey
 
 1. Customer opens the website on mobile.
 2. Customer views menu and restaurant details.
-3. Customer finds the verified contact method or directions.
-4. Customer contacts the restaurant or visits.
+3. Customer selects dishes and quantities, then opens a prefilled WhatsApp order message.
+4. Restaurant confirms item availability, delivery or pickup, final charges and payment directly with the customer.
+5. Customer can also use verified phone, email or directions.
 
-এই journey-তে কোনো order/booking/confirmation feature না থাকলে সেটি proposal-এ স্পষ্টভাবে বাদ দিন।
+WhatsApp message পাঠানো মানেই order confirmed নয়। Website কোনো online payment নেয় না। Live reservation, order database, admin dashboard, delivery tracking বা payment gateway না থাকলে সেগুলো proposal-এর exclusions-এ স্পষ্টভাবে লিখুন।
 
 ## 5. Deliverables and exclusions
 
@@ -46,7 +48,7 @@ Deliverables:
 
 Exclusions:
 - [CMS/admin]
-- [Booking/order/payment]
+- [Live reservation / advanced order management / online payment]
 - [Content/photo production]
 - [Maintenance]
 - [Domain/hosting/third-party costs]

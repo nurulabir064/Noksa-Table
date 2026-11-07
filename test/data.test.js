@@ -68,3 +68,9 @@ test('cart ignores unknown dish IDs and invalid quantity changes in the summary'
   assert.equal(summary.totalQuantity, 0);
   assert.equal(summary.subtotal, 0);
 });
+
+
+test('each sample dish has its own image assignment', () => {
+  const imageUrls = dishes.map(({ image }) => image);
+  assert.equal(new Set(imageUrls).size, imageUrls.length, 'dish images should not be accidentally reused across menu items');
+});
