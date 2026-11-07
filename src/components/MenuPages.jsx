@@ -1,8 +1,10 @@
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { dishes } from '../data.js'
+import { siteConfig } from '../config/site.js'
+import { buildWhatsAppOrderLink } from '../lib/order-links.js'
 
-const categoryDetails = [
+export const categoryDetails = [
   { name: 'Starters & Appetizers', slug: 'starters-appetizers', note: 'A considered beginning', description: 'Small plates and first bites made for sharing.', image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85' },
   { name: 'Soups', slug: 'soups', note: 'Warm, fragrant bowls', description: 'Comforting classics and bright, aromatic broths.', image: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85' },
   { name: 'Bangladeshi & Traditional', slug: 'bangladeshi-traditional', note: 'Rooted in tradition', description: 'Familiar Bengali favourites and generous table classics.', image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=1200&q=85' },
@@ -16,6 +18,7 @@ const categoryDetails = [
 ]
 
 function CategoryDish({ dish }) {
+  const orderUrl = buildWhatsAppOrderLink(dish, siteConfig.whatsappNumber)
   return <article className="premium-dish">
     <Link to={'/menu/' + dish.id} className="premium-dish-image">
       <img src={dish.image} alt={dish.name} loading="lazy" decoding="async" width="900" height="700" />
@@ -24,7 +27,7 @@ function CategoryDish({ dish }) {
       <div><h3><Link to={'/menu/' + dish.id}>{dish.name}</Link></h3><p>{dish.description}</p></div>
       <strong>৳{dish.price}</strong>
     </div>
-    <span className="premium-dish-note">Illustrative sample menu</span>
+    <div className="premium-dish-actions"><span className="premium-dish-note">Illustrative sample menu</span>{orderUrl && <a className="premium-order-link" href={orderUrl} target="_blank" rel="noopener noreferrer">Order on WhatsApp <ArrowUpRight size={15}/></a>}</div>
   </article>
 }
 
