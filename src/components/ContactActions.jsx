@@ -1,34 +1,29 @@
 import { siteConfig } from '../config/site.js'
 import { buildContactLinks } from '../lib/contact-links.js'
+import { MessageCircle, ArrowUpRight } from 'lucide-react'
 
 export default function ContactActions() {
-  const links = buildContactLinks({
-    phone: siteConfig.publicPhone,
+  const link = buildContactLinks({
     whatsapp: siteConfig.whatsappNumber,
-    email: siteConfig.publicEmail,
-    message: siteConfig.whatsappMessage,
-  })
-  const hasContact = links.phone || links.whatsapp || links.email
+    message: 'Hello NOKSHA TABLE, I would like to ask about your menu.',
+  }).whatsapp
+
+  if (!link) return <p className="contact-number-fallback">WhatsApp contact is not available.</p>
 
   return (
-    <div className="contact-actions" aria-label="Restaurant contact options">
-      {hasContact ? (
-        <>
-          {links.phone && <a href={links.phone.href}>Call: {links.phone.label}</a>}
-          {links.whatsapp && <a href={links.whatsapp.href} target="_blank" rel="noopener noreferrer">WhatsApp</a>}
-          {links.email && <a href={links.email.href}>Email: {links.email.label}</a>}
-        </>
-      ) : (
-        <span>Contact details will appear here after client verification.</span>
-      )}
-      {siteConfig.locationLabel && <span>{siteConfig.locationLabel}</span>}
-      {siteConfig.openingHoursLabel && <span>{siteConfig.openingHoursLabel}</span>}
-      {siteConfig.mapUrl?.startsWith('https://') && (
-        <a href={siteConfig.mapUrl} target="_blank" rel="noopener noreferrer">Directions</a>
-      )}
-      {siteConfig.instagramUrl?.startsWith('https://') && (
-        <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>
-      )}
-    </div>
+    <section className="contact-whatsapp-card" aria-label="WhatsApp contact">
+      <div className="contact-whatsapp-icon"><MessageCircle size={25}/></div>
+      <div className="contact-whatsapp-copy">
+        <span className="premium-kicker">LET’S TALK</span>
+        <h2>One message away.</h2>
+        <p>For menu questions and order enquiries, reach NOKSHA TABLE on WhatsApp.</p>
+        <a className="contact-whatsapp-number" href={link.href} target="_blank" rel="noopener noreferrer">
+          +880 1304-302201 <ArrowUpRight size={16}/>
+        </a>
+      </div>
+      <a className="contact-whatsapp-button" href={link.href} target="_blank" rel="noopener noreferrer">
+        <MessageCircle size={17}/> Chat on WhatsApp
+      </a>
+    </section>
   )
 }
