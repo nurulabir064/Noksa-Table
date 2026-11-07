@@ -26,7 +26,8 @@
 - About / Story page
 - Gallery page
 - Contact page populated with client-approved public contact details (requires client-specific content configuration)
-- Contact actions such as call, email or WhatsApp are configured only after the client supplies verified public details and the links are tested. The public demo does not use a real restaurant's phone or WhatsApp number.
+- Verified call, email and WhatsApp contact links.
+- Menu selection with quantity controls, running subtotal and a WhatsApp order message containing selected dish names, quantities and subtotal. The restaurant confirms availability, delivery/pickup, final charges and payment directly.
 - Mobile navigation and basic accessibility features
 - Basic page metadata and deployment to an agreed hosting account
 - One production handover and short owner walkthrough
@@ -35,7 +36,7 @@
 
 ### অন্তর্ভুক্ত নয়
 
-- Online payment, checkout, food delivery or ordering
+- Online payment gateway, automated delivery dispatch or POS integration
 - Live table availability or confirmed reservations
 - Admin dashboard / CMS
 - Customer database or CRM
@@ -49,12 +50,12 @@
 | Add-on | কী দিতে হবে |
 |---|---|
 | Menu update support | নির্দিষ্ট সংখ্যক menu edits/month; scope লিখিতভাবে নির্ধারণ |
-| WhatsApp / call / email CTA | Verified client contact details, click-to-chat/call/email implementation and device testing |
+| WhatsApp / call / email CTA | Included in the starter; configure verified client details and test on supported devices |
 | Google Maps / directions | Client-verified business location and map link |
 | Analytics setup | Account ownership, consent/privacy decision and configuration |
 | CMS / admin dashboard | আলাদা discovery, database, roles, security and testing |
 | Reservation request workflow | Database, privacy notice, staff workflow, notifications, abuse protection and end-to-end testing |
-| Online ordering | Cart, order rules, payment provider, fulfilment workflow, refunds and operational testing |
+| Advanced online ordering | Order database, staff dashboard, status tracking, fulfilment workflow and operational testing |
 
 কোনো add-on-কে “ready” বলবেন না যতক্ষণ সেটি implement, test এবং client environment-এ verify করা হয়নি।
 
