@@ -17,7 +17,7 @@ const pages = [
   {
     route: '/menu',
     title: 'Menu | ' + siteConfig.brandName,
-    description: 'Explore the menu at ' + siteConfig.brandName + '.',
+    description: 'Explore Thai, Chinese, Indian, Continental, seafood, Bengali favourites and mocktails at ' + siteConfig.brandName + '.'',
     image: defaultImage,
   },
   {
