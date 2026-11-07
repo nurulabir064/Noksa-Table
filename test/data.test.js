@@ -22,6 +22,18 @@ test('menu contains dishes with complete required fields', () => {
   }
 });
 
+test('Blue Lagoon and Strawberry Mojito use verified Pexels image assets', () => {
+  const blueLagoon = dishes.find(({ id }) => id === 'blue-lagoon');
+  const strawberryMojito = dishes.find(({ id }) => id === 'strawberry-mojito');
+
+  assert.ok(blueLagoon);
+  assert.ok(strawberryMojito);
+  assert.match(blueLagoon.image, /^https:\/\/images\.pexels\.com\/photos\/17321327\/pexels-photo-17321327\.jpeg\?/);
+  assert.match(strawberryMojito.image, /^https:\/\/images\.pexels\.com\/photos\/17321274\/pexels-photo-17321274\.jpeg\?/);
+  assert.equal(blueLagoon.imageCredit?.name, 'Shameel mukkath');
+  assert.equal(strawberryMojito.imageCredit?.name, 'Shameel mukkath');
+});
+
 test('menu dish IDs are unique', () => {
   const ids = dishes.map(({ id }) => id);
   assert.equal(new Set(ids).size, ids.length);

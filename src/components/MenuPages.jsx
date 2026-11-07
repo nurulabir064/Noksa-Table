@@ -29,21 +29,18 @@ function CategoryDish({ dish }) {
     </Link>
     <div className="premium-dish-copy">
       <div className="premium-dish-description"><h3><Link to={'/menu/' + dish.id}>{dish.name}</Link></h3><p>{dish.description}</p></div>
-      <div className="premium-price-block">
-        <span className="premium-price-label">{isDemoContent ? 'SAMPLE PRICE' : 'PRICE'}</span>
-        <strong>৳{dish.price}</strong>
-        <span className="premium-price-unit">per item</span>
-      </div>
     </div>
     <div className="premium-dish-order">
-      <div className="premium-quantity-label"><span>QUANTITY</span><small>Choose how many you need</small></div>
       <div className="premium-order-controls">
-        <div className="premium-quantity-control" aria-label={dish.name + ' quantity'}>
-          <button type="button" onClick={() => { setQuantity(value => Math.max(1, value - 1)) }} aria-label={'Decrease ' + dish.name + ' quantity'} disabled={quantity <= 1}>−</button>
-          <output aria-live="polite" aria-label="Selected quantity">{quantity}</output>
-          <button type="button" onClick={() => { setQuantity(value => Math.min(99, value + 1)) }} aria-label={'Increase ' + dish.name + ' quantity'} disabled={quantity >= 99}>+</button>
+        <div className="premium-order-quantity">
+          <div className="premium-quantity-label"><span>QUANTITY</span><small>Adjust your selection</small></div>
+          <div className="premium-quantity-control" aria-label={dish.name + ' quantity'}>
+            <button type="button" onClick={() => { setQuantity(value => Math.max(1, value - 1)) }} aria-label={'Decrease ' + dish.name + ' quantity'} disabled={quantity <= 1}>−</button>
+            <output aria-live="polite" aria-label="Selected quantity">{quantity}</output>
+            <button type="button" onClick={() => { setQuantity(value => Math.min(99, value + 1)) }} aria-label={'Increase ' + dish.name + ' quantity'} disabled={quantity >= 99}>+</button>
+          </div>
         </div>
-        <div className="premium-total-price"><span>ESTIMATED TOTAL</span><strong>৳{total.toLocaleString('en-BD')}</strong></div>
+        <div className="premium-total-price"><span>{isDemoContent ? 'SAMPLE TOTAL' : 'ITEM TOTAL'}</span><strong>৳{total.toLocaleString('en-BD')}</strong></div>
       </div>
       {orderUrl && <a className="premium-order-link" href={orderUrl} target="_blank" rel="noopener noreferrer">Order {quantity} on WhatsApp <ArrowUpRight size={15}/></a>}
     </div>
