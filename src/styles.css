@@ -482,3 +482,125 @@ html.js-enabled [data-reveal]{opacity:0;transform:translateY(24px);transition:op
  .premium-dish-image img,.premium-order-link{transition:none}
  .premium-dish:hover .premium-dish-image img{transform:none}
 }
+
+
+/* Menu card refinement: one live total, premium spacing, and touch-friendly controls */
+.premium-dish{
+  padding:0;
+  overflow:hidden;
+  border:1px solid rgba(198,166,104,.28);
+  border-radius:16px;
+  background:linear-gradient(155deg,#29261f 0%,#1e1c17 72%);
+  box-shadow:0 12px 30px rgba(18,16,12,.12);
+  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease;
+}
+.premium-dish:hover{
+  transform:translateY(-4px);
+  border-color:rgba(211,183,126,.58);
+  box-shadow:0 18px 38px rgba(18,16,12,.2);
+}
+.premium-dish-image{
+  aspect-ratio:16/10;
+  border-radius:0;
+  background:#302c24;
+}
+.premium-dish-image img{
+  object-fit:cover;
+  object-position:center 52%;
+}
+.premium-dish-copy{
+  display:block;
+  padding:20px 20px 16px;
+}
+.premium-dish-description h3{
+  margin-bottom:9px;
+}
+.premium-dish-description p{
+  max-width:58ch;
+}
+.premium-dish-order{
+  margin:0 20px;
+  padding:16px 0 14px;
+  border-top:1px solid rgba(198,166,104,.24);
+}
+.premium-order-controls{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:end;
+  gap:14px;
+}
+.premium-order-quantity{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:9px;
+  min-width:0;
+}
+.premium-quantity-label{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+  margin:0;
+}
+.premium-quantity-control{
+  border-radius:9px;
+  overflow:hidden;
+  min-height:42px;
+}
+.premium-quantity-control button{
+  width:42px;
+  height:42px;
+  font-size:22px;
+  touch-action:manipulation;
+}
+.premium-quantity-control output{
+  min-width:38px;
+  font-weight:700;
+}
+.premium-total-price{
+  min-width:112px;
+  padding:9px 12px;
+  border:1px solid rgba(211,183,126,.32);
+  border-radius:10px;
+  background:rgba(194,160,99,.1);
+}
+.premium-total-price strong{
+  font-size:20px;
+  white-space:nowrap;
+}
+.premium-order-link{
+  min-height:44px;
+  border-radius:10px;
+}
+.premium-dish-note{
+  margin:0 20px 16px;
+  padding-top:11px;
+  line-height:1.55;
+}
+@media(max-width:900px){
+  .premium-dish-grid{gap:16px}
+  .premium-dish-copy{padding:18px 16px 14px}
+  .premium-dish-order{margin:0 16px}
+  .premium-dish-note{margin-left:16px;margin-right:16px}
+}
+@media(max-width:620px){
+  .premium-dish-grid{grid-template-columns:minmax(0,1fr);gap:18px}
+  .premium-dish{border-radius:15px}
+  .premium-dish-image{aspect-ratio:16/9}
+  .premium-dish-copy{padding:18px 17px 14px}
+  .premium-dish-order{margin:0 17px;padding:14px 0 13px}
+  .premium-order-controls{grid-template-columns:minmax(0,1fr) auto;gap:10px}
+  .premium-total-price{min-width:104px;padding:9px 10px}
+  .premium-total-price strong{font-size:18px}
+  .premium-quantity-control button{width:40px;height:42px}
+  .premium-dish-note{margin:0 17px 15px}
+}
+@media(max-width:360px){
+  .premium-order-controls{grid-template-columns:1fr;align-items:stretch}
+  .premium-total-price{align-items:flex-start;width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .premium-dish,.premium-dish-image img,.premium-order-link{transition:none}
+  .premium-dish:hover{transform:none}
+}
