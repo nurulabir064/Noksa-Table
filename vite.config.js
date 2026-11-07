@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import { dishes } from './src/data.js'
+import { dishes, categories } from './src/data.js'
 import { siteConfig } from './src/config/site.js'
 
 const siteUrl = siteConfig.siteUrl.replace(/\/+$/, '')
@@ -44,6 +44,12 @@ const pages = [
     description: 'Contact information for ' + siteConfig.brandName + '.',
     image: defaultImage,
   },
+  ...categories.map(category => ({
+    route: '/menu/category/' + category.toLowerCase().replace(/&/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+    title: category + ' | ' + siteConfig.brandName,
+    description: 'Explore ' + category + ' at ' + siteConfig.brandName + '. Illustrative sample menu and photography.',
+    image: defaultImage,
+  })),
   ...dishes.map(dish => ({
     route: '/menu/' + dish.id,
     title: dish.name + ' | ' + siteConfig.brandName,
