@@ -50,7 +50,7 @@ test('cart adds quantities and calculates line totals and subtotal', () => {
 });
 
 test('cart combines different dishes and calculates the correct grand subtotal', () => {
-  const cart = { 'dhaka-kacchi': 2, 'borhani': 2 };
+  const cart = { 'dhaka-kacchi': 2, 'classic-lassi': 2 };
   const summary = getCartSummary(cart, dishes);
   assert.equal(summary.totalQuantity, 4);
   assert.equal(summary.subtotal, 1420);
