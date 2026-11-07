@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { dishes } from '../data.js'
@@ -18,16 +19,36 @@ export const categoryDetails = [
 ]
 
 function CategoryDish({ dish }) {
-  const orderUrl = buildWhatsAppOrderLink(dish, siteConfig.whatsappNumber)
+  const [quantity, setQuantity] = useState(1)
+  const [showOrder, setShowOrder] = useState(false)
+  const orderUrl = buildWhatsAppOrderLink(dish, siteConfig.whatsappNumber, quantity)
+  const total = dish.price * quantity
+
   return <article className="premium-dish">
     <Link to={'/menu/' + dish.id} className="premium-dish-image">
       <img src={dish.image} alt={dish.name} loading="lazy" decoding="async" width="900" height="700" />
     </Link>
     <div className="premium-dish-copy">
-      <div><h3><Link to={'/menu/' + dish.id}>{dish.name}</Link></h3><p>{dish.description}</p></div>
-      <strong>৳{dish.price}</strong>
+      <div className="premium-dish-description"><h3><Link to={'/menu/' + dish.id}>{dish.name}</Link></h3><p>{dish.description}</p></div>
+      <div className="premium-price-block">
+        <span className="premium-price-label">SAMPLE PRICE</span>
+        <strong>৳{dish.price}</strong>
+        <span className="premium-price-unit">per item</span>
+      </div>
     </div>
-    <div className="premium-dish-actions"><span className="premium-dish-note">Illustrative sample menu</span>{orderUrl && <a className="premium-order-link" href={orderUrl} target="_blank" rel="noopener noreferrer">Order on WhatsApp <ArrowUpRight size={15}/></a>}</div>
+    <div className="premium-dish-order">
+      <div className="premium-quantity-label"><span>QUANTITY</span><small>Choose how many you need</small></div>
+      <div className="premium-order-controls">
+        <div className="premium-quantity-control" aria-label={dish.name + ' quantity'}>
+          <button type="button" onClick={() => { setQuantity(value => Math.max(1, value - 1)); setShowOrder(false) }} aria-label={'Decrease ' + dish.name + ' quantity'} disabled={quantity <= 1}>−</button>
+          <output aria-live="polite" aria-label="Selected quantity">{quantity}</output>
+          <button type="button" onClick={() => { setQuantity(value => Math.min(99, value + 1)); setShowOrder(false) }} aria-label={'Increase ' + dish.name + ' quantity'} disabled={quantity >= 99}>+</button>
+        </div>
+        <div className="premium-total-price"><span>ESTIMATED TOTAL</span><strong>৳{total.toLocaleString('en-BD')}</strong></div>
+      </div>
+      {orderUrl && <a className="premium-order-link" href={orderUrl} target="_blank" rel="noopener noreferrer" onClick={() => setShowOrder(true)}>Order {quantity} on WhatsApp <ArrowUpRight size={15}/></a>}
+    </div>
+    <p className="premium-dish-note">Illustrative price only · Final price and availability to be confirmed</p>
   </article>
 }
 
