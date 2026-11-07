@@ -26,7 +26,7 @@
 - About / Story page
 - Gallery page
 - Contact page populated with client-approved public contact details (requires client-specific content configuration)
-- Contact actions such as call, email or WhatsApp only when the verified client details are supplied and the links are separately implemented and tested; WhatsApp is not currently part of this starter demo
+- Contact actions such as call, email or WhatsApp are configured only after the client supplies verified public details and the links are tested. The public demo does not use a real restaurant's phone or WhatsApp number.
 - Mobile navigation and basic accessibility features
 - Basic page metadata and deployment to an agreed hosting account
 - One production handover and short owner walkthrough
