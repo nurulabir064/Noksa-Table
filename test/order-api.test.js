@@ -91,6 +91,16 @@ test('rejects unsupported methods and cross-origin requests', async () => {
   assert.equal(scheme.res.statusCode, 403);
 });
 
+test('accepts same-origin local Vercel development requests over HTTP', async () => {
+  const { res } = await call(validBody, {
+    headers: {
+      origin: 'http://localhost:3000',
+      host: 'localhost:3000',
+    },
+  });
+  assert.equal(res.statusCode, 200);
+});
+
 test('requires the exact JSON media type and rejects oversized requests', async () => {
   const mediaType = await call(validBody, { headers: { 'content-type': 'application/jsonp' } });
   const oversized = await call(validBody, { headers: { 'content-length': '9000' } });
