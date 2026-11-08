@@ -23,7 +23,8 @@
 - [ ] Phone, WhatsApp and email links use client-approved contact details
 - [ ] WhatsApp number is active, uses the correct Bangladesh international format, and opens the intended business chat
 - [ ] Add/remove quantities, line totals and subtotal are correct for several dishes
-- [ ] WhatsApp order message contains the correct dish names, quantities and subtotal; customer must press Send
+- [ ] WhatsApp order message contains correct dish names, quantities, subtotal, customer contact, pickup/delivery choice, delivery address when applicable and special instructions
+- [ ] Order details remain only in the guest's message draft until the guest sends them; the demo does not silently store customer details
 - [ ] Email alternative opens with the correct recipient, subject and order details
 - [ ] Order buttons do not claim that an order was received or confirmed before the restaurant responds
 - [ ] Map/directions link points to the verified location
