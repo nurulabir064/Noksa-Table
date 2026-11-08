@@ -79,6 +79,7 @@ test('menu presents the requested international categories without Bengali dishe
   assert.ok(categories.includes('Chinese'));
   assert.ok(categories.includes('Continental'));
   assert.ok(categories.includes('Drinks & Mocktails'));
+  assert.ok(categories.includes('Soft Drinks'));
   assert.ok(categories.includes('Desserts'));
   assert.ok(categories.includes('Combos'));
   assert.ok(dishes.some(dish => dish.id === 'blueberry-mojito'));
