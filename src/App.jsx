@@ -419,7 +419,7 @@ function Gallery(){
       </div>
 
       <div className="gallery-grid">
-        {visibleImages.map((image,i)=><button type="button" className={'gallery-item gallery-item-'+image.kind.toLowerCase()} key={image.id} onClick={()=>setSelected(image)} aria-label={'View image: '+image.alt}>
+        {visibleImages.map((image,i)=><button type="button" className={'gallery-item gallery-item-'+image.kind.toLowerCase()} key={image.id||image.src} onClick={()=>setSelected(image)} aria-label={'View image: '+image.alt}>
           <img loading="lazy" decoding="async" width="1000" height="750" src={image.src||('https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85')} alt={image.alt} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/>
           <span className="image-fallback" aria-hidden="true">Photography update pending</span>
           <span className="gallery-item-caption"><span>{image.kind}</span><strong>{image.alt}</strong></span>
