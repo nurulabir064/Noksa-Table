@@ -86,6 +86,8 @@ The production output is generated in `dist/`.
 ├── api/
 │   ├── _lib/
 │   │   └── reservation-validation.js
+│   ├── orders/
+│   │   └── prepare.js
 │   └── reservations.js
 ├── db/
 │   └── schema.sql
@@ -103,12 +105,16 @@ The production output is generated in `dist/`.
 │   │   └── order-message.js
 │   ├── App.jsx
 │   ├── data.js
+│   ├── gallery-data.js
+│   ├── gallery-premium.css
 │   ├── main.jsx
 │   └── styles.css
 ├── test/
 │   ├── contact-links.test.js
 │   ├── order-message.test.js
 │   ├── data.test.js
+│   ├── gallery.test.js
+│   ├── order-api.test.js
 │   ├── reservation-api.test.js
 │   └── reservation-validation.test.js
 ├── package.json
