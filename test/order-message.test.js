@@ -14,7 +14,7 @@ test('builds an email order message with item quantities and subtotal', () => {
 
   assert.match(message, /Chicken Tikka × 2 — ৳960/);
   assert.match(message, /Blueberry Mojito Mocktail × 1 — ৳120/);
-  assert.match(message, /Subtotal: ৳1080/);
+  assert.match(message, /Estimated subtotal: ৳1080/);
   assert.match(message, /confirm item availability/);
 });
 
