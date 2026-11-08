@@ -19,7 +19,7 @@ export default function ContactActions() {
       </div>
       {links.whatsapp && <a className="contact-whatsapp-link" href={links.whatsapp.href} target="_blank" rel="noopener noreferrer">Chat on WhatsApp <span aria-hidden="true">↗</span></a>}
       {links.phone && <a href={links.phone.href}>Call: {links.phone.label}</a>}
-      {links.email && <a href={links.email.href}>Email: {links.email.label}</a>
+      {links.email && <a href={links.email.href}>Email: {links.email.label}</a>}
       {siteConfig.mapUrl?.startsWith('https://') && (
         <a href={siteConfig.mapUrl} target="_blank" rel="noopener noreferrer">Get directions</a>
       )}
