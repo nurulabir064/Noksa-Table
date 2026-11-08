@@ -98,3 +98,10 @@ test('homepage featured selection references exactly four existing dishes', () =
     assert.ok(dishIds.has(id), 'homepage featured dish is missing from menu data: ' + id);
   }
 });
+
+test('homepage featured labels do not claim unverified popularity or rankings', () => {
+  const featured = dishes.filter(dish => featuredDishIds.includes(dish.id));
+  for (const dish of featured) {
+    assert.doesNotMatch(dish.tag || '', /popular|best seller|top rated|guest favourite/i);
+  }
+});
