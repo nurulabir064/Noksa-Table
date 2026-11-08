@@ -7,10 +7,8 @@ function getDigits(value) {
 
 export function buildContactLinks({ phone = '', email = '' } = {}) {
   const phoneDigits = getDigits(phone)
-  const whatsappDigits = getDigits(whatsapp)
   const normalizedEmail = typeof email === 'string' ? email.trim() : ''
   const validPhone = phoneDigits.length >= 7 && phoneDigits.length <= 15
-  const validWhatsApp = whatsappDigits.length >= 8 && whatsappDigits.length <= 15
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) && normalizedEmail.length <= 254
 
   return {
