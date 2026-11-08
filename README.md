@@ -16,6 +16,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - [Quotation template](docs/QUOTE-TEMPLATE-BN.md) — fixed scope, itemized fees, milestones, revisions and acceptance.
 - [Bengali sales kit](docs/SALES-KIT-BN.md) — positioning, starter package, pricing context and honest demo positioning.
 - [Client onboarding brief](docs/CLIENT-ONBOARDING-BN.md) — business details, content, goals and booking/order discovery.
+- [Payment architecture](docs/PAYMENT-ARCHITECTURE-BN.md) — SSLCOMMERZ recommendation, provider comparison, server-side validation, IPN, refunds and sandbox launch gates.
 - [Client customization workflow](docs/CLIENT-CUSTOMIZATION-WORKFLOW-BN.md) — replace demo branding, configure verified contact links, content, SEO and deployment safely.
 - [Service agreement draft](docs/SERVICE-AGREEMENT-DRAFT-BN.md) — plain-language working draft; obtain local legal review before signing.
 - [Invoice template](docs/INVOICE-TEMPLATE-BN.md) — BDT invoice layout and payment tracking.
@@ -30,7 +31,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
 - Verified-format phone, WhatsApp, email and directions links driven by public client configuration
-- Homepage presents 12 curated dishes, including Bangladeshi favourites, pizza and Indian choices, with exactly one Soft Drinks item. The cart supports quantity controls and running subtotals. Guests can add a name, phone, pickup/delivery choice, delivery address and special instructions; WhatsApp is the primary order handoff and a prefilled email is the alternative
+- Homepage presents 12 curated dishes, including Bangladeshi favourites, pizza and Indian choices, with exactly one Soft Drinks item. The three Bangladesh online-order leaders reported for 2025—Basmati Kacchi, Plain Paratha and Chicken Chap—are included; the other nine are editorial selections, not ranked best-sellers. The cart supports quantity controls and running subtotals. Guests can add a name, phone, pickup/delivery choice, delivery address and special instructions; WhatsApp is the primary order handoff and a prefilled email is the alternative
 - Dish detail pages offer WhatsApp ordering first and email enquiry as an alternative
 - Contact form prepares an email draft through the visitor's configured email app; it does not send or store messages
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
@@ -166,6 +167,7 @@ The API stores requests as `pending`; it does not confirm tables or send notific
 - [ ] Obtain client approval for content, images, policies, and legal/privacy text.
 - [ ] Keep production reservations disabled until the live database, staff workflow, privacy/retention policy, notification handling and controlled production test are approved.
 - [ ] Keep online payments disabled until a Bangladesh gateway merchant account is approved, sandbox credentials are configured server-side, verified webhook/IPN handling and duplicate protection are tested, and refunds/reconciliation are documented.
+- [ ] Follow docs/PAYMENT-ARCHITECTURE-BN.md; SSLCOMMERZ is the recommended first provider, not yet integrated or approved.
 - [ ] Never treat a frontend redirect or success message as proof of payment; verify the transaction server-side with the gateway.
 
 ## Deployment
