@@ -150,7 +150,7 @@ function Home(){
 
       <section className="featured section-wrap" data-reveal>
         <div className="section-heading">
-          <div><div className="eyebrow">FROM OUR KITCHEN</div><h2>Made to be <em>remembered.</em></h2></div>
+          <div><div className="eyebrow">FROM OUR KITCHEN</div><h2>Popular picks, <em>thoughtfully served.</em></h2></div>
           <Link className="under-link" to="/menu">View full menu <ArrowRight size={16}/></Link>
         </div>
         <div className="dish-grid">
