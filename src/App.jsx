@@ -281,6 +281,20 @@ function About(){
         </div>
       </section>
 
+      <section className="story-menu-philosophy">
+        <div className="eyebrow">A MENU WITH ROOM TO EXPLORE</div>
+        <div className="story-menu-grid">
+          <h2>Familiar comfort, with room for <em>discovery.</em></h2>
+          <div>
+            <p>We imagine a menu that helps guests find something they already love while making it easy to try something new. Chinese wok favourites, Thai soups and curries, Indian classics, Continental plates, seafood, drinks and desserts belong within one easy-to-explore selection.</p>
+            <p>Variety should not feel confusing. Clear categories, concise descriptions and accurate food photography help guests understand what they are choosing before they reach the table.</p>
+          </div>
+        </div>
+        <div className="story-menu-categories" aria-label="Cuisine and menu categories">
+          <span>Chinese</span><span>Thai</span><span>Indian</span><span>Continental</span><span>Seafood</span><span>Drinks & desserts</span>
+        </div>
+      </section>
+
       <section className="story-principles" aria-label="Our approach">
         <div className="eyebrow">WHAT SHAPES THE EXPERIENCE</div>
         <div className="story-principle-grid">
