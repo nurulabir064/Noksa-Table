@@ -6,6 +6,7 @@ import { siteConfig } from './config/site.js'
 import ContactActions from './components/ContactActions.jsx'
 import { buildEmailLink, buildWhatsAppLink } from './lib/contact-links.js'
 import { buildOrderMessage } from './lib/order-message.js'
+import { buildReservationMessage } from './lib/reservation-message.js'
 import { getCartSummary, updateCartQuantity } from './lib/cart.js'
 
 function Header(){const [open,setOpen]=useState(false);const whatsappLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message:'Hello, I found NOKSHA TABLE online and would like to know more.'});useEffect(()=>{if(!open)return;const closeOnEscape=event=>{if(event.key==='Escape')setOpen(false)};window.addEventListener('keydown',closeOnEscape);return()=>window.removeEventListener('keydown',closeOnEscape)},[open]);return <><a className="skip-link" href="#main-content">Skip to content</a><header className="header"><Link className="brand" to="/"><span className="brand-mark">ন</span><span>{siteConfig.brandName}<small>{siteConfig.descriptor}</small></span></Link><button className="mobile-toggle" type="button" onClick={()=>setOpen(!open)} aria-label="Toggle navigation" aria-expanded={open} aria-controls="primary-navigation">{open?<X/>:<MenuIcon/>}</button><nav id="primary-navigation" aria-label="Primary navigation" className={open?'nav open':'nav'}>{[['/','Home'],['/menu','Menu'],['/about','Our Story'],['/gallery','Gallery'],['/contact','Contact']].map(([to,label])=><NavLink key={to} to={to} onClick={()=>setOpen(false)} end={to==='/'}>{label}</NavLink>)}{whatsappLink?<a className="nav-cta" href={whatsappLink.href} target="_blank" rel="noopener noreferrer" onClick={()=>setOpen(false)}>WhatsApp us <ArrowUpRight size={15}/></a>:<Link className="nav-cta" to="/contact" onClick={()=>setOpen(false)}>Contact us <ArrowUpRight size={15}/></Link>}</nav></header></>}
@@ -496,19 +497,16 @@ function FormPage({reservation=false}){
 
     if(!reservationEnabled){
       const formData=new FormData(form);
-      const message=[
-        'Hello '+siteConfig.brandName+', I would like to request a table reservation.',
-        '',
-        'Name: '+formData.get('name'),
-        'Phone: '+formData.get('phone'),
-        formData.get('email')?'Email: '+formData.get('email'):'',
-        'Date: '+formData.get('date'),
-        'Preferred time: '+formData.get('time'),
-        'Guests: '+formData.get('guestCount'),
-        formData.get('message')?'Notes: '+formData.get('message'):'',
-        '',
-        'Please confirm availability. This is a request, not a confirmed booking.'
-      ].filter(Boolean).join('\n');
+      const message=buildReservationMessage({
+        restaurantName:siteConfig.brandName,
+        name:formData.get('name'),
+        phone:formData.get('phone'),
+        email:formData.get('email'),
+        date:formData.get('date'),
+        time:formData.get('time'),
+        guestCount:formData.get('guestCount'),
+        notes:formData.get('message')
+      });
       const whatsappLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message});
       const emailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Reservation request — '+siteConfig.brandName,body:message});
       setFallbackEmailHref(emailLink?.href||'');
