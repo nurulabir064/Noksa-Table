@@ -202,7 +202,7 @@ function Home(){
       <section className="home-story section-wrap" data-reveal>
         <div className="home-story-image">
           <img src={galleryImages[6].src} alt={galleryImages[6].alt} loading="lazy" decoding="async"/>
-          <PhotoCredit credit={galleryImages[6].credit}/>
+          <PhotoCredit credit={galleryImages[6].credit} className="image-credit-overlay"/>
           <span>THE ART OF A GOOD TABLE</span>
         </div>
         <div className="home-story-copy">
@@ -251,8 +251,10 @@ function Home(){
             <Link className="under-link" to="/reservation">Request a table <ArrowRight size={15}/></Link>
           </div>
         </div>
-        <img src={galleryImages[5].src} alt={galleryImages[5].alt} loading="lazy" decoding="async" width="1200" height="900"/>
-        <PhotoCredit credit={galleryImages[5].credit}/>
+        <div className="visit-image-wrap">
+          <img src={galleryImages[5].src} alt={galleryImages[5].alt} loading="lazy" decoding="async" width="1200" height="900"/>
+          <PhotoCredit credit={galleryImages[5].credit}/>
+        </div>
       </section>
     </main>
   );
@@ -320,7 +322,7 @@ function About(){
       <section className="story-hero">
         <div className="story-hero-image">
           <img src={galleryImages[6].src} alt={galleryImages[6].alt} loading="lazy" decoding="async"/>
-          <PhotoCredit credit={galleryImages[6].credit}/>
+          <PhotoCredit credit={galleryImages[6].credit} className="image-credit-overlay"/>
           <span>THE NOKSHA TABLE CONCEPT</span>
         </div>
         <div className="story-hero-copy">
@@ -424,7 +426,7 @@ function Gallery(){
 
       <div className="gallery-grid">
         {visibleImages.map((image,i)=><button type="button" className={'gallery-item gallery-item-'+image.kind.toLowerCase()} key={image.id||image.src} onClick={()=>setSelected(image)} aria-label={'View image: '+image.alt}>
-          <img loading="lazy" decoding="async" width="1000" height="750" src={image.src||('https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85')} alt={image.alt} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/>
+          <img loading="lazy" decoding="async" width="1000" height="750" src={image.src} alt={image.alt} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/>
           <span className="image-fallback" aria-hidden="true">Photography update pending</span>
           <span className="gallery-item-caption"><span>{image.kind}</span><strong>{image.alt}</strong></span>
         </button>)}
@@ -435,7 +437,7 @@ function Gallery(){
       {selected&&<div className="gallery-lightbox" role="presentation" onClick={()=>setSelected(null)}>
         <div ref={dialogRef} className="gallery-lightbox-panel" role="dialog" aria-modal="true" aria-label={selected.alt} onClick={event=>event.stopPropagation()}>
           <button ref={closeButtonRef} type="button" className="gallery-lightbox-close" onClick={()=>setSelected(null)} aria-label="Close image">×</button>
-          <img src={selected.src||('https://images.unsplash.com/'+selected.id+'?auto=format&fit=max&w=1800&q=90')} alt={selected.alt}/>
+          <img src={selected.src} alt={selected.alt}/>
           <p>{selected.alt}</p>
           {selected.credit&&<p className="gallery-image-credit">Photo: <a href={selected.credit.url} target="_blank" rel="noopener noreferrer">{selected.credit.name}</a>{selected.credit.licenseUrl&&<> · <a href={selected.credit.licenseUrl} target="_blank" rel="noopener noreferrer">{selected.credit.license||'License details'}</a></>}</p>}
         </div>
