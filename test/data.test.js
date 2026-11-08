@@ -90,8 +90,8 @@ test('menu presents the requested international categories without Bengali dishe
   assert.ok(dishes.every(dish => dish.category !== 'Bengali Classics'));
 });
 
-test('homepage featured selection references exactly four existing dishes', () => {
-  assert.equal(featuredDishIds.length, 4);
+test('homepage featured selection references exactly twelve existing dishes', () => {
+  assert.equal(featuredDishIds.length, 12);
   assert.equal(new Set(featuredDishIds).size, featuredDishIds.length);
   const dishIds = new Set(dishes.map(dish => dish.id));
   for (const id of featuredDishIds) {
@@ -106,9 +106,15 @@ test('homepage featured labels do not claim unverified popularity or rankings', 
   }
 });
 
-test('homepage features a balanced mix of food and drinks', () => {
+test('homepage features pizza, Indian dishes, Thai combo, strawberry mocktail and exactly one soft drink', () => {
   const featured = dishes.filter(dish => featuredDishIds.includes(dish.id));
+  const ids = new Set(featured.map(dish => dish.id));
+  assert.ok(ids.has('bbq-chicken-pizza'));
+  assert.ok(ids.has('butter-chicken'));
+  assert.ok(ids.has('chicken-tikka'));
+  assert.ok(ids.has('thai-rice-combo'));
+  assert.ok(ids.has('strawberry-mojito'));
+  assert.equal(featured.filter(dish => dish.category === 'Soft Drinks').length, 1);
   assert.ok(featured.some(dish => dish.category === 'Seafood'));
-  assert.ok(featured.some(dish => dish.category === 'Continental'));
-  assert.ok(featured.some(dish => dish.category === 'Drinks & Mocktails'));
+  assert.ok(featured.some(dish => dish.category === 'Chinese'));
 });
