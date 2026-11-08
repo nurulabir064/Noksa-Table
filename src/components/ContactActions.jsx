@@ -8,28 +8,35 @@ export default function ContactActions() {
     email: siteConfig.publicEmail,
     message: siteConfig.whatsappMessage,
   })
-  const hasContact = links.phone || links.whatsapp || links.email
 
   return (
     <div className="contact-actions" aria-label="Restaurant contact options">
-      {hasContact ? (
-        <>
-          {links.phone && <a href={links.phone.href}>Call: {links.phone.label}</a>}
-          {links.whatsapp && <a href={links.whatsapp.href} target="_blank" rel="noopener noreferrer">WhatsApp us</a>}
-          {links.email && <a href={links.email.href}>Email: {links.email.label}</a>}
-        </>
-      ) : (
-        <span>Public phone and email details will appear after verification.</span>
-      )}
-      <span className="contact-pending">WhatsApp · business number to be verified and activated.</span>
-      {siteConfig.locationLabel && <span>{siteConfig.locationLabel}</span>}
-      {siteConfig.openingHoursLabel && <span>{siteConfig.openingHoursLabel}</span>}
+      <div className="contact-detail-row">
+        <strong>Address</strong>
+        <span>{siteConfig.addressLabel}</span>
+      </div>
+      <div className="contact-detail-row">
+        <strong>Opening hours</strong>
+        <span>{siteConfig.openingHoursLabel}</span>
+      </div>
+      {links.phone && <a href={links.phone.href}>Call: {links.phone.label}</a>}
+      {links.email && <a href={links.email.href}>Email: {links.email.label}</a>}
       {siteConfig.mapUrl?.startsWith('https://') && (
-        <a href={siteConfig.mapUrl} target="_blank" rel="noopener noreferrer">Directions</a>
+        <a href={siteConfig.mapUrl} target="_blank" rel="noopener noreferrer">Get directions</a>
       )}
       {siteConfig.instagramUrl?.startsWith('https://') && (
         <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>
       )}
+      {links.whatsapp ? (
+        <a className="contact-whatsapp-button" href={links.whatsapp.href} target="_blank" rel="noopener noreferrer">
+          WhatsApp the restaurant
+        </a>
+      ) : (
+        <span className="contact-whatsapp-button is-disabled" aria-disabled="true">
+          WhatsApp · business number pending verification
+        </span>
+      )}
+      <p className="contact-demo-note">Demo information only. Confirm the real address, business hours and contact details before publishing this site for a restaurant.</p>
     </div>
   )
 }
