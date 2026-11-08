@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, NavLink, Route, Routes, useParams, useLocation } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight, Menu as MenuIcon, Search, X } from 'lucide-react'
-import { dishes, categories } from './data'
+import { dishes, categories, featuredDishIds } from './data'
 import { siteConfig } from './config/site.js'
 import ContactActions from './components/ContactActions.jsx'
 import { buildEmailLink } from './lib/contact-links.js'
@@ -154,7 +154,7 @@ function Home(){
           <Link className="under-link" to="/menu">View full menu <ArrowRight size={16}/></Link>
         </div>
         <div className="dish-grid">
-          {dishes.filter(d=>['thai-soup','chicken-fried-rice-combo','bbq-chicken-pizza','chicken-chow-mein'].includes(d.id)).map(d=><DishCard key={d.id} dish={d}/>)}
+          {dishes.filter(d=>featuredDishIds.includes(d.id)).map(d=><DishCard key={d.id} dish={d}/>)}
         </div>
       </section>
 
@@ -334,14 +334,46 @@ function Gallery(){
   ];
   const [selected,setSelected]=useState(null);
   const [category,setCategory]=useState('All');
+  const dialogRef=useRef(null);
+  const closeButtonRef=useRef(null);
   const categories=['All','Food','Drinks','Dessert','Interior'];
   const visibleImages=category==='All'?images:images.filter(image=>image.kind===category);
 
   useEffect(()=>{
     if(!selected)return;
-    const close=event=>{if(event.key==='Escape')setSelected(null)};
-    window.addEventListener('keydown',close);
-    return()=>window.removeEventListener('keydown',close);
+    const previousActiveElement=document.activeElement;
+    const previousOverflow=document.body.style.overflow;
+    document.body.style.overflow='hidden';
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown=event=>{
+      if(event.key==='Escape'){
+        setSelected(null);
+        return;
+      }
+      if(event.key!=='Tab')return;
+      const focusable=dialogRef.current?.querySelectorAll('button:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])');
+      if(!focusable?.length){
+        event.preventDefault();
+        return;
+      }
+      const first=focusable[0];
+      const last=focusable[focusable.length-1];
+      if(event.shiftKey&&document.activeElement===first){
+        event.preventDefault();
+        last.focus();
+      }else if(!event.shiftKey&&document.activeElement===last){
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener('keydown',handleKeyDown);
+    return()=>{
+      window.removeEventListener('keydown',handleKeyDown);
+      document.body.style.overflow=previousOverflow;
+      if(previousActiveElement instanceof HTMLElement)previousActiveElement.focus();
+    };
   },[selected]);
 
   return (
@@ -367,8 +399,8 @@ function Gallery(){
       <p className="sample-note gallery-demo-note">Demo photography is illustrative and is not a representation of the restaurant’s actual dishes or interior. Replace it with owner-approved, correctly matched photographs before a restaurant launch.</p>
 
       {selected&&<div className="gallery-lightbox" role="presentation" onClick={()=>setSelected(null)}>
-        <div className="gallery-lightbox-panel" role="dialog" aria-modal="true" aria-label={selected.alt} onClick={event=>event.stopPropagation()}>
-          <button type="button" className="gallery-lightbox-close" onClick={()=>setSelected(null)} aria-label="Close image">×</button>
+        <div ref={dialogRef} className="gallery-lightbox-panel" role="dialog" aria-modal="true" aria-label={selected.alt} onClick={event=>event.stopPropagation()}>
+          <button ref={closeButtonRef} type="button" className="gallery-lightbox-close" onClick={()=>setSelected(null)} aria-label="Close image">×</button>
           <img src={'https://images.unsplash.com/'+selected.id+'?auto=format&fit=max&w=1800&q=90'} alt={selected.alt}/>
           <p>{selected.alt}</p>
         </div>
@@ -449,8 +481,8 @@ function FormPage({reservation=false}){
     <p className="page-intro">{reservation?'Choose your preferred date and time. A request is not a confirmed booking.':'Questions about the menu, a group visit or the restaurant concept? Send an email to the team.'}</p>
     {sent
       ? <div className="success" role="status" aria-live="polite">
-          <h2>{reservation?'Request received.':'Email draft opened.'}</h2>
-          <p>{reservation?'Your request is pending. The restaurant must contact you to confirm availability.':'Your email app should open with the recipient and message filled in. Review it and press Send to deliver it.'}</p>
+          <h2>{reservation?'Request received.':'Continue in your email app.'}</h2>
+          <p>{reservation?'Your request is pending. The restaurant must contact you to confirm availability.':'If your device opens an email app, review the recipient and message, then press Send. This website cannot confirm that the draft opened or that an email was sent.'}</p>
           <button type="button" className="under-link" onClick={()=>setSent(false)}>Start again</button>
         </div>
       : <form className="contact-form" onSubmit={handleSubmit}>
