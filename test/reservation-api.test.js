@@ -132,3 +132,59 @@ test('keeps reservation processing disabled without explicit launch approval', a
     else process.env.RESERVATIONS_ENABLED = previous;
   }
 });
+
+test('rejects oversized request bodies before field validation', async () => {
+  const response = await callHandler({
+    body: { ...validBody, message: 'x'.repeat(9 * 1024) },
+  });
+  assert.equal(response.statusCode, 413);
+});
+
+test('rejects arrays instead of JSON objects', async () => {
+  const response = await callHandler({ body: [validBody] });
+  assert.equal(response.statusCode, 400);
+});
+
+test('keeps reservation processing disabled when server configuration is incomplete', async () => {
+  const keys = ['RESERVATIONS_ENABLED', 'DATABASE_URL', 'RATE_LIMIT_SECRET', 'PRIVACY_POLICY_URL'];
+  const previous = Object.fromEntries(keys.map(key => [key, process.env[key]]));
+  try {
+    process.env.RESERVATIONS_ENABLED = 'true';
+    delete process.env.DATABASE_URL;
+    delete process.env.RATE_LIMIT_SECRET;
+    delete process.env.PRIVACY_POLICY_URL;
+    const response = await callHandler({ body: validBody });
+    assert.equal(response.statusCode, 503);
+  } finally {
+    for (const key of keys) {
+      if (previous[key] === undefined) delete process.env[key];
+      else process.env[key] = previous[key];
+    }
+  }
+});
+
+test('requires a trusted client IP before accessing the database', async () => {
+  const keys = ['RESERVATIONS_ENABLED', 'DATABASE_URL', 'RATE_LIMIT_SECRET', 'PRIVACY_POLICY_URL'];
+  const previous = Object.fromEntries(keys.map(key => [key, process.env[key]]));
+  try {
+    process.env.RESERVATIONS_ENABLED = 'true';
+    process.env.DATABASE_URL = 'postgres://placeholder.invalid/db';
+    process.env.RATE_LIMIT_SECRET = 'test-secret';
+    process.env.PRIVACY_POLICY_URL = 'https://example.com/privacy';
+    const response = await callHandler({
+      headers: {
+        origin: 'https://noksa-table.example',
+        host: 'noksa-table.example',
+        'x-forwarded-proto': 'https',
+        'content-type': 'application/json',
+      },
+      body: validBody,
+    });
+    assert.equal(response.statusCode, 400);
+  } finally {
+    for (const key of keys) {
+      if (previous[key] === undefined) delete process.env[key];
+      else process.env[key] = previous[key];
+    }
+  }
+});
