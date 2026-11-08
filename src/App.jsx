@@ -100,20 +100,27 @@ function DishCard({dish,quantity=0,onAdd,onRemove}){
   );
 }
 function Home(){
+  const [cart,setCart]=useState({});
+  const order=getCartSummary(cart,dishes);
+  const orderMessage=buildOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal});
+  const orderEmailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Order enquiry — '+siteConfig.brandName,body:orderMessage});
+  const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));
+  const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));
+
   return (
     <main id="main-content">
       <section className="hero" aria-labelledby="home-hero-title">
         <img className="hero-bg" fetchPriority="high" decoding="async" width="2000" height="1100"
-          src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=90"
-          alt="Warm contemporary restaurant dining room"/>
+          src="https://images.unsplash.com/photo-1662472458178-13ea0399f2b2?auto=format&fit=crop&w=2000&q=90"
+          alt="Contemporary restaurant dining room with warm lighting and carefully arranged tables"/>
         <div className="hero-shade"/>
         <div className="hero-content">
-          <span className="eyebrow light">THAI · CHINESE · INDIAN · CONTINENTAL & MORE</span>
-          <h1 id="home-hero-title">A world of<br/><em>flavour.</em><br/>One welcoming table.</h1>
-          <p>Discover wok-fired favourites, comforting curries, Continental plates, fresh seafood, handcrafted mocktails and indulgent desserts.</p>
+          <span className="eyebrow light">A CONTEMPORARY MULTI-CUISINE TABLE</span>
+          <h1 id="home-hero-title">Come for the<br/><em>flavours.</em><br/>Stay for the moment.</h1>
+          <p>Thoughtful plates, familiar favourites and refreshing drinks—brought together for good company, unhurried moments and something new to discover.</p>
           <div className="hero-actions">
-            <Link className="button button-light" to="/menu">Explore the menu <ArrowRight size={16}/></Link>
-            <Link className="text-link light-link" to="/about">Discover our story <ArrowUpRight size={16}/></Link>
+            <Link className="button button-light" to="/menu">Explore food & drinks <ArrowRight size={16}/></Link>
+            <Link className="text-link light-link" to="/reservation">Request a table <ArrowUpRight size={16}/></Link>
           </div>
         </div>
         <div className="hero-note">GOOD FOOD. GOOD COMPANY. ALWAYS.</div>
@@ -140,7 +147,7 @@ function Home(){
       <section className="intro section-wrap" data-reveal>
         <div className="eyebrow">THE NOKSHA EXPERIENCE</div>
         <div className="intro-grid">
-          <h2>There is a story<br/>in every <em>flavour.</em></h2>
+          <h2>Good taste begins<br/>with a <em>welcome.</em></h2>
           <div>
             <p className="lead">We bring together much-loved international flavours in a setting shaped by thoughtful hospitality, good ingredients and the joy of sharing.</p>
             <Link className="under-link" to="/about">A little about us <ArrowUpRight size={16}/></Link>
@@ -150,12 +157,19 @@ function Home(){
 
       <section className="featured section-wrap" data-reveal>
         <div className="section-heading">
-          <div><div className="eyebrow">FROM OUR KITCHEN</div><h2>Popular picks, <em>thoughtfully served.</em></h2></div>
-          <Link className="under-link" to="/menu">View full menu <ArrowRight size={16}/></Link>
+          <div><div className="eyebrow">A FIRST LOOK AT THE MENU</div><h2>A little something to <em>look forward to.</em></h2></div>
+          <Link className="under-link" to="/menu">Explore all food & drinks <ArrowRight size={16}/></Link>
         </div>
         <div className="dish-grid">
-          {dishes.filter(d=>featuredDishIds.includes(d.id)).map(d=><DishCard key={d.id} dish={d}/>)}
+          {dishes.filter(d=>featuredDishIds.includes(d.id)).map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}
         </div>
+        {order.items.length>0&&<section className="order-summary home-order-summary" id="home-order-summary" aria-labelledby="home-order-title">
+          <div><div className="eyebrow">YOUR SELECTION</div><h2 id="home-order-title">Your order <em>so far.</em></h2></div>
+          <ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul>
+          <div className="order-total"><span>Subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div>
+          <p className="sample-note">Prepare an email with your selection. The restaurant must confirm availability, final charges and collection or delivery details. Payment is not processed on this website.</p>
+          {orderEmailLink?<a className="button button-dark order-email-button" href={orderEmailLink.href}>Prepare order email <ArrowRight size={16}/></a>:<Link className="button button-dark" to="/contact">Contact the restaurant <ArrowRight size={16}/></Link>}
+        </section>}
       </section>
 
       <section className="home-story section-wrap" data-reveal>
@@ -194,7 +208,7 @@ function Home(){
         <div className="home-gallery-grid">
           <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85" alt="Warm contemporary restaurant interior" loading="lazy" decoding="async"/>
           <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=900&q=85" alt="Chicken fried rice served fresh" loading="lazy" decoding="async"/>
-          <img src="https://images.unsplash.com/photo-1513558161293-cdaf765edfd4?auto=format&fit=crop&w=900&q=85" alt="Refreshing fruit and mint mocktail" loading="lazy" decoding="async"/>
+          <img src="https://images.unsplash.com/photo-1720446838030-d914440e6a16?auto=format&fit=crop&w=900&q=85" alt="Fresh lime and mint cooler served over ice" loading="lazy" decoding="async"/>
           <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=85" alt="Freshly prepared pasta" loading="lazy" decoding="async"/>
         </div>
       </section>
@@ -323,8 +337,9 @@ function Gallery(){
     {id:'photo-1473093295043-cdd812d0e601',alt:'Pasta served with a creamy sauce',kind:'Food'},
     {id:'photo-1599487488170-d11ec9c172f0',alt:'A platter of grilled tandoori-style food',kind:'Food'},
     {id:'photo-1559737558-2f5a35f4523b',alt:'Seafood platter prepared for sharing',kind:'Food'},
-    {id:'photo-1513558161293-cdaf765edfd4',alt:'A chilled fruit and mint mocktail',kind:'Drinks'},
-    {id:'photo-1536935338788846bb9981813',alt:'A strawberry and lime mocktail',kind:'Drinks'},
+    {id:'photo-1720446838030-d914440e6a16',alt:'A chilled lime and mint cooler served over ice',kind:'Drinks'},
+    {id:'photo-1771398388247-3531996406f9',alt:'A freshly prepared drink poured over ice and mint',kind:'Drinks'},
+    {id:'photo-1536935338788846bb9981813',alt:'A strawberry and lime drink served chilled',kind:'Drinks'},
     {id:'photo-1488477181946-6428a0291777',alt:'A strawberry crepe dessert with cream',kind:'Dessert'},
     {id:'photo-1533134242443-d4fd215305ad',alt:'A slice of classic cheesecake',kind:'Dessert'},
     {id:'photo-1559847844-5315695dadae',alt:'A Thai noodle dish served fresh',kind:'Food'},
@@ -390,8 +405,9 @@ function Gallery(){
       </div>
 
       <div className="gallery-grid">
-        {visibleImages.map((image,i)=><button type="button" className="gallery-item" key={image.id} onClick={()=>setSelected(image)} aria-label={'View image: '+image.alt}>
-          <img loading="lazy" decoding="async" width="1000" height="750" src={'https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85'} alt={image.alt}/>
+        {visibleImages.map((image,i)=><button type="button" className={'gallery-item gallery-item-'+image.kind.toLowerCase()} key={image.id} onClick={()=>setSelected(image)} aria-label={'View image: '+image.alt}>
+          <img loading="lazy" decoding="async" width="1000" height="750" src={'https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85'} alt={image.alt} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/>
+          <span className="image-fallback" aria-hidden="true">Photography update pending</span>
           <span className="gallery-item-caption"><span>{image.kind}</span><strong>{image.alt}</strong></span>
         </button>)}
       </div>
