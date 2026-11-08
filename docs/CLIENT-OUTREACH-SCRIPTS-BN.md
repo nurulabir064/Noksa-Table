@@ -22,7 +22,7 @@
 2. Menu বা price কত ঘন ঘন পরিবর্তন হয়?
 3. Customer-দের সবচেয়ে বেশি কী জানতে ফোন করতে হয়?
 4. Branch কয়টি? প্রতিটি branch-এর আলাদা address/hours আছে?
-5. Website থেকে মূলত কী চান—menu দেখা, directions, calls, WhatsApp enquiries, নাকি booking/order?
+5. Website থেকে মূলত কী চান—menu দেখা, directions, call/email enquiries, নাকি booking/order?
 6. ছবি, logo, menu data ও verified contact details কি আপনাদের কাছে প্রস্তুত?
 7. Website কে update করবে?
 8. Domain/hosting account কার ownership-এ থাকবে?
