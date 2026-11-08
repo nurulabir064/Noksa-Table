@@ -90,10 +90,10 @@ export const galleryImages = Object.freeze([
     credit: { name: 'Veer Sajid / Pexels', url: 'https://www.pexels.com/photo/delicious-fish-and-fries-15580734/', license: 'Pexels License', licenseUrl: 'https://www.pexels.com/license/' },
   },
   {
-    src: 'https://images.pexels.com/photos/1872903/pexels-photo-1872903.jpeg?auto=compress&cs=tinysrgb&w=1000',
-    alt: 'Cream of mushroom soup served in a bowl',
+    src: 'https://images.pexels.com/photos/29653179/pexels-photo-29653179.jpeg?auto=compress&cs=tinysrgb&w=1000',
+    alt: 'Creamy mushroom soup with chunks and a spoon',
     kind: 'Food',
-    credit: { name: 'Valeria Boltneva / Pexels', url: 'https://www.pexels.com/photo/soup-in-bowl-beside-spoon-1872903/', license: 'Pexels License', licenseUrl: 'https://www.pexels.com/license/' },
+    credit: { name: 'Valeria Boltneva / Pexels', url: 'https://www.pexels.com/photo/creamy-mushroom-soup-with-chunks-and-spoon-29653179/', license: 'Pexels License', licenseUrl: 'https://www.pexels.com/license/' },
   },
   {
     src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Chicken%20Chap.jpg?width=1000',
@@ -138,10 +138,10 @@ export const galleryImages = Object.freeze([
     credit: { name: 'Yasser Mohamed / Pexels', url: 'https://www.pexels.com/photo/pasta-dish-on-black-ceramic-bowl-4371845/', license: 'Pexels License', licenseUrl: 'https://www.pexels.com/license/' },
   },
   {
-    src: 'https://images.pexels.com/photos/17346205/pexels-photo-17346205.jpeg?auto=compress&cs=tinysrgb&w=1000',
-    alt: 'Steak and pasta plated together',
+    src: 'https://images.pexels.com/photos/765081/pexels-photo-765081.jpeg?auto=compress&cs=tinysrgb&w=1000',
+    alt: 'Steak with mushrooms and spaghetti',
     kind: 'Food',
-    credit: { name: 'Nadin Sh / Pexels', url: 'https://www.pexels.com/photo/pasta-with-meat-17346205/', license: 'Pexels License', licenseUrl: 'https://www.pexels.com/license/' },
+    credit: { name: 'Yigithan Bal / Pexels', url: 'https://www.pexels.com/photo/steak-with-mushroom-and-spaghetti-765081/', license: 'Pexels License', licenseUrl: 'https://www.pexels.com/license/' },
   },
   {
     src: 'https://images.pexels.com/photos/8882949/pexels-photo-8882949.jpeg?auto=compress&cs=tinysrgb&w=1000',
