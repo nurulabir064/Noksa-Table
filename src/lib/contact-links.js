@@ -5,6 +5,19 @@ function getDigits(value) {
   return digits
 }
 
+export function buildWhatsAppLink({ phone = '', message = '' } = {}) {
+  let digits = getDigits(phone)
+  if (digits.length === 11 && digits.startsWith('0')) digits = '880' + digits.slice(1)
+  if (digits.length === 10 && digits.startsWith('1')) digits = '880' + digits
+  if (!/^[1-9]\d{7,14}$/.test(digits)) return null
+
+  const text = typeof message === 'string' ? message.trim() : ''
+  return {
+    href: 'https://wa.me/' + digits + (text ? '?text=' + encodeURIComponent(text) : ''),
+    label: 'WhatsApp',
+  }
+}
+
 export function buildContactLinks({ phone = '', email = '' } = {}) {
   const phoneDigits = getDigits(phone)
   const normalizedEmail = typeof email === 'string' ? email.trim() : ''
@@ -14,6 +27,7 @@ export function buildContactLinks({ phone = '', email = '' } = {}) {
   return {
     phone: validPhone ? { href: 'tel:+' + phoneDigits, label: phone.trim() } : null,
     email: validEmail ? { href: 'mailto:' + normalizedEmail, label: normalizedEmail } : null,
+    whatsapp: buildWhatsAppLink({ phone }),
   }
 }
 
