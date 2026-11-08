@@ -41,3 +41,10 @@ test('normalizes an international WhatsApp number and rejects missing or invalid
   assert.equal(buildWhatsAppLink({ phone: '' }), null);
   assert.equal(buildWhatsAppLink({ phone: 'not a number' }), null);
 });
+
+
+test('normalizes a Bangladesh local phone number for direct calling', () => {
+  const links = buildContactLinks({ phone: '01304302201' });
+  assert.equal(links.phone.href, 'tel:+8801304302201');
+  assert.equal(links.whatsapp.href, 'https://wa.me/8801304302201');
+});
