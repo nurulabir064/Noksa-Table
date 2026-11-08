@@ -21,7 +21,9 @@ function isSameOrigin(req) {
 
   try {
     const parsed = new URL(origin);
-    const forwardedProtocol = (req.headers?.['x-forwarded-proto'] || 'https').split(',')[0].trim().replace(/:$/, '') + ':';
+    const localHost = /^(localhost|127\\.0\\.0\\.1)(:\\d+)?$/i.test(host);
+    const forwardedProtocol = (req.headers?.['x-forwarded-proto'] || (localHost ? 'http' : 'https'))
+      .split(',')[0].trim().replace(/:$/, '') + ':';
     return parsed.host.toLowerCase() === host.toLowerCase()
       && parsed.protocol === forwardedProtocol;
   } catch {
