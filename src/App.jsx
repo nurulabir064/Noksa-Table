@@ -176,7 +176,7 @@ function Home(){
           <Link className="under-link" to="/menu">Explore all food & drinks <ArrowRight size={16}/></Link>
         </div>
         <div className="dish-grid">
-          {dishes.filter(d=>featuredDishIds.includes(d.id)).map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}
+          {featuredDishIds.map(id=>dishes.find(d=>d.id===id)).filter(Boolean).map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}
         </div>
         {order.items.length>0&&<section className="order-summary home-order-summary" id="home-order-summary" aria-labelledby="home-order-title">
           <div><div className="eyebrow">YOUR SELECTION</div><h2 id="home-order-title">Your order <em>so far.</em></h2></div>
