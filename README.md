@@ -25,13 +25,13 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 ## Features
 
 - Responsive restaurant landing page and mobile navigation
-- Multi-cuisine menu with Starters, Chinese, Thai, Indian, Continental, Seafood, Drinks & Mocktails, Desserts and Combos; includes search and filters
+- Multi-cuisine menu with Starters, Chinese, Thai, Indian, Continental, Seafood, Drinks & Mocktails, one Soft Drinks item and Combos; includes search and filters
 - Individual dish detail routes
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
-- Verified phone / email / directions links driven by public client configuration
-- Homepage featured dishes and full menu support quantity controls, running subtotals and a prefilled email draft containing selected dish names, quantities and subtotal
-- Dish detail pages include an email enquiry action
+- Verified-format phone, WhatsApp, email and directions links driven by public client configuration
+- Homepage presents 12 curated dishes, including pizza and Indian choices, with exactly one Soft Drinks item. The cart supports quantity controls and running subtotals; WhatsApp is the primary order handoff and a prefilled email is the alternative
+- Dish detail pages offer WhatsApp ordering first and email enquiry as an alternative
 - Contact form prepares an email draft through the visitor's configured email app; it does not send or store messages
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
@@ -130,11 +130,11 @@ Replace all fictional/sample content with client-approved assets and information
 - The reservation API and PostgreSQL schema are included, but the live reservation feature is deliberately disabled by default.
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
-- Ordering currently creates a prefilled email draft; it does not submit an order to a backend, confirm availability, calculate delivery fees, collect payment, or guarantee fulfilment. The guest must review and send the draft; the restaurant confirms details directly.
+- Ordering opens a prefilled WhatsApp chat first and offers a prefilled email draft as an alternative. Neither action sends automatically: the guest must review and press Send. There is no order database, staff dashboard, automatic order acknowledgement, delivery-fee engine or payment processing yet. The restaurant must confirm availability, final charges and fulfilment directly.
 - The contact form prepares an email draft only. It does not automatically send, transmit to a backend, or store the message.
 - Sample menu data is stored locally in `src/data.js`.
 - No online payment gateway is implemented. Card payments, server-side transaction verification, IPN/webhooks, idempotency, refunds and transaction history must be designed and sandbox-tested before any payment launch.
-- Images are remote Unsplash URLs used for concept presentation. The current source audit has explicit photo-page metadata for 10 of 29 menu images; 19 menu images and the gallery set still need source/photographer verification. Do not treat the image set as client-delivery-ready until every asset is checked against its source page and license, and the client approves the final selection.
+- Images are remote Unsplash and Pexels assets used for concept presentation. Source-page and creator metadata is currently recorded for 13 of 30 menu images and for the two newly curated Pexels gallery images. Remaining images still require source, license, relevance, crop, sharpness and client-approval checks; do not treat the image set as client-delivery-ready until that audit is complete.
 - Automated tests cover menu data, cart calculations, contact links, order email construction, reservation input validation and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
 - The canonical and sitemap URLs currently point to the public demo domain and must be updated when a client-owned domain is connected.
 
