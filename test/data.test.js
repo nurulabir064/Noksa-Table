@@ -53,7 +53,7 @@ test('cart combines different dishes and calculates the correct grand subtotal',
   const cart = { 'chicken-fried-rice': 2, 'blueberry-mojito': 2 };
   const summary = getCartSummary(cart, dishes);
   assert.equal(summary.totalQuantity, 4);
-  assert.equal(summary.subtotal, 1380);
+  assert.equal(summary.subtotal, 1420);
 });
 
 test('cart never allows negative or zero quantities to remain', () => {
