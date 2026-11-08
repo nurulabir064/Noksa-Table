@@ -5,10 +5,15 @@ function getDigits(value) {
   return digits
 }
 
-export function buildWhatsAppLink({ phone = '', message = '' } = {}) {
-  let digits = getDigits(phone)
+function normalizePhoneDigits(value) {
+  let digits = getDigits(value)
   if (digits.length === 11 && digits.startsWith('0')) digits = '880' + digits.slice(1)
   if (digits.length === 10 && digits.startsWith('1')) digits = '880' + digits
+  return digits
+}
+
+export function buildWhatsAppLink({ phone = '', message = '' } = {}) {
+  const digits = normalizePhoneDigits(phone)
   if (!/^[1-9]\d{7,14}$/.test(digits)) return null
 
   const text = typeof message === 'string' ? message.trim() : ''
@@ -19,7 +24,7 @@ export function buildWhatsAppLink({ phone = '', message = '' } = {}) {
 }
 
 export function buildContactLinks({ phone = '', email = '' } = {}) {
-  const phoneDigits = getDigits(phone)
+  const phoneDigits = normalizePhoneDigits(phone)
   const normalizedEmail = typeof email === 'string' ? email.trim() : ''
   const validPhone = phoneDigits.length >= 7 && phoneDigits.length <= 15
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) && normalizedEmail.length <= 254
