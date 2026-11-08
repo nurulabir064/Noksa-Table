@@ -1,4 +1,6 @@
 // Illustrative demo menu data. Confirm every item, price and photo with the restaurant before launch.
+export const featuredDishIds = Object.freeze(['thai-soup', 'chicken-fried-rice-combo', 'bbq-chicken-pizza', 'chicken-chow-mein'])
+
 export const dishes = [
   { id: 'thai-soup', name: 'Thai Chicken Soup', category: 'Thai', price: 390, description: 'A comforting Thai-style chicken soup with mushrooms, herbs and a gently tangy finish.', image: 'https://images.unsplash.com/photo-1625535608282-8f181a38f9e7?auto=format&fit=crop&w=1000&q=85', imageCredit: { name: 'Ryutaro Uozumi / Unsplash', url: 'https://unsplash.com/photos/soup-in-white-ceramic-bowl-bzsXHiw6O6g', license: 'Unsplash License', licenseUrl: 'https://unsplash.com/license' }, tag: 'Popular choice' },
   { id: 'bbq-chicken-pizza', name: 'BBQ Chicken Pizza', category: 'Continental', price: 890, description: 'Oven-baked pizza topped with barbecue chicken, melted cheese and a savoury smoky sauce.', image: 'https://images.unsplash.com/photo-1767065603116-8cee3bf11372?auto=format&fit=crop&w=1000&q=85', imageCredit: { name: 'Diego Arenas de Rodrigo / Unsplash', url: 'https://unsplash.com/photos/a-delicious-bbq-chicken-pizza-with-crispy-crust-EATQ00s8dB4', license: 'Unsplash License', licenseUrl: 'https://unsplash.com/license' }, tag: 'Popular choice' },
