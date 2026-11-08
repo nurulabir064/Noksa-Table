@@ -21,7 +21,7 @@ function isSameOrigin(req) {
 
   try {
     const parsed = new URL(origin);
-    const localHost = /^(localhost|127\\.0\\.0\\.1)(:\\d+)?$/i.test(host);
+    const localHost = host === 'localhost' || host.startsWith('localhost:') || host === '127.0.0.1' || host.startsWith('127.0.0.1:');
     const forwardedProtocol = (req.headers?.['x-forwarded-proto'] || (localHost ? 'http' : 'https'))
       .split(',')[0].trim().replace(/:$/, '') + ':';
     return parsed.host.toLowerCase() === host.toLowerCase()
