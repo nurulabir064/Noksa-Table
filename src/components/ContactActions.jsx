@@ -15,12 +15,13 @@ export default function ContactActions() {
       {hasContact ? (
         <>
           {links.phone && <a href={links.phone.href}>Call: {links.phone.label}</a>}
-          {links.whatsapp && <a href={links.whatsapp.href} target="_blank" rel="noopener noreferrer">WhatsApp</a>}
+          {links.whatsapp && <a href={links.whatsapp.href} target="_blank" rel="noopener noreferrer">WhatsApp us</a>}
           {links.email && <a href={links.email.href}>Email: {links.email.label}</a>}
         </>
       ) : (
-        <span>Contact details will appear here after client verification.</span>
+        <span>Public phone and email details will appear after verification.</span>
       )}
+      <span className="contact-pending">WhatsApp · business number to be verified and activated.</span>
       {siteConfig.locationLabel && <span>{siteConfig.locationLabel}</span>}
       {siteConfig.openingHoursLabel && <span>{siteConfig.openingHoursLabel}</span>}
       {siteConfig.mapUrl?.startsWith('https://') && (
