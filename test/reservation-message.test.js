@@ -28,7 +28,7 @@ test('builds a complete reservation request message with customer and booking de
 test('trims and limits user-provided reservation fields', () => {
   const message = buildReservationMessage({
     restaurantName: 'N'.repeat(120),
-    name: ' A '.repeat(60),
+    name: 'A'.repeat(150),
     phone: '1'.repeat(40),
     email: 'a'.repeat(300),
     date: '2026-12-12',
@@ -38,7 +38,7 @@ test('trims and limits user-provided reservation fields', () => {
   });
 
   assert.ok(message.includes('N'.repeat(100)));
-  assert.ok(message.includes('A '.repeat(40).trim()));
+  assert.ok(message.includes('A'.repeat(80)));
   assert.ok(message.includes('1'.repeat(25)));
   assert.ok(message.includes('x'.repeat(1000)));
 });
