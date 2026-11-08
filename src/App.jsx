@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight, Menu as MenuIcon, Search, X } from 'lucide-re
 import { dishes, categories } from './data'
 import { siteConfig } from './config/site.js'
 import ContactActions from './components/ContactActions.jsx'
-import { buildContactLinks, buildEmailLink } from './lib/contact-links.js'
+import { buildEmailLink } from './lib/contact-links.js'
 import { buildWhatsAppOrderMessage } from './lib/whatsapp-order.js'
 import { getCartSummary, updateCartQuantity } from './lib/cart.js'
 
@@ -384,7 +384,7 @@ function FormPage({reservation=false}){
         '',
         'Message:',
         formData.get('message')
-      ].join('\\n');
+      ].join('\n');
       const emailLink = buildEmailLink({ email: siteConfig.publicEmail, subject: 'Website enquiry — ' + siteConfig.brandName, body });
       if (!emailLink) {
         setError('The restaurant email address is not configured. Please use the email shown in Contact details.');
