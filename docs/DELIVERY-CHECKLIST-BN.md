@@ -18,7 +18,7 @@
 - [ ] Menu search works for names, categories and descriptions
 - [ ] Category filters and empty state work
 - [ ] Dish detail routes show correct content and handle unknown IDs
-- [ ] Phone and WhatsApp links use verified client numbers
+- [ ] Phone and email links use verified client details
 - [ ] Map/directions link points to the verified location
 - [ ] Forms have labels, required-field validation and understandable error states
 - [ ] No form is described as working unless its actual delivery/storage path was tested
