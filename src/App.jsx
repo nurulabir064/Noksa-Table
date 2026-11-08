@@ -105,12 +105,55 @@ function DishCard({dish,quantity=0,onAdd,onRemove}){
 function OrderDetailsFields({value,onChange}) {
   const update=(key,nextValue)=>onChange(current=>({...current,[key]:nextValue}));
   return <div className="order-details-form" aria-label="Order contact details">
-    <label>Your name<input type="text" value={value.name} maxLength={100} autoComplete="name" placeholder="Name for the order" onChange={event=>update('name',event.target.value)}/></label>
-    <label>Contact number<input type="tel" value={value.phone} maxLength={30} autoComplete="tel" inputMode="tel" placeholder="Your phone number" onChange={event=>update('phone',event.target.value)}/></label>
+    <label>Your name<input type="text" value={value.name} maxLength={100} autoComplete="name" placeholder="Name for the order" required onChange={event=>update('name',event.target.value)}/></label>
+    <label>Contact number<input type="tel" value={value.phone} maxLength={30} autoComplete="tel" inputMode="tel" placeholder="Your phone number" required onChange={event=>update('phone',event.target.value)}/></label>
     <label>Pickup or delivery<select value={value.fulfilment} onChange={event=>update('fulfilment',event.target.value)}><option value="pickup">Pickup</option><option value="delivery">Delivery</option></select></label>
-    {value.fulfilment==='delivery'&&<label className="order-address-field">Delivery address<textarea value={value.address} maxLength={250} autoComplete="street-address" rows={2} placeholder="Area, road, building and apartment" onChange={event=>update('address',event.target.value)}/></label>}
+    {value.fulfilment==='delivery'&&<label className="order-address-field">Delivery address<textarea value={value.address} maxLength={250} autoComplete="street-address" rows={2} placeholder="Area, road, building and apartment" required onChange={event=>update('address',event.target.value)}/></label>}
     <label className="order-notes-field">Special instructions (optional)<textarea value={value.notes} maxLength={250} rows={2} placeholder="Spice preference or other request" onChange={event=>update('notes',event.target.value)}/></label>
   </div>;
+}
+
+function OrderWhatsAppButton({items,customer,compact=false}) {
+  const [loading,setLoading]=useState(false);
+  const [error,setError]=useState('');
+
+  async function handleOrder(){
+    const name=typeof customer?.name==='string'?customer.name.trim():'';
+    const phone=typeof customer?.phone==='string'?customer.phone.trim():'';
+    const phoneDigits=phone.replace(/\D/g,'');
+    if(name.length<2){setError('Enter your name before continuing.');return;}
+    if(phoneDigits.length<7||phoneDigits.length>15){setError('Enter a valid contact number before continuing.');return;}
+    if(customer.fulfilment==='delivery'&&String(customer.address||'').trim().length<8){setError('Enter your complete delivery address.');return;}
+
+    setLoading(true);
+    setError('');
+    try{
+      const response=await fetch('/api/orders/prepare',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          items:items.map(item=>({id:item.id,quantity:item.quantity})),
+          customer
+        })
+      });
+      const result=await response.json();
+      if(!response.ok)throw new Error(result.error||'We could not prepare this order.');
+      const link=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message:result.message});
+      if(!link)throw new Error('The restaurant WhatsApp number is not configured correctly.');
+      window.location.assign(link.href);
+    }catch(err){
+      setError(err instanceof Error?err.message:'A network error occurred. Please try again.');
+    }finally{
+      setLoading(false);
+    }
+  }
+
+  return <>
+    <button type="button" className={compact?'sticky-email sticky-whatsapp order-whatsapp-submit':'button button-whatsapp'} onClick={handleOrder} disabled={loading}>
+      {loading?'Preparing order…':compact?'WhatsApp order':'Order on WhatsApp'} <ArrowRight size={16}/>
+    </button>
+    {error&&<p className="form-error order-submit-error" role="alert">{error}</p>}
+  </>;
 }
 
 function Home(){
@@ -118,7 +161,6 @@ function Home(){
   const [orderDetails,setOrderDetails]=useState({name:'',phone:'',fulfilment:'pickup',address:'',notes:''});
   const order=getCartSummary(cart,dishes);
   const orderMessage=buildOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal,customer:orderDetails});
-  const orderWhatsAppLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message:orderMessage});
   const orderEmailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Order enquiry — '+siteConfig.brandName,body:orderMessage});
   const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));
   const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));
@@ -186,7 +228,7 @@ function Home(){
           <OrderDetailsFields value={orderDetails} onChange={setOrderDetails}/>
           <p className="sample-note">Your details are included only in the WhatsApp message or email draft you choose to send; this website does not save them. Review everything before sending. The restaurant must confirm availability, final charges and pickup or delivery details. This demo does not process payments or submit an order automatically.</p>
           <div className="order-action-links">
-            {orderWhatsAppLink&&<a className="button button-whatsapp" href={orderWhatsAppLink.href} target="_blank" rel="noopener noreferrer">Order on WhatsApp <ArrowRight size={16}/></a>}
+            <OrderWhatsAppButton items={order.items} customer={orderDetails}/>
             {orderEmailLink&&<a className="button button-dark order-email-button" href={orderEmailLink.href}>Email this order <ArrowRight size={16}/></a>}
           </div>
         </section>}
@@ -248,7 +290,7 @@ function Home(){
     </main>
   );
 }
-function Menu(){const [cat,setCat]=useState('All'),[q,setQ]=useState(''),[cart,setCart]=useState({}),[orderDetails,setOrderDetails]=useState({name:'',phone:'',fulfilment:'pickup',address:'',notes:''});const normalizedQuery=q.trim().toLocaleLowerCase();const shown=useMemo(()=>dishes.filter(d=>(cat==='All'||d.category===cat)&&[d.name,d.category,d.description].some(value=>value.toLocaleLowerCase().includes(normalizedQuery))),[cat,normalizedQuery]);const order=getCartSummary(cart,dishes);const orderMessage=buildOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal,customer:orderDetails});const orderWhatsAppLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message:orderMessage});const orderEmailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Menu order enquiry — '+siteConfig.brandName,body:orderMessage});const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));return <main id="main-content" className="page section-wrap menu-page"><div className="eyebrow">DISCOVER YOUR NEXT FAVOURITE</div><h1 className="page-title">Something to <em>savour.</em></h1><p className="page-intro">From wok-fired plates and comforting classics to fresh seafood, vibrant coolers and something sweet, explore a menu made for different moods and appetites.</p><p className="menu-guidance">Menu items and prices are illustrative in this demo. For ingredient, spice, allergen or dietary questions, contact the restaurant before ordering.</p><div className="menu-tools"><div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(c=><button type="button" aria-pressed={cat===c} className={cat===c?'filter active':'filter'} key={c} onClick={()=>setCat(c)}>{c}</button>)}</div><label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={e=>setQ(e.target.value)} placeholder="Find a dish"/></label></div><p className="results-count" aria-live="polite">{shown.length} {shown.length===1?'dish':'dishes'} found</p><div className="dish-grid menu-grid" key={cat+"-"+q}>{shown.map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}</div>{!shown.length&&<p className="empty">No dishes match your search. Try another name, description, or category.</p>}<section className="order-summary" id="order-summary" aria-labelledby="order-summary-title"><div><div className="eyebrow">YOUR SELECTION</div><h2 id="order-summary-title">Your order <em>so far.</em></h2></div>{order.items.length===0?<p className="empty-order">Choose a dish above to see your quantity and running total here.</p>:<><ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul><div className="order-total"><span>Subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div><OrderDetailsFields value={orderDetails} onChange={setOrderDetails}/><p className="sample-note">Your details are included only in the WhatsApp message or email draft you choose to send; this website does not save them. Review everything before sending. The restaurant must confirm availability, pickup or delivery details and final charges. No payment is taken here.</p><div className="order-action-links">{orderWhatsAppLink&&<a className="button button-whatsapp" href={orderWhatsAppLink.href} target="_blank" rel="noopener noreferrer">Order on WhatsApp <ArrowRight size={16}/></a>}{orderEmailLink&&<a className="button button-dark order-email-button" href={orderEmailLink.href}>Email this order <ArrowRight size={16}/></a>}</div></>}</section><p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>{order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order"><div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div><a className="sticky-view-order" href="#order-summary">Review</a>{orderWhatsAppLink?<a className="sticky-email sticky-whatsapp" href={orderWhatsAppLink.href} target="_blank" rel="noopener noreferrer">WhatsApp order <ArrowRight size={15}/></a>:orderEmailLink?<a className="sticky-email" href={orderEmailLink.href}>Email order <ArrowRight size={15}/></a>:<Link className="sticky-email" to="/contact">Contact to order <ArrowRight size={15}/></Link>}</div>}</main>}
+function Menu(){const [cat,setCat]=useState('All'),[q,setQ]=useState(''),[cart,setCart]=useState({}),[orderDetails,setOrderDetails]=useState({name:'',phone:'',fulfilment:'pickup',address:'',notes:''});const normalizedQuery=q.trim().toLocaleLowerCase();const shown=useMemo(()=>dishes.filter(d=>(cat==='All'||d.category===cat)&&[d.name,d.category,d.description].some(value=>value.toLocaleLowerCase().includes(normalizedQuery))),[cat,normalizedQuery]);const order=getCartSummary(cart,dishes);const orderMessage=buildOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal,customer:orderDetails});const orderWhatsAppLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message:orderMessage});const orderEmailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Menu order enquiry — '+siteConfig.brandName,body:orderMessage});const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));return <main id="main-content" className="page section-wrap menu-page"><div className="eyebrow">DISCOVER YOUR NEXT FAVOURITE</div><h1 className="page-title">Something to <em>savour.</em></h1><p className="page-intro">From wok-fired plates and comforting classics to fresh seafood, vibrant coolers and something sweet, explore a menu made for different moods and appetites.</p><p className="menu-guidance">Menu items and prices are illustrative in this demo. For ingredient, spice, allergen or dietary questions, contact the restaurant before ordering.</p><div className="menu-tools"><div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(c=><button type="button" aria-pressed={cat===c} className={cat===c?'filter active':'filter'} key={c} onClick={()=>setCat(c)}>{c}</button>)}</div><label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={e=>setQ(e.target.value)} placeholder="Find a dish"/></label></div><p className="results-count" aria-live="polite">{shown.length} {shown.length===1?'dish':'dishes'} found</p><div className="dish-grid menu-grid" key={cat+"-"+q}>{shown.map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}</div>{!shown.length&&<p className="empty">No dishes match your search. Try another name, description, or category.</p>}<section className="order-summary" id="order-summary" aria-labelledby="order-summary-title"><div><div className="eyebrow">YOUR SELECTION</div><h2 id="order-summary-title">Your order <em>so far.</em></h2></div>{order.items.length===0?<p className="empty-order">Choose a dish above to see your quantity and running total here.</p>:<><ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul><div className="order-total"><span>Subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div><OrderDetailsFields value={orderDetails} onChange={setOrderDetails}/><p className="sample-note">Your details are included only in the WhatsApp message or email draft you choose to send; this website does not save them. Review everything before sending. The restaurant must confirm availability, pickup or delivery details and final charges. No payment is taken here.</p><div className="order-action-links"><OrderWhatsAppButton items={order.items} customer={orderDetails}/>{orderEmailLink&&<a className="button button-dark order-email-button" href={orderEmailLink.href}>Email this order <ArrowRight size={16}/></a>}</div></>}</section><p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>{order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order"><div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div><a className="sticky-view-order" href="#order-summary">Review</a><OrderWhatsAppButton compact items={order.items} customer={orderDetails}/></div>}</main>}
 function Detail(){
   const {id}=useParams();
   const [orderDetails,setOrderDetails]=useState({name:'',phone:'',fulfilment:'pickup',address:'',notes:''});
@@ -261,7 +303,6 @@ function Detail(){
     subtotal:dish.price,
     customer:orderDetails
   });
-  const whatsappLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message:dishOrderMessage});
   const emailLink=buildEmailLink({
     email:siteConfig.publicEmail,
     subject:'Dish enquiry — '+siteConfig.brandName,
@@ -292,7 +333,7 @@ function Detail(){
         <p>{dish.description}</p>
         <OrderDetailsFields value={orderDetails} onChange={setOrderDetails}/>
         <div className="order-action-links">
-          {whatsappLink&&<a className="button button-whatsapp" href={whatsappLink.href} target="_blank" rel="noopener noreferrer">Order on WhatsApp <ArrowRight size={16}/></a>}
+          <OrderWhatsAppButton items={[{id:dish.id,quantity:1}]} customer={orderDetails}/>
           {emailLink&&<a className="button button-dark" href={emailLink.href}>Email this enquiry <ArrowRight size={16}/></a>}
         </div>
         {dish.imageCredit&&<p className="image-credit">Photo: <a href={dish.imageCredit.url} target="_blank" rel="noreferrer">{dish.imageCredit.name}</a> · <a href={dish.imageCredit.licenseUrl} target="_blank" rel="noreferrer">{dish.imageCredit.license}</a></p>}
