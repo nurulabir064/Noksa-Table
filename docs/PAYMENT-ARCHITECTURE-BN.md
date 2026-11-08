@@ -16,7 +16,9 @@ The official SSLCOMMERZ developer documentation describes a server-created payme
 - shurjoPay: official REST documentation covers authentication token generation, payment initiation, payment verification and sandbox/live environments. Its status page also describes IPN retry improvements. Docs: https://web2.shurjopay.com.bd/frontend-developers/direct-integration-with-api and https://www.shurjopay.com.bd/systemStatus
 - aamarPay: official documentation provides sandbox/live API endpoints and card/wallet channel coverage. Docs: https://aamarpay.readme.io/reference/overview and https://aamarpay.readme.io/reference/initiate-payment-json
 
-**Decision boundary:** SSLCOMMERZ is the recommended first integration because the documented hosted checkout + IPN + validation + transaction query + refund flow aligns with the requested controls. This is not a claim that it has the lowest fees or fastest merchant approval. Compare the written merchant quote, settlement time, refund rules, chargeback handling and Visa/Mastercard approval before signing.
+**Documentation caveat:** the official V4 API guide labels itself Version 4.00 and says it was updated on 12 May 2019, although the same guide includes a refund transaction-ID parameter introduced on 24 February 2025. Treat it as evidence of the documented flow, not proof that every endpoint or merchant term is unchanged today. Confirm the current API version, card channels, IPN/refund process and merchant terms directly with SSLCOMMERZ before coding against it.
+
+**Decision boundary:** SSLCOMMERZ is the recommended first integration candidate because the official documentation explicitly describes hosted checkout, Visa/Mastercard, server-side Order Validation, IPN, risk handling, transaction queries and refund initiation/status. This is not a claim that it has the lowest fees or fastest merchant approval. Compare the written merchant quote, settlement time, refund rules, chargeback handling and Visa/Mastercard approval before signing.
 
 ## 2. Required server-side flow
 
