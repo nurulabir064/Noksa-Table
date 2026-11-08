@@ -5,19 +5,25 @@ function getDigits(value) {
   return digits
 }
 
-export function buildContactLinks({ phone = '', whatsapp = '', email = '', message = '' } = {}) {
+export function buildContactLinks({ phone = '', email = '' } = {}) {
   const phoneDigits = getDigits(phone)
-  const whatsappDigits = getDigits(whatsapp)
   const normalizedEmail = typeof email === 'string' ? email.trim() : ''
   const validPhone = phoneDigits.length >= 7 && phoneDigits.length <= 15
-  const validWhatsApp = whatsappDigits.length >= 8 && whatsappDigits.length <= 15
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) && normalizedEmail.length <= 254
 
   return {
     phone: validPhone ? { href: 'tel:+' + phoneDigits, label: phone.trim() } : null,
-    whatsapp: validWhatsApp
-      ? { href: 'https://wa.me/' + whatsappDigits + '?text=' + encodeURIComponent(message), label: 'WhatsApp' }
-      : null,
     email: validEmail ? { href: 'mailto:' + normalizedEmail, label: normalizedEmail } : null,
   }
+}
+
+export function buildEmailLink({ email = '', subject = '', body = '' } = {}) {
+  const normalizedEmail = typeof email === 'string' ? email.trim() : '';
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) && normalizedEmail.length <= 254;
+  if (!validEmail) return null;
+  const params = new URLSearchParams();
+  if (subject) params.set('subject', subject);
+  if (body) params.set('body', body);
+  const query = params.toString();
+  return { href: 'mailto:' + normalizedEmail + (query ? '?' + query : ''), label: normalizedEmail };
 }

@@ -42,29 +42,29 @@ test('menu filter categories are unique', () => {
 import { getCartSummary, updateCartQuantity } from '../src/lib/cart.js';
 
 test('cart adds quantities and calculates line totals and subtotal', () => {
-  const cart = updateCartQuantity(updateCartQuantity({}, 'dhaka-kacchi', 1), 'dhaka-kacchi', 1);
+  const cart = updateCartQuantity(updateCartQuantity({}, 'chicken-fried-rice', 1), 'chicken-fried-rice', 1);
   const summary = getCartSummary(cart, dishes);
   assert.equal(summary.totalQuantity, 2);
-  assert.equal(summary.items[0].lineTotal, 1180);
-  assert.equal(summary.subtotal, 1180);
+  assert.equal(summary.items[0].lineTotal, 900);
+  assert.equal(summary.subtotal, 900);
 });
 
 test('cart combines different dishes and calculates the correct grand subtotal', () => {
-  const cart = { 'dhaka-kacchi': 2, 'classic-lassi': 2 };
+  const cart = { 'chicken-fried-rice': 2, 'blueberry-mojito': 2 };
   const summary = getCartSummary(cart, dishes);
   assert.equal(summary.totalQuantity, 4);
   assert.equal(summary.subtotal, 1420);
 });
 
 test('cart never allows negative or zero quantities to remain', () => {
-  const once = updateCartQuantity({ 'dhaka-kacchi': 1 }, 'dhaka-kacchi', -1);
-  const twice = updateCartQuantity(once, 'dhaka-kacchi', -1);
+  const once = updateCartQuantity({ 'chicken-fried-rice': 1 }, 'chicken-fried-rice', -1);
+  const twice = updateCartQuantity(once, 'chicken-fried-rice', -1);
   assert.deepEqual(once, {});
   assert.deepEqual(twice, {});
 });
 
 test('cart ignores unknown dish IDs and invalid quantity changes in the summary', () => {
-  const summary = getCartSummary({ unknown: 4, 'dhaka-kacchi': -2 }, dishes);
+  const summary = getCartSummary({ unknown: 4, 'chicken-fried-rice': -2 }, dishes);
   assert.equal(summary.totalQuantity, 0);
   assert.equal(summary.subtotal, 0);
 });
@@ -73,4 +73,19 @@ test('cart ignores unknown dish IDs and invalid quantity changes in the summary'
 test('each sample dish has its own image assignment', () => {
   const imageUrls = dishes.map(({ image }) => image);
   assert.equal(new Set(imageUrls).size, imageUrls.length, 'dish images should not be accidentally reused across menu items');
+});
+
+test('menu presents the requested international categories without Bengali dishes', () => {
+  assert.ok(categories.includes('Chinese'));
+  assert.ok(categories.includes('Continental'));
+  assert.ok(categories.includes('Drinks & Mocktails'));
+  assert.ok(categories.includes('Desserts'));
+  assert.ok(categories.includes('Combos'));
+  assert.ok(dishes.some(dish => dish.id === 'blueberry-mojito'));
+  assert.ok(dishes.some(dish => dish.id === 'strawberry-mojito'));
+  assert.ok(dishes.some(dish => dish.id === 'chocolate-frappe'));
+  assert.ok(dishes.some(dish => dish.id === 'thai-soup'));
+  assert.ok(dishes.some(dish => dish.id === 'bbq-chicken-pizza'));
+  assert.ok(dishes.some(dish => dish.id === 'chicken-fried-rice'));
+  assert.ok(dishes.every(dish => dish.category !== 'Bengali Classics'));
 });

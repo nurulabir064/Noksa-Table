@@ -1,4 +1,4 @@
-export function buildWhatsAppOrderMessage({ restaurantName, items, subtotal } = {}) {
+export function buildOrderMessage({ restaurantName, items, subtotal } = {}) {
   if (!Array.isArray(items) || items.length === 0) return '';
   if (!Number.isFinite(subtotal) || subtotal < 0) return '';
 
