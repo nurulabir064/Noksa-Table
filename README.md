@@ -5,7 +5,7 @@ A premium multi-cuisine restaurant website concept built with React, Vite, React
 **Live demo:** https://noksa-table.vercel.app  
 **Repository:** https://github.com/nurulabir064/Noksa-Table
 
-> **Important:** Noksha Table is a fictional concept project, not a real restaurant. Menu items, prices, venue imagery, and Dhaka references are illustrative. The reservation API is included but disabled by default; no real booking is accepted. The contact form prepares an email draft in the visitor's configured email app; the website cannot confirm that the draft opened or that a message was sent or stored.
+> **Important:** NOKSHA TABLE is a fictional concept project, not a real restaurant. Menu items, prices, venue imagery, and Dhaka references are illustrative. When the reservation API is disabled, the reservation form prepares a WhatsApp request (email fallback); this does not create or confirm a booking. The contact form prepares an email draft; the website cannot confirm that a draft opened or a message was sent.
 
 ## Sales and client delivery documents
 
@@ -30,7 +30,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
 - Verified-format phone, WhatsApp, email and directions links driven by public client configuration
-- Homepage presents 12 curated dishes, including pizza and Indian choices, with exactly one Soft Drinks item. The cart supports quantity controls and running subtotals. Guests can add a name, phone, pickup/delivery choice, delivery address and special instructions; WhatsApp is the primary order handoff and a prefilled email is the alternative
+- Homepage presents 12 curated dishes, including Bangladeshi favourites, pizza and Indian choices, with exactly one Soft Drinks item. The cart supports quantity controls and running subtotals. Guests can add a name, phone, pickup/delivery choice, delivery address and special instructions; WhatsApp is the primary order handoff and a prefilled email is the alternative
 - Dish detail pages offer WhatsApp ordering first and email enquiry as an alternative
 - Contact form prepares an email draft through the visitor's configured email app; it does not send or store messages
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
@@ -127,7 +127,7 @@ Replace all fictional/sample content with client-approved assets and information
 
 ## Current limitations
 
-- The reservation API and PostgreSQL schema are included, but the live reservation feature is deliberately disabled by default.
+- The reservation API and PostgreSQL schema are included, but live database submission is disabled by default. When disabled, the reservation form prepares a WhatsApp request with an email alternative; the guest must press Send and the restaurant must confirm manually.
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
 - Ordering opens a prefilled WhatsApp chat first and offers a prefilled email draft as an alternative. Neither action sends automatically: the guest must review and press Send. The website does not store the entered order details. There is no order database, staff dashboard, automatic order acknowledgement, delivery-fee engine or payment processing yet. The restaurant must confirm availability, final charges and fulfilment directly.
