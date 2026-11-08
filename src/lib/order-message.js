@@ -29,7 +29,7 @@ export function buildOrderMessage({ restaurantName, items, subtotal, customer = 
     '',
     ...lines,
     '',
-    `Subtotal: ৳${subtotal}`,
+    `Estimated subtotal: ৳${subtotal}`,
     '',
     `Customer: ${safeCustomer.name || 'To be confirmed'}`,
     `Contact number: ${safeCustomer.phone || 'To be shared'}`,
