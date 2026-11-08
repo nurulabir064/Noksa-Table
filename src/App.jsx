@@ -133,9 +133,10 @@ function Home(){
     <main id="main-content">
       <section className="hero" aria-labelledby="home-hero-title">
         <img className="hero-bg" fetchPriority="high" decoding="async" width="2000" height="1100"
-          src="https://images.unsplash.com/photo-1662472458178-13ea0399f2b2?auto=format&fit=crop&w=2000&q=90"
-          alt="Contemporary restaurant dining room with warm lighting and carefully arranged tables"/>
+          src={galleryImages[5].src}
+          alt={galleryImages[5].alt}/>
         <div className="hero-shade"/>
+        <PhotoCredit credit={galleryImages[5].credit} className="hero-image-credit"/>
         <div className="hero-content">
           <span className="eyebrow light">A CONTEMPORARY MULTI-CUISINE TABLE</span>
           <h1 id="home-hero-title">Come for the<br/><em>flavours.</em><br/>Stay for the moment.</h1>
@@ -200,7 +201,8 @@ function Home(){
 
       <section className="home-story section-wrap" data-reveal>
         <div className="home-story-image">
-          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=85" alt="Thoughtfully designed restaurant dining space" loading="lazy" decoding="async"/>
+          <img src={galleryImages[6].src} alt={galleryImages[6].alt} loading="lazy" decoding="async"/>
+          <PhotoCredit credit={galleryImages[6].credit}/>
           <span>THE ART OF A GOOD TABLE</span>
         </div>
         <div className="home-story-copy">
@@ -232,10 +234,10 @@ function Home(){
           <Link className="under-link" to="/gallery">View the gallery <ArrowRight size={15}/></Link>
         </div>
         <div className="home-gallery-grid">
-          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85" alt="Warm contemporary restaurant interior" loading="lazy" decoding="async"/>
-          <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=900&q=85" alt="Chicken fried rice served fresh" loading="lazy" decoding="async"/>
-          <img src="https://images.unsplash.com/photo-1720446838030-d914440e6a16?auto=format&fit=crop&w=900&q=85" alt="Fresh lime and mint cooler served over ice" loading="lazy" decoding="async"/>
-          <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=85" alt="Freshly prepared pasta" loading="lazy" decoding="async"/>
+          <img src={galleryImages[0].src} alt={galleryImages[0].alt} loading="lazy" decoding="async"/>
+          <img src={galleryImages[1].src} alt={galleryImages[1].alt} loading="lazy" decoding="async"/>
+          <img src={galleryImages[2].src} alt={galleryImages[2].alt} loading="lazy" decoding="async"/>
+          <img src={galleryImages[3].src} alt={galleryImages[3].alt} loading="lazy" decoding="async"/>
         </div>
       </section>
 
@@ -249,7 +251,8 @@ function Home(){
             <Link className="under-link" to="/reservation">Request a table <ArrowRight size={15}/></Link>
           </div>
         </div>
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=85" alt="Elegant restaurant table setting" loading="lazy" decoding="async" width="1200" height="900"/>
+        <img src={galleryImages[5].src} alt={galleryImages[5].alt} loading="lazy" decoding="async" width="1200" height="900"/>
+        <PhotoCredit credit={galleryImages[5].credit}/>
       </section>
     </main>
   );
@@ -316,7 +319,8 @@ function About(){
 
       <section className="story-hero">
         <div className="story-hero-image">
-          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1400&q=90" alt="Warm restaurant interior with carefully arranged dining tables" loading="lazy" decoding="async"/>
+          <img src={galleryImages[6].src} alt={galleryImages[6].alt} loading="lazy" decoding="async"/>
+          <PhotoCredit credit={galleryImages[6].credit}/>
           <span>THE NOKSHA TABLE CONCEPT</span>
         </div>
         <div className="story-hero-copy">
