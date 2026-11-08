@@ -7,7 +7,8 @@
 - [ ] Menu names, descriptions, prices and availability approved
 - [ ] Allergen/dietary statements approved by restaurant
 - [ ] Images are client-owned, licensed or otherwise cleared for commercial use
-- [ ] Each menu and gallery image has a checked source page, creator and license record
+- [ ] All 33 menu and 25 gallery images have a checked source page, creator and license record
+- [ ] Rendered image match, sharpness, crop and mobile framing are checked in browser QA
 - [ ] Strawberry Mojito and Thai Basil Rice Combo photographs match the actual displayed dish/drink
 - [ ] Basmati Kacchi, Paratha and Chicken Chap photos match their labels and retain the required Creative Commons/Pexels attribution
 - [ ] No invented awards, reviews, history, certifications or claims
