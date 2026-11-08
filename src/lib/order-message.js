@@ -15,12 +15,13 @@ export function buildOrderMessage({ restaurantName, items, subtotal, customer = 
 
   if (lines.length !== items.length) return '';
 
+  const customerDetails = customer && typeof customer === 'object' ? customer : {};
   const safeCustomer = {
-    name: typeof customer.name === 'string' ? customer.name.trim().slice(0, 100) : '',
-    phone: typeof customer.phone === 'string' ? customer.phone.trim().slice(0, 30) : '',
-    fulfilment: customer.fulfilment === 'delivery' ? 'Delivery' : 'Pickup',
-    address: typeof customer.address === 'string' ? customer.address.trim().slice(0, 250) : '',
-    notes: typeof customer.notes === 'string' ? customer.notes.trim().slice(0, 250) : '',
+    name: typeof customerDetails.name === 'string' ? customerDetails.name.trim().slice(0, 100) : '',
+    phone: typeof customerDetails.phone === 'string' ? customerDetails.phone.trim().slice(0, 30) : '',
+    fulfilment: customerDetails.fulfilment === 'delivery' ? 'Delivery' : 'Pickup',
+    address: typeof customerDetails.address === 'string' ? customerDetails.address.trim().slice(0, 250) : '',
+    notes: typeof customerDetails.notes === 'string' ? customerDetails.notes.trim().slice(0, 250) : '',
   };
 
   return [
