@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { buildOrderMessage } from '../src/lib/order-message.js';
 
-test('builds a email order message with item quantities and subtotal', () => {
+test('builds an email order message with item quantities and subtotal', () => {
   const message = buildOrderMessage({
     restaurantName: 'NOKSHA TABLE',
     items: [
