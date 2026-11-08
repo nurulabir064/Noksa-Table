@@ -651,3 +651,12 @@ html.js-enabled [data-reveal] {
   .gallery-item-drinks, .gallery-item-drinks:nth-child(2), .gallery-item-drinks:nth-child(5) { height: 230px; }
 }
 @media (prefers-reduced-motion: reduce) { .hero::after { animation: none !important; opacity: .25; } }
+
+
+.menu-guidance {
+  max-width: 720px;
+  margin: 14px 0 28px;
+  color: #716b61;
+  font-size: 12px;
+  line-height: 1.7;
+}
