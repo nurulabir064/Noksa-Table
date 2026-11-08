@@ -4,13 +4,11 @@ import { buildContactLinks } from '../lib/contact-links.js'
 export default function ContactActions() {
   const links = buildContactLinks({
     phone: siteConfig.publicPhone,
-    whatsapp: siteConfig.whatsappNumber,
     email: siteConfig.publicEmail,
-    message: siteConfig.whatsappMessage,
   })
 
   return (
-    <div className="contact-actions" aria-label="Restaurant contact options">
+    <div className="contact-actions" aria-label="Restaurant contact information">
       <div className="contact-detail-row">
         <strong>Address</strong>
         <span>{siteConfig.addressLabel}</span>
@@ -26,15 +24,6 @@ export default function ContactActions() {
       )}
       {siteConfig.instagramUrl?.startsWith('https://') && (
         <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>
-      )}
-      {links.whatsapp ? (
-        <a className="contact-whatsapp-button" href={links.whatsapp.href} target="_blank" rel="noopener noreferrer">
-          WhatsApp the restaurant
-        </a>
-      ) : (
-        <span className="contact-whatsapp-button is-disabled" aria-disabled="true">
-          WhatsApp contact · business number to be confirmed
-        </span>
       )}
       <p className="contact-demo-note">Demo information only. Confirm the real address, business hours and contact details before publishing this site for a restaurant.</p>
     </div>
