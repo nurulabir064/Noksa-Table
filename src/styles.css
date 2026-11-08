@@ -479,3 +479,83 @@ html.js-enabled [data-reveal] {
 .featured .dish-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:1000px){.featured .dish-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.featured .dish-grid{grid-template-columns:1fr}}
+
+
+/* Premium hospitality refinement — restrained motion, clear hierarchy, tactile controls */
+.hero-bg {
+  animation: hero-image-settle 1.35s cubic-bezier(.2,.7,.2,1) both,
+             hero-drift 32s 1.35s ease-in-out infinite alternate;
+  transform: scale(1.035);
+}
+.hero-content { animation: none; }
+.hero-content > .eyebrow { animation: hero-copy-reveal .72s .12s both; }
+.hero-content h1 { animation: hero-copy-reveal .82s .24s both; }
+.hero-content > p { animation: hero-copy-reveal .82s .4s both; }
+.hero-content .hero-actions { animation: hero-copy-reveal .82s .56s both; }
+.hero-note { animation: hero-copy-reveal .82s .72s both; }
+
+@keyframes hero-image-settle {
+  from { opacity: .78; transform: scale(1.075); }
+  to { opacity: 1; transform: scale(1.035); }
+}
+@keyframes hero-copy-reveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dish-card {
+  border-bottom: 1px solid rgba(110, 96, 78, .18);
+  transition: transform .32s cubic-bezier(.2,.65,.25,1), border-color .25s ease;
+}
+.dish-meta h3 {
+  transition: color .25s ease, letter-spacing .25s ease;
+}
+.dish-meta > div > p:not(.dish-description) {
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.dish-meta strong {
+  color: #7e422f;
+  font-variant-numeric: tabular-nums;
+}
+.dish-card:hover .dish-meta h3 { color: #8d513b; }
+.dish-card:hover { border-color: rgba(166, 93, 66, .55); }
+
+.button, .nav-cta, .add-to-order, .quantity-control button,
+.filter, .gallery-filters button {
+  transition: color .22s ease, background-color .22s ease, border-color .22s ease,
+              box-shadow .22s ease, transform .22s ease;
+}
+.button:focus-visible, .nav-cta:focus-visible, .add-to-order:focus-visible,
+.quantity-control button:focus-visible, .filter:focus-visible,
+.gallery-filters button:focus-visible {
+  outline: 2px solid #a65d42;
+  outline-offset: 4px;
+}
+.button-light:hover, .button-dark:hover, .nav-cta:hover {
+  box-shadow: 0 9px 22px rgba(20, 20, 17, .14);
+}
+.button-light:hover { background: #e8dfd2; color: #24241f; }
+.button-dark:hover { background: #8d513b; }
+.add-to-order:hover, .quantity-control button:hover {
+  box-shadow: 0 5px 14px rgba(166, 93, 66, .16);
+}
+.filter { min-height: 40px; padding-inline: 14px; }
+.filter.active { box-shadow: inset 0 -2px 0 #a65d42; }
+
+@media (max-width: 800px) {
+  .hero-bg { animation: hero-image-settle 1.1s ease-out both; }
+  .hero-content > .eyebrow { animation-delay: .08s; }
+  .hero-content h1 { animation-delay: .18s; }
+  .hero-content > p { animation-delay: .32s; }
+  .hero-content .hero-actions { animation-delay: .46s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg { animation: none !important; transform: none !important; }
+  .hero-content > .eyebrow, .hero-content h1, .hero-content > p,
+  .hero-content .hero-actions, .hero-note { animation: none !important; }
+  .dish-card, .dish-meta h3, .button, .nav-cta, .add-to-order,
+  .quantity-control button, .filter, .gallery-filters button {
+    transition: none !important;
+  }
+}
