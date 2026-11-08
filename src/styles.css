@@ -2609,3 +2609,5 @@ html.js-enabled [data-reveal] {
  .gallery-item-caption strong { font-size:9px; }
 }
 @media(prefers-reduced-motion:reduce) { .featured .dish-image img { transition:none; } }
+
+.gallery-item-drinks { height:100%; }
