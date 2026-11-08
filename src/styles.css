@@ -474,3 +474,8 @@ html.js-enabled [data-reveal] {
 .detail-image-wrap.image-missing .image-fallback { display: grid; }
 @media (max-width: 800px) { .detail-image-wrap img { height: 360px; } }
 @media (prefers-reduced-motion: reduce) { .detail-image-wrap img { transition: none; } }
+
+/* Balanced four-item featured selection on the homepage */
+.featured .dish-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1000px){.featured .dish-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.featured .dish-grid{grid-template-columns:1fr}}
