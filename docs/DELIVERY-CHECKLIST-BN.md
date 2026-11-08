@@ -9,6 +9,7 @@
 - [ ] Images are client-owned, licensed or otherwise cleared for commercial use
 - [ ] Each menu and gallery image has a checked source page, creator and license record
 - [ ] Strawberry Mojito and Thai Basil Rice Combo photographs match the actual displayed dish/drink
+- [ ] Basmati Kacchi, Paratha and Chicken Chap photos match their labels and retain the required Creative Commons/Pexels attribution
 - [ ] No invented awards, reviews, history, certifications or claims
 - [ ] Sample/demo labels removed only after real content is approved
 
@@ -57,6 +58,11 @@
 - [ ] Backup and restore process tested if database is used
 
 ## 5. Reservation-specific launch gate
+
+When the live API is disabled, the demo reservation form prepares a WhatsApp request with an email alternative; it does not create or confirm a booking.
+- [ ] WhatsApp reservation message includes the correct name, phone, date, time, guest count and notes
+- [ ] Guest must press Send; restaurant must reply before any booking is described as confirmed
+- [ ] Demo reservation details are not silently stored by the website
 
 Do not enable reservations until every item below is true.
 
