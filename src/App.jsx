@@ -220,7 +220,51 @@ function Home(){
   );
 }
 function Menu(){const [cat,setCat]=useState('All'),[q,setQ]=useState(''),[cart,setCart]=useState({});const normalizedQuery=q.trim().toLocaleLowerCase();const shown=useMemo(()=>dishes.filter(d=>(cat==='All'||d.category===cat)&&[d.name,d.category,d.description].some(value=>value.toLocaleLowerCase().includes(normalizedQuery))),[cat,normalizedQuery]);const order=getCartSummary(cart,dishes);const orderMessage=buildWhatsAppOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal});const orderWhatsAppLink=buildContactLinks({whatsapp:siteConfig.whatsappNumber,message:orderMessage}).whatsapp;const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));return <main id="main-content" className="page section-wrap menu-page"><div className="eyebrow">A THOUGHTFUL SELECTION</div><h1 className="page-title">The <em>menu.</em></h1><p className="page-intro">Browse a considered mix of Chinese, Thai, Indian and Continental favourites, plus seafood, mocktails, desserts and easy-to-share combos.</p><div className="menu-tools"><div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(c=><button type="button" aria-pressed={cat===c} className={cat===c?'filter active':'filter'} key={c} onClick={()=>setCat(c)}>{c}</button>)}</div><label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={e=>setQ(e.target.value)} placeholder="Find a dish"/></label></div><p className="results-count" aria-live="polite">{shown.length} {shown.length===1?'dish':'dishes'} found</p><div className="dish-grid menu-grid" key={cat+"-"+q}>{shown.map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}</div>{!shown.length&&<p className="empty">No dishes match your search. Try another name, description, or category.</p>}<section className="order-summary" aria-labelledby="order-summary-title"><div><div className="eyebrow">YOUR SELECTION</div><h2 id="order-summary-title">Your order <em>so far.</em></h2></div>{order.items.length===0?<p className="empty-order">Choose a dish above to see your quantity and running total here.</p>:<><ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul><div className="order-total"><span>Subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div><p className="sample-note">Your selected dishes and subtotal will be sent to the restaurant on WhatsApp. The restaurant must confirm availability, delivery or pickup details, final charges and payment directly. This website does not process online payments.</p>{orderWhatsAppLink?<a className="button button-dark whatsapp-order-button" href={orderWhatsAppLink.href} target="_blank" rel="noopener noreferrer">Send order on WhatsApp <ArrowRight size={16}/></a>:<p className="form-error">WhatsApp ordering is unavailable until a verified restaurant WhatsApp number is configured.</p>}</>}</section><p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>{order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order"><div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div><a className="sticky-view-order" href="#order-summary">Review</a>{orderWhatsAppLink?<a className="sticky-whatsapp" href={orderWhatsAppLink.href} target="_blank" rel="noopener noreferrer">WhatsApp order <ArrowRight size={15}/></a>:<span className="sticky-unavailable">WhatsApp unavailable</span>}</div>}</main>}
-function Detail(){const {id}=useParams(),d=dishes.find(x=>x.id===id);if(!d)return <main id="main-content" className="page section-wrap"><h1>Dish not found</h1><Link to="/menu">Back to menu</Link></main>;return <main id="main-content" className="detail section-wrap"><img decoding="async" fetchPriority="high" width="1200" height="900" src={d.image} alt={d.name} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/><div><div className="eyebrow">{d.category}</div><h1>{d.name}</h1><strong className="detail-price">৳{d.price}</strong><p>{d.description}</p><a className="button button-dark" href={buildContactLinks({whatsapp:siteConfig.whatsappNumber,message:buildWhatsAppOrderMessage({restaurantName:siteConfig.brandName,items:[{name:d.name,quantity:1,lineTotal:d.price}],subtotal:d.price})}).whatsapp?.href||"/contact"} target="_blank" rel="noopener noreferrer">Order this dish on WhatsApp <ArrowRight size={16}/></a>{d.imageCredit&&<p className="image-credit">Photo: <a href={d.imageCredit.url} target="_blank" rel="noreferrer">{d.imageCredit.name}</a> · <a href={d.imageCredit.licenseUrl} target="_blank" rel="noreferrer">{d.imageCredit.license}</a></p>}<p className="sample-note">Illustrative menu item and price.</p></div></main>}
+function Detail(){
+  const {id}=useParams();
+  const dish=dishes.find(item=>item.id===id);
+  if(!dish)return <main id="main-content" className="page section-wrap"><h1>Dish not found</h1><Link to="/menu">Back to menu</Link></main>;
+
+  const whatsappLink=buildContactLinks({
+    whatsapp:siteConfig.whatsappNumber,
+    message:buildWhatsAppOrderMessage({
+      restaurantName:siteConfig.brandName,
+      items:[{name:dish.name,quantity:1,lineTotal:dish.price}],
+      subtotal:dish.price
+    })
+  }).whatsapp;
+
+  return (
+    <main id="main-content" className="detail section-wrap">
+      <div className="detail-image-wrap">
+        <img
+          decoding="async"
+          fetchPriority="high"
+          width="1200"
+          height="900"
+          src={dish.image}
+          alt={dish.name}
+          onError={event=>{
+            event.currentTarget.hidden=true;
+            event.currentTarget.parentElement.classList.add('image-missing');
+          }}
+        />
+        <span className="image-fallback" aria-hidden="true">Dish photography update pending</span>
+      </div>
+      <div>
+        <div className="eyebrow">{dish.category}</div>
+        <h1>{dish.name}</h1>
+        <strong className="detail-price">৳{dish.price}</strong>
+        <p>{dish.description}</p>
+        {whatsappLink
+          ? <a className="button button-dark" href={whatsappLink.href} target="_blank" rel="noopener noreferrer">Order this dish on WhatsApp <ArrowRight size={16}/></a>
+          : <Link className="button button-dark" to="/contact">Contact to place an order <ArrowRight size={16}/></Link>}
+        {dish.imageCredit&&<p className="image-credit">Photo: <a href={dish.imageCredit.url} target="_blank" rel="noreferrer">{dish.imageCredit.name}</a> · <a href={dish.imageCredit.licenseUrl} target="_blank" rel="noreferrer">{dish.imageCredit.license}</a></p>}
+        <p className="sample-note">Illustrative menu item and price.</p>
+      </div>
+    </main>
+  );
+}
 function About(){
   return (
     <main id="main-content" className="page section-wrap story-page">
