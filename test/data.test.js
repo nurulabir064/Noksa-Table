@@ -105,3 +105,10 @@ test('homepage featured labels do not claim unverified popularity or rankings', 
     assert.doesNotMatch(dish.tag || '', /popular|best seller|top rated|guest favourite/i);
   }
 });
+
+test('homepage features a balanced mix of food and drinks', () => {
+  const featured = dishes.filter(dish => featuredDishIds.includes(dish.id));
+  assert.ok(featured.some(dish => dish.category === 'Seafood'));
+  assert.ok(featured.some(dish => dish.category === 'Continental'));
+  assert.ok(featured.some(dish => dish.category === 'Drinks & Mocktails'));
+});
