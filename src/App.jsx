@@ -4,13 +4,14 @@ import { ArrowRight, ArrowUpRight, Menu as MenuIcon, Search, X } from 'lucide-re
 import { dishes, categories, featuredDishIds } from './data'
 import { siteConfig } from './config/site.js'
 import ContactActions from './components/ContactActions.jsx'
-import { buildEmailLink } from './lib/contact-links.js'
+import { buildEmailLink, buildWhatsAppLink } from './lib/contact-links.js'
 import { buildOrderMessage } from './lib/order-message.js'
 import { getCartSummary, updateCartQuantity } from './lib/cart.js'
 
-function Header(){const [open,setOpen]=useState(false);const emailLink=buildEmailLink({email:siteConfig.publicEmail,subject:siteConfig.emailSubject,body:'Hello, I found NOKSHA TABLE online and would like to know more.'});useEffect(()=>{if(!open)return;const closeOnEscape=event=>{if(event.key==='Escape')setOpen(false)};window.addEventListener('keydown',closeOnEscape);return()=>window.removeEventListener('keydown',closeOnEscape)},[open]);return <><a className="skip-link" href="#main-content">Skip to content</a><header className="header"><Link className="brand" to="/"><span className="brand-mark">ন</span><span>{siteConfig.brandName}<small>{siteConfig.descriptor}</small></span></Link><button className="mobile-toggle" type="button" onClick={()=>setOpen(!open)} aria-label="Toggle navigation" aria-expanded={open} aria-controls="primary-navigation">{open?<X/>:<MenuIcon/>}</button><nav id="primary-navigation" aria-label="Primary navigation" className={open?'nav open':'nav'}>{[['/','Home'],['/menu','Menu'],['/about','Our Story'],['/gallery','Gallery'],['/contact','Contact']].map(([to,label])=><NavLink key={to} to={to} onClick={()=>setOpen(false)} end={to==='/'}>{label}</NavLink>)}{emailLink?<a className="nav-cta" href={emailLink.href} onClick={()=>setOpen(false)}>Email us <ArrowUpRight size={15}/></a>:<Link className="nav-cta" to="/contact" onClick={()=>setOpen(false)}>Contact us <ArrowUpRight size={15}/></Link>}</nav></header></>}
+function Header(){const [open,setOpen]=useState(false);const emailLink=buildEmailLink({email:siteConfig.publicEmail,subject:siteConfig.emailSubject,body:'Hello, I found NOKSHA TABLE online and would like to know more.'});const whatsappLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message:'Hello, I found NOKSHA TABLE online and would like to know more.'});useEffect(()=>{if(!open)return;const closeOnEscape=event=>{if(event.key==='Escape')setOpen(false)};window.addEventListener('keydown',closeOnEscape);return()=>window.removeEventListener('keydown',closeOnEscape)},[open]);return <><a className="skip-link" href="#main-content">Skip to content</a><header className="header"><Link className="brand" to="/"><span className="brand-mark">ন</span><span>{siteConfig.brandName}<small>{siteConfig.descriptor}</small></span></Link><button className="mobile-toggle" type="button" onClick={()=>setOpen(!open)} aria-label="Toggle navigation" aria-expanded={open} aria-controls="primary-navigation">{open?<X/>:<MenuIcon/>}</button><nav id="primary-navigation" aria-label="Primary navigation" className={open?'nav open':'nav'}>{[['/','Home'],['/menu','Menu'],['/about','Our Story'],['/gallery','Gallery'],['/contact','Contact']].map(([to,label])=><NavLink key={to} to={to} onClick={()=>setOpen(false)} end={to==='/'}>{label}</NavLink>)}{whatsappLink?<a className="nav-cta" href={whatsappLink.href} target="_blank" rel="noopener noreferrer" onClick={()=>setOpen(false)}>WhatsApp us <ArrowUpRight size={15}/></a>:<Link className="nav-cta" to="/contact" onClick={()=>setOpen(false)}>Contact us <ArrowUpRight size={15}/></Link>}</nav></header></>}
 function Footer(){
   const emailLink = buildEmailLink({ email: siteConfig.publicEmail, subject: siteConfig.emailSubject });
+  const whatsappLink = buildWhatsAppLink({ phone: siteConfig.publicWhatsApp, message: 'Hello, I would like to contact NOKSHA TABLE.' });
 
   return (
     <footer className="footer" data-reveal>
@@ -41,6 +42,7 @@ function Footer(){
 
         <div className="footer-column">
           <h3>Get in touch</h3>
+          {whatsappLink && <a href={whatsappLink.href} target="_blank" rel="noopener noreferrer">WhatsApp the restaurant <ArrowUpRight size={14}/></a>}
           <Link to="/contact">Contact the restaurant</Link>
           {emailLink && <a href={emailLink.href}>Email the restaurant <ArrowUpRight size={14}/></a>}
           <Link to="/menu">Start an order <ArrowUpRight size={14}/></Link>
@@ -103,6 +105,7 @@ function Home(){
   const [cart,setCart]=useState({});
   const order=getCartSummary(cart,dishes);
   const orderMessage=buildOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal});
+  const orderWhatsAppLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message:orderMessage});
   const orderEmailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Order enquiry — '+siteConfig.brandName,body:orderMessage});
   const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));
   const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));
@@ -167,8 +170,11 @@ function Home(){
           <div><div className="eyebrow">YOUR SELECTION</div><h2 id="home-order-title">Your order <em>so far.</em></h2></div>
           <ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul>
           <div className="order-total"><span>Subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div>
-          <p className="sample-note">Prepare an email with your selection. The restaurant must confirm availability, final charges and collection or delivery details. Payment is not processed on this website.</p>
-          {orderEmailLink?<a className="button button-dark order-email-button" href={orderEmailLink.href}>Prepare order email <ArrowRight size={16}/></a>:<Link className="button button-dark" to="/contact">Contact the restaurant <ArrowRight size={16}/></Link>}
+          <p className="sample-note">Your selection opens in WhatsApp first. Review the message and press Send; the restaurant must confirm availability, final charges and pickup or delivery details. Email is also available. This demo does not process payments or submit an order automatically.</p>
+          <div className="order-action-links">
+            {orderWhatsAppLink&&<a className="button button-whatsapp" href={orderWhatsAppLink.href} target="_blank" rel="noopener noreferrer">Order on WhatsApp <ArrowRight size={16}/></a>}
+            {orderEmailLink&&<a className="button button-dark order-email-button" href={orderEmailLink.href}>Email this order <ArrowRight size={16}/></a>}
+          </div>
         </section>}
       </section>
 
@@ -228,20 +234,22 @@ function Home(){
     </main>
   );
 }
-function Menu(){const [cat,setCat]=useState('All'),[q,setQ]=useState(''),[cart,setCart]=useState({});const normalizedQuery=q.trim().toLocaleLowerCase();const shown=useMemo(()=>dishes.filter(d=>(cat==='All'||d.category===cat)&&[d.name,d.category,d.description].some(value=>value.toLocaleLowerCase().includes(normalizedQuery))),[cat,normalizedQuery]);const order=getCartSummary(cart,dishes);const orderMessage=buildOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal});const orderEmailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Menu order enquiry — '+siteConfig.brandName,body:orderMessage});const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));return <main id="main-content" className="page section-wrap menu-page"><div className="eyebrow">DISCOVER YOUR NEXT FAVOURITE</div><h1 className="page-title">Something to <em>savour.</em></h1><p className="page-intro">From wok-fired plates and comforting classics to fresh seafood, vibrant coolers and something sweet, explore a menu made for different moods and appetites.</p><p className="menu-guidance">Menu items and prices are illustrative in this demo. For ingredient, spice, allergen or dietary questions, contact the restaurant before ordering.</p><div className="menu-tools"><div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(c=><button type="button" aria-pressed={cat===c} className={cat===c?'filter active':'filter'} key={c} onClick={()=>setCat(c)}>{c}</button>)}</div><label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={e=>setQ(e.target.value)} placeholder="Find a dish"/></label></div><p className="results-count" aria-live="polite">{shown.length} {shown.length===1?'dish':'dishes'} found</p><div className="dish-grid menu-grid" key={cat+"-"+q}>{shown.map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}</div>{!shown.length&&<p className="empty">No dishes match your search. Try another name, description, or category.</p>}<section className="order-summary" id="order-summary" aria-labelledby="order-summary-title"><div><div className="eyebrow">YOUR SELECTION</div><h2 id="order-summary-title">Your order <em>so far.</em></h2></div>{order.items.length===0?<p className="empty-order">Choose a dish above to see your quantity and running total here.</p>:<><ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul><div className="order-total"><span>Subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div><p className="sample-note">Your selected dishes and subtotal will be added to an email draft addressed to the restaurant. The restaurant must confirm availability, delivery or pickup details, final charges and payment directly. This website does not process online payments.</p>{orderEmailLink?<a className="button button-dark order-email-button" href={orderEmailLink.href}>Prepare order email <ArrowRight size={16}/></a>:<Link className="button button-dark" to="/contact">Contact the restaurant <ArrowRight size={16}/></Link>}</>}</section><p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>{order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order"><div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div><a className="sticky-view-order" href="#order-summary">Review</a>{orderEmailLink?<a className="sticky-email" href={orderEmailLink.href}>Email order <ArrowRight size={15}/></a>:<Link className="sticky-email" to="/contact">Contact to order <ArrowRight size={15}/></Link>}</div>}</main>}
+function Menu(){const [cat,setCat]=useState('All'),[q,setQ]=useState(''),[cart,setCart]=useState({});const normalizedQuery=q.trim().toLocaleLowerCase();const shown=useMemo(()=>dishes.filter(d=>(cat==='All'||d.category===cat)&&[d.name,d.category,d.description].some(value=>value.toLocaleLowerCase().includes(normalizedQuery))),[cat,normalizedQuery]);const order=getCartSummary(cart,dishes);const orderMessage=buildOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal});const orderWhatsAppLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message:orderMessage});const orderEmailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Menu order enquiry — '+siteConfig.brandName,body:orderMessage});const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));return <main id="main-content" className="page section-wrap menu-page"><div className="eyebrow">DISCOVER YOUR NEXT FAVOURITE</div><h1 className="page-title">Something to <em>savour.</em></h1><p className="page-intro">From wok-fired plates and comforting classics to fresh seafood, vibrant coolers and something sweet, explore a menu made for different moods and appetites.</p><p className="menu-guidance">Menu items and prices are illustrative in this demo. For ingredient, spice, allergen or dietary questions, contact the restaurant before ordering.</p><div className="menu-tools"><div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(c=><button type="button" aria-pressed={cat===c} className={cat===c?'filter active':'filter'} key={c} onClick={()=>setCat(c)}>{c}</button>)}</div><label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={e=>setQ(e.target.value)} placeholder="Find a dish"/></label></div><p className="results-count" aria-live="polite">{shown.length} {shown.length===1?'dish':'dishes'} found</p><div className="dish-grid menu-grid" key={cat+"-"+q}>{shown.map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}</div>{!shown.length&&<p className="empty">No dishes match your search. Try another name, description, or category.</p>}<section className="order-summary" id="order-summary" aria-labelledby="order-summary-title"><div><div className="eyebrow">YOUR SELECTION</div><h2 id="order-summary-title">Your order <em>so far.</em></h2></div>{order.items.length===0?<p className="empty-order">Choose a dish above to see your quantity and running total here.</p>:<><ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul><div className="order-total"><span>Subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div><p className="sample-note">Your selected dishes open in WhatsApp first. Review the message and press Send. The restaurant must confirm availability, pickup or delivery details and final charges. Email is available as a second option; no payment is taken here.</p><div className="order-action-links">{orderWhatsAppLink&&<a className="button button-whatsapp" href={orderWhatsAppLink.href} target="_blank" rel="noopener noreferrer">Order on WhatsApp <ArrowRight size={16}/></a>}{orderEmailLink&&<a className="button button-dark order-email-button" href={orderEmailLink.href}>Email this order <ArrowRight size={16}/></a>}</div></>}</section><p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>{order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order"><div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div><a className="sticky-view-order" href="#order-summary">Review</a>{orderWhatsAppLink?<a className="sticky-email sticky-whatsapp" href={orderWhatsAppLink.href} target="_blank" rel="noopener noreferrer">WhatsApp order <ArrowRight size={15}/></a>:orderEmailLink?<a className="sticky-email" href={orderEmailLink.href}>Email order <ArrowRight size={15}/></a>:<Link className="sticky-email" to="/contact">Contact to order <ArrowRight size={15}/></Link>}</div>}</main>}
 function Detail(){
   const {id}=useParams();
   const dish=dishes.find(item=>item.id===id);
   if(!dish)return <main id="main-content" className="page section-wrap"><h1>Dish not found</h1><Link to="/menu">Back to menu</Link></main>;
 
+  const dishOrderMessage=buildOrderMessage({
+    restaurantName:siteConfig.brandName,
+    items:[{name:dish.name,quantity:1,lineTotal:dish.price}],
+    subtotal:dish.price
+  });
+  const whatsappLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message:dishOrderMessage});
   const emailLink=buildEmailLink({
     email:siteConfig.publicEmail,
     subject:'Dish enquiry — '+siteConfig.brandName,
-    body:buildOrderMessage({
-      restaurantName:siteConfig.brandName,
-      items:[{name:dish.name,quantity:1,lineTotal:dish.price}],
-      subtotal:dish.price
-    })
+    body:dishOrderMessage
   });
 
   return (
@@ -266,9 +274,10 @@ function Detail(){
         <h1>{dish.name}</h1>
         <strong className="detail-price">৳{dish.price}</strong>
         <p>{dish.description}</p>
-        {emailLink
-          ? <a className="button button-dark" href={emailLink.href}>Enquire about this dish <ArrowRight size={16}/></a>
-          : <Link className="button button-dark" to="/contact">Contact to place an order <ArrowRight size={16}/></Link>}
+        <div className="order-action-links">
+          {whatsappLink&&<a className="button button-whatsapp" href={whatsappLink.href} target="_blank" rel="noopener noreferrer">Order on WhatsApp <ArrowRight size={16}/></a>}
+          {emailLink&&<a className="button button-dark" href={emailLink.href}>Email this enquiry <ArrowRight size={16}/></a>}
+        </div>
         {dish.imageCredit&&<p className="image-credit">Photo: <a href={dish.imageCredit.url} target="_blank" rel="noreferrer">{dish.imageCredit.name}</a> · <a href={dish.imageCredit.licenseUrl} target="_blank" rel="noreferrer">{dish.imageCredit.license}</a></p>}
         <p className="sample-note">Illustrative menu item and price.</p>
       </div>
@@ -337,9 +346,10 @@ function Gallery(){
     {id:'photo-1473093295043-cdd812d0e601',alt:'Pasta served with a creamy sauce',kind:'Food'},
     {id:'photo-1599487488170-d11ec9c172f0',alt:'A platter of grilled tandoori-style food',kind:'Food'},
     {id:'photo-1559737558-2f5a35f4523b',alt:'Seafood platter prepared for sharing',kind:'Food'},
+    {src:'https://images.pexels.com/photos/12824412/pexels-photo-12824412.jpeg?auto=compress&dpr=1&h=750&w=1260',alt:'Thai basil chicken rice combo with fried egg and fresh garnish',kind:'Food',credit:{name:'Manit Seekhao / Pexels',url:'https://www.pexels.com/photo/cooked-food-on-round-ceramic-plate-12824412/'}},
     {id:'photo-1720446838030-d914440e6a16',alt:'A chilled lime and mint cooler served over ice',kind:'Drinks'},
     {id:'photo-1771398388247-3531996406f9',alt:'A freshly prepared drink poured over ice and mint',kind:'Drinks'},
-    {id:'photo-1536935338788846bb9981813',alt:'A strawberry and lime drink served chilled',kind:'Drinks'},
+    {src:'https://images.pexels.com/photos/17321274/pexels-photo-17321274.jpeg?cs=srgb&dl=pexels-shameel-mukkath-3421394-17321274.jpg&fm=jpg',alt:'Strawberry mojito mocktail with fresh mint, strawberry and lime',kind:'Drinks',credit:{name:'Shameel Mukkath / Pexels',url:'https://www.pexels.com/photo/a-glass-of-strawberry-and-lime-drink-with-lime-and-mint-17321274/'}},
     {id:'photo-1488477181946-6428a0291777',alt:'A strawberry crepe dessert with cream',kind:'Dessert'},
     {id:'photo-1533134242443-d4fd215305ad',alt:'A slice of classic cheesecake',kind:'Dessert'},
     {id:'photo-1559847844-5315695dadae',alt:'A Thai noodle dish served fresh',kind:'Food'},
@@ -406,7 +416,7 @@ function Gallery(){
 
       <div className="gallery-grid">
         {visibleImages.map((image,i)=><button type="button" className={'gallery-item gallery-item-'+image.kind.toLowerCase()} key={image.id} onClick={()=>setSelected(image)} aria-label={'View image: '+image.alt}>
-          <img loading="lazy" decoding="async" width="1000" height="750" src={'https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85'} alt={image.alt} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/>
+          <img loading="lazy" decoding="async" width="1000" height="750" src={image.src||('https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85')} alt={image.alt} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/>
           <span className="image-fallback" aria-hidden="true">Photography update pending</span>
           <span className="gallery-item-caption"><span>{image.kind}</span><strong>{image.alt}</strong></span>
         </button>)}
@@ -417,8 +427,9 @@ function Gallery(){
       {selected&&<div className="gallery-lightbox" role="presentation" onClick={()=>setSelected(null)}>
         <div ref={dialogRef} className="gallery-lightbox-panel" role="dialog" aria-modal="true" aria-label={selected.alt} onClick={event=>event.stopPropagation()}>
           <button ref={closeButtonRef} type="button" className="gallery-lightbox-close" onClick={()=>setSelected(null)} aria-label="Close image">×</button>
-          <img src={'https://images.unsplash.com/'+selected.id+'?auto=format&fit=max&w=1800&q=90'} alt={selected.alt}/>
+          <img src={selected.src||('https://images.unsplash.com/'+selected.id+'?auto=format&fit=max&w=1800&q=90')} alt={selected.alt}/>
           <p>{selected.alt}</p>
+          {selected.credit&&<p className="gallery-image-credit">Photo: <a href={selected.credit.url} target="_blank" rel="noopener noreferrer">{selected.credit.name}</a> · <a href="https://www.pexels.com/license/" target="_blank" rel="noopener noreferrer">Pexels License</a></p>}
         </div>
       </div>}
     </main>
