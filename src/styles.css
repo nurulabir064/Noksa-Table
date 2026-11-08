@@ -227,7 +227,7 @@ html.js-enabled [data-reveal]{opacity:0;transform:translateY(24px);transition:op
 
 .order-email-button{margin-top:22px}.order-summary .sample-note{max-width:720px;line-height:1.7}
 
-/* Premium homepage content and persistent WhatsApp order access */
+/* Premium homepage content and persistent order access */
 .home-highlights{padding-top:20px}
 .home-highlight-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:28px}
 .home-highlight-grid article{padding:28px;background:#eeebe3;border-top:2px solid #a65d42}
@@ -284,8 +284,6 @@ html.js-enabled [data-reveal]{opacity:0;transform:translateY(24px);transition:op
 .contact-detail-row strong{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8d513b}
 .contact-detail-row span,.contact-actions>a{font-size:13px;line-height:1.7;color:#5f5a51}
 .contact-actions>a{text-decoration:underline;text-underline-offset:3px}
-.contact-whatsapp-button{display:flex!important;justify-content:center;align-items:center;min-height:48px;padding:13px 18px;background:#24241f;color:#fff!important;text-align:center;text-decoration:none!important;font-size:12px!important;font-weight:600;letter-spacing:.02em}
-.contact-whatsapp-button.is-disabled{background:#d8d3c9;color:#6c675d!important;cursor:not-allowed}
 .contact-demo-note{margin:0;padding-top:12px;border-top:1px solid #d7d1c6;color:#817a70;font-size:10px;line-height:1.7}
 @media(max-width:1000px){.featured .dish-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-gallery-grid img,.home-gallery-grid img:first-child{height:220px}}
 @media(max-width:480px){.featured .dish-grid{grid-template-columns:1fr}.home-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-gallery-grid img,.home-gallery-grid img:first-child{height:155px}.contact-detail-row{grid-template-columns:1fr;gap:6px}}
