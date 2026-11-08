@@ -508,7 +508,7 @@ function FormPage({reservation=false}){
         formData.get('message')?'Notes: '+formData.get('message'):'',
         '',
         'Please confirm availability. This is a request, not a confirmed booking.'
-      ].filter(Boolean).join('\\n');
+      ].filter(Boolean).join('\n');
       const whatsappLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message});
       const emailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Reservation request — '+siteConfig.brandName,body:message});
       setFallbackEmailHref(emailLink?.href||'');
