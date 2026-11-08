@@ -5,7 +5,7 @@ function getDigits(value) {
   return digits
 }
 
-export function buildContactLinks({ phone = '', whatsapp = '', email = '', message = '' } = {}) {
+export function buildContactLinks({ phone = '', email = '' } = {}) {
   const phoneDigits = getDigits(phone)
   const whatsappDigits = getDigits(whatsapp)
   const normalizedEmail = typeof email === 'string' ? email.trim() : ''
@@ -15,9 +15,6 @@ export function buildContactLinks({ phone = '', whatsapp = '', email = '', messa
 
   return {
     phone: validPhone ? { href: 'tel:+' + phoneDigits, label: phone.trim() } : null,
-    whatsapp: validWhatsApp
-      ? { href: 'https://wa.me/' + whatsappDigits + '?text=' + encodeURIComponent(message), label: 'WhatsApp' }
-      : null,
     email: validEmail ? { href: 'mailto:' + normalizedEmail, label: normalizedEmail } : null,
   }
 }
