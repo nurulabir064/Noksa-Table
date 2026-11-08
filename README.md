@@ -135,7 +135,7 @@ Replace all fictional/sample content with client-approved assets and information
 - The contact form prepares an email draft only. It does not automatically send, transmit to a backend, or store the message.
 - Sample menu data is stored locally in `src/data.js`.
 - No online payment gateway is implemented. Card payments, server-side transaction verification, IPN/webhooks, idempotency, refunds and transaction history must be designed and sandbox-tested before any payment launch.
-- Images are remote Unsplash and Pexels assets used for concept presentation. All 33 menu images and all 25 gallery images now include source-page, creator and license records. Visual relevance, sharpness and crop still require rendered browser QA, and the restaurant owner must approve the final image set before launch.
+- Images are remote Unsplash, Pexels and Wikimedia Commons assets used for concept presentation. All 33 menu images and all 25 gallery images now include source-page, creator and license records. Visual relevance, sharpness and crop still require rendered browser QA, and the restaurant owner must approve the final image set before launch.
 - Automated tests cover menu data, cart calculations, contact links, order email construction, reservation input validation and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
 - The canonical and sitemap URLs currently point to the public demo domain and must be updated when a client-owned domain is connected.
 
