@@ -6,6 +6,7 @@ import { siteConfig } from './config/site.js'
 import ContactActions from './components/ContactActions.jsx'
 import { buildEmailLink, buildWhatsAppLink } from './lib/contact-links.js'
 import { buildOrderMessage } from './lib/order-message.js'
+import { galleryImages } from './gallery-data.js'
 import { buildReservationMessage } from './lib/reservation-message.js'
 import { getCartSummary, updateCartQuantity } from './lib/cart.js'
 
@@ -354,33 +355,7 @@ function About(){
   );
 }
 function Gallery(){
-  const images=[
-    {id:'photo-1517248135467-4c7edcad34c4',alt:'Warm contemporary restaurant interior',kind:'Interior'},
-    {id:'photo-1414235077428-338989a2e8c0',alt:'Elegant dining table with carefully arranged place settings',kind:'Interior'},
-    {id:'photo-1559339352-11d035aa65de',alt:'Restaurant dining room with ambient lighting',kind:'Interior'},
-    {id:'photo-1603133872878-684f208fb84b',alt:'A colourful plate of chicken fried rice',kind:'Food'},
-    {id:'photo-1513104890138-7c749659a591',alt:'Freshly baked pizza with melted cheese',kind:'Food'},
-    {id:'photo-1473093295043-cdd812d0e601',alt:'Pasta served with a creamy sauce',kind:'Food'},
-    {id:'photo-1599487488170-d11ec9c172f0',alt:'A platter of grilled tandoori-style food',kind:'Food'},
-    {id:'photo-1559737558-2f5a35f4523b',alt:'Seafood platter prepared for sharing',kind:'Food'},
-    {src:'https://images.pexels.com/photos/35215474/pexels-photo-35215474/free-photo-of-authentic-thai-basil-chicken-with-rice-and-egg.jpeg?auto=compress&dpr=1&h=750&w=1260',alt:'Thai basil chicken with rice, fried egg and fresh vegetables',kind:'Food',credit:{name:'UNDO KIM / Pexels',url:'https://www.pexels.com/photo/authentic-thai-basil-chicken-with-rice-and-egg-35215474/',license:'Pexels License',licenseUrl:'https://www.pexels.com/license/'}},
-    {src:'https://images.pexels.com/photos/24738507/pexels-photo-24738507/free-photo-of-close-up-of-chicken-noodles-dish.jpeg?auto=compress&dpr=1&h=750&w=1260',alt:'Chicken chow mein noodles with sesame and greens',kind:'Food',credit:{name:'Nadin Sh / Pexels',url:'https://www.pexels.com/photo/close-up-of-chicken-noodles-dish-24738507/',license:'Pexels License',licenseUrl:'https://www.pexels.com/license/'}},
-    {src:'https://images.pexels.com/photos/9609844/pexels-photo-9609844.jpeg?auto=compress&dpr=1&h=750&w=1260',alt:'Butter chicken curry with cream and fresh herbs',kind:'Food',credit:{name:'Prabal Pratap Singh / Pexels',url:'https://www.pexels.com/photo/stainless-steel-bowl-with-chicken-dish-9609844/',license:'Pexels License',licenseUrl:'https://www.pexels.com/license/'}},
-    {src:'https://images.pexels.com/photos/29173114/pexels-photo-29173114/free-photo-of-delicious-chicken-tikka-platter-with-chutney.jpeg?auto=compress&dpr=1&h=750&w=1260',alt:'Chicken tikka platter with green chutney and garnishes',kind:'Food',credit:{name:'Kunal Lakhotia / Pexels',url:'https://www.pexels.com/photo/delicious-chicken-tikka-platter-with-chutney-29173114/',license:'Pexels License',licenseUrl:'https://www.pexels.com/license/'}},
-    {src:'https://images.pexels.com/photos/34463131/pexels-photo-34463131/free-photo-of-delicious-plate-of-grilled-chicken-with-sides.jpeg?auto=compress&cs=tinysrgb&dpr=1&h=750&w=1260',alt:'Grilled chicken steak with rice, fries and fresh sides',kind:'Food',credit:{name:'Nascimento Jr. / Pexels',url:'https://www.pexels.com/photo/delicious-plate-of-grilled-chicken-with-sides-34463131/',license:'Pexels License',licenseUrl:'https://www.pexels.com/license/'}},
-    {src:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Kacchi_Biryani.jpg/1024px-Kacchi_Biryani.jpg',alt:'Basmati kacchi biryani with rice and tender meat',kind:'Food',credit:{name:'ANKAN / Wikimedia Commons',url:'https://commons.wikimedia.org/wiki/File:Kacchi_Biryani.jpg',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'}},
-    {src:'https://images.pexels.com/photos/20408462/pexels-photo-20408462/free-photo-of-indian-flatbread-with-tomato-and-cream-on-a-plate.jpeg?auto=compress&dpr=1&h=750&w=1260',alt:'Paratha served with yogurt and pickle',kind:'Food',credit:{name:'Jack Baghel / Pexels',url:'https://www.pexels.com/photo/indian-flatbread-with-tomato-and-cream-on-a-plate-20408462/',license:'Pexels License',licenseUrl:'https://www.pexels.com/license/'}},
-    {src:'https://commons.wikimedia.org/wiki/Special:FilePath/Chicken%20Chap.jpg?width=1000',alt:'Chicken chap served with aromatic gravy',kind:'Food',credit:{name:'Meghattay Saha / Wikimedia Commons',url:'https://commons.wikimedia.org/wiki/File:Chicken_Chap.jpg',license:'CC BY-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/'}},
-    {id:'photo-1720446838030-d914440e6a16',alt:'A chilled lime and mint cooler served over ice',kind:'Drinks'},
-    {id:'photo-1771398388247-3531996406f9',alt:'A freshly prepared drink poured over ice and mint',kind:'Drinks'},
-    {src:'https://images.pexels.com/photos/17321274/pexels-photo-17321274.jpeg?cs=srgb&dl=pexels-shameel-mukkath-3421394-17321274.jpg&fm=jpg',alt:'Strawberry, lime and mint mocktail served in a glass',kind:'Drinks',credit:{name:'Shameel Mukkath / Pexels',url:'https://www.pexels.com/photo/a-glass-of-strawberry-and-lime-drink-with-lime-and-mint-17321274/',license:'Pexels License',licenseUrl:'https://www.pexels.com/license/'}},
-    {id:'photo-1488477181946-6428a0291777',alt:'A strawberry crepe dessert with cream',kind:'Dessert'},
-    {id:'photo-1533134242443-d4fd215305ad',alt:'A slice of classic cheesecake',kind:'Dessert'},
-    {id:'photo-1559847844-5315695dadae',alt:'A Thai noodle dish served fresh',kind:'Food'},
-    {id:'photo-1532550907401-a500c9a57435',alt:'Grilled chicken steak with sides',kind:'Food'},
-    {id:'photo-1527477396000-e27163b481c2',alt:'Crispy chicken wings for sharing',kind:'Food'},
-    {id:'photo-1515003197210-e0cd7184f8b5',alt:'A colourful rice and curry plate',kind:'Food'}
-  ];
+  const images=galleryImages;
   const [selected,setSelected]=useState(null);
   const [category,setCategory]=useState('All');
   const dialogRef=useRef(null);
