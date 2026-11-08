@@ -33,7 +33,7 @@ export default function ContactActions() {
         </a>
       ) : (
         <span className="contact-whatsapp-button is-disabled" aria-disabled="true">
-          WhatsApp · business number pending verification
+          WhatsApp contact · business number to be confirmed
         </span>
       )}
       <p className="contact-demo-note">Demo information only. Confirm the real address, business hours and contact details before publishing this site for a restaurant.</p>
