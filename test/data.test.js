@@ -82,6 +82,7 @@ test('menu includes Bangladesh favourites alongside international and Indian cat
   assert.ok(categories.includes('Continental'));
   assert.ok(categories.includes('Drinks & Mocktails'));
   assert.ok(categories.includes('Soft Drinks'));
+  assert.equal(dishes.filter(dish => dish.category === 'Soft Drinks').length, 1);
   assert.ok(categories.includes('Desserts'));
   assert.ok(categories.includes('Combos'));
   for (const id of ['basmati-kacchi','plain-paratha','chicken-chap','strawberry-mojito','thai-soup','bbq-chicken-pizza','chicken-fried-rice']) {
