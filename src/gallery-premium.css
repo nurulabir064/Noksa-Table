@@ -327,3 +327,33 @@
     transform: none;
   }
 }
+
+.order-whatsapp-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.order-whatsapp-submit:disabled {
+  cursor: wait;
+  opacity: .72;
+}
+
+.order-submit-error {
+  grid-column: 1 / -1;
+  margin: 8px 0 0;
+}
+
+.sticky-order-bar .order-submit-error {
+  position: absolute;
+  right: 16px;
+  bottom: calc(100% + 8px);
+  max-width: min(90vw, 360px);
+  padding: 10px 12px;
+  background: #fff;
+  box-shadow: 0 5px 22px rgba(0, 0, 0, .14);
+}
