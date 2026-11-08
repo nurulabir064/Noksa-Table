@@ -8,9 +8,9 @@ export const siteConfig = Object.freeze({
   addressLabel: 'Gulshan 2 Circle, Dhaka, Bangladesh · Sample landmark only; not a verified restaurant address.',
   openingHoursLabel: 'Daily · 12:00 PM–11:00 PM · Sample hours, subject to confirmation',
   publicPhone: '',
-  whatsappNumber: '+8801304302201',
-  publicEmail: '',
-  whatsappMessage: 'Hello, I found NOKSHA TABLE online and would like to know more about the menu.',
+  whatsappNumber: '',
+  publicEmail: 'nurulabir064@gmail.com',
+  emailSubject: 'Website enquiry — NOKSHA TABLE',
   mapUrl: 'https://www.google.com/maps/search/?api=1&query=Gulshan+2+Circle+Dhaka+Bangladesh',
   instagramUrl: '',
 })
