@@ -28,7 +28,13 @@ function isSameOrigin(req) {
 }
 
 async function readJsonBody(req) {
-  if (req.body && typeof req.body === 'object' && !Array.isArray(req.body)) {
+  if (req.body && typeof req.body === 'object') {
+    if (Array.isArray(req.body)) {
+      throw Object.assign(new Error('The order request must be a JSON object.'), { status: 400 });
+    }
+    if (Buffer.byteLength(JSON.stringify(req.body), 'utf8') > MAX_BODY_BYTES) {
+      throw Object.assign(new Error('The order request is too large.'), { status: 413 });
+    }
     return req.body;
   }
 
@@ -151,6 +157,10 @@ export default async function handler(req, res) {
     return respond(res, error.status || 400, {
       error: error.status === 413 ? error.message : 'The order request contains invalid JSON.',
     });
+  }
+
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return respond(res, 400, { error: 'The order request must be a JSON object.' });
   }
 
   const itemResult = normalizeItems(body.items);
