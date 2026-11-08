@@ -14,7 +14,7 @@
 ## B. Contact and location
 
 - Public phone:
-- WhatsApp number (if different):
+- Public contact email:
 - Public email:
 - Full address:
 - Google Maps pin/link:
@@ -26,7 +26,7 @@
 Client-এর প্রধান লক্ষ্য (একটি বা একাধিক):
 - [ ] Brand and restaurant information
 - [ ] Menu discovery
-- [ ] Calls / WhatsApp enquiries
+- [ ] Calls / email enquiries
 - [ ] Directions / visits
 - [ ] Reservation requests
 - [ ] Online ordering
