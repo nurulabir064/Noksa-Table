@@ -14,7 +14,6 @@
 ## B. Contact and location
 
 - Public phone:
-- Public contact email:
 - Public email:
 - Full address:
 - Google Maps pin/link:
