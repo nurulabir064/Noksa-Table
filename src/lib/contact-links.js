@@ -24,7 +24,7 @@ export function buildContactLinks({ phone = '', whatsapp = '', email = '', messa
 
 export function buildEmailLink({ email = '', subject = '', body = '' } = {}) {
   const normalizedEmail = typeof email === 'string' ? email.trim() : '';
-  const validEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(normalizedEmail) && normalizedEmail.length <= 254;
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) && normalizedEmail.length <= 254;
   if (!validEmail) return null;
   const params = new URLSearchParams();
   if (subject) params.set('subject', subject);
