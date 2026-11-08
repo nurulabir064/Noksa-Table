@@ -25,7 +25,8 @@ export default async function handler(req, res) {
     return respond(res, 403, { error: 'Request origin is not allowed.' });
   }
 
-  if (!req.headers['content-type']?.toLowerCase().includes('application/json')) {
+  const contentType = req.headers['content-type']?.split(';', 1)[0].trim().toLowerCase();
+  if (contentType !== 'application/json') {
     return respond(res, 415, { error: 'Content-Type must be application/json.' });
   }
 
