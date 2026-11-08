@@ -118,4 +118,7 @@ test('homepage features pizza, Indian dishes, Thai combo, strawberry mocktail an
   assert.equal(featured.filter(dish => dish.category === 'Soft Drinks').length, 1);
   assert.ok(featured.some(dish => dish.category === 'Seafood'));
   assert.ok(featured.some(dish => dish.category === 'Chinese'));
+  for (const dish of featured) {
+    assert.ok(dish.imageCredit, 'featured dish needs a source and creator record: ' + dish.name);
+  }
 });
