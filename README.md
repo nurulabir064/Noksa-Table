@@ -30,7 +30,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
 - Verified phone / email / directions links driven by public client configuration
-- Menu cart with quantity controls, running subtotal and a prefilled email draft containing selected dish names, quantities and subtotal
+- Homepage featured dishes and full menu support quantity controls, running subtotals and a prefilled email draft containing selected dish names, quantities and subtotal
 - Dish detail pages include an email enquiry action
 - Contact form preview state with native browser validation
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
