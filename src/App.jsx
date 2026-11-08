@@ -58,6 +58,11 @@ function Footer(){
     </footer>
   );
 }
+function PhotoCredit({credit,className=''}) {
+  if(!credit)return null;
+  return <p className={'image-credit '+className}>Photo: <a href={credit.url} target="_blank" rel="noopener noreferrer">{credit.name}</a> · <a href={credit.licenseUrl} target="_blank" rel="noopener noreferrer">{credit.license}</a></p>;
+}
+
 function DishCard({dish,quantity=0,onAdd,onRemove}){
   return (
     <article className="dish-card">
