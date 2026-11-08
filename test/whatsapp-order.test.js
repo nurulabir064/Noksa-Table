@@ -7,13 +7,13 @@ test('builds a WhatsApp order message with item quantities and subtotal', () => 
     restaurantName: 'NOKSHA TABLE',
     items: [
       { name: 'Chicken Tikka', quantity: 2, lineTotal: 960 },
-      { name: 'Borhani', quantity: 1, lineTotal: 120 },
+      { name: 'Blueberry Mojito Mocktail', quantity: 1, lineTotal: 120 },
     ],
     subtotal: 1080,
   });
 
   assert.match(message, /Chicken Tikka × 2 — ৳960/);
-  assert.match(message, /Borhani × 1 — ৳120/);
+  assert.match(message, /Blueberry Mojito Mocktail × 1 — ৳120/);
   assert.match(message, /Subtotal: ৳1080/);
   assert.match(message, /confirm item availability/);
 });
