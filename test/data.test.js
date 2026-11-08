@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { dishes, categories } from '../src/data.js';
+import { dishes, categories, featuredDishIds } from '../src/data.js';
 
 test('menu contains dishes with complete required fields', () => {
   assert.ok(dishes.length > 0, 'menu should not be empty');
@@ -88,4 +88,13 @@ test('menu presents the requested international categories without Bengali dishe
   assert.ok(dishes.some(dish => dish.id === 'bbq-chicken-pizza'));
   assert.ok(dishes.some(dish => dish.id === 'chicken-fried-rice'));
   assert.ok(dishes.every(dish => dish.category !== 'Bengali Classics'));
+});
+
+test('homepage featured selection references exactly four existing dishes', () => {
+  assert.equal(featuredDishIds.length, 4);
+  assert.equal(new Set(featuredDishIds).size, featuredDishIds.length);
+  const dishIds = new Set(dishes.map(dish => dish.id));
+  for (const id of featuredDishIds) {
+    assert.ok(dishIds.has(id), 'homepage featured dish is missing from menu data: ' + id);
+  }
 });
