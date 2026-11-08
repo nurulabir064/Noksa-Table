@@ -32,3 +32,37 @@ test('rejects malformed cart lines and invalid totals', () => {
     subtotal: -1,
   }), '');
 });
+
+
+test('includes customer contact, delivery address and special instructions in the order message', () => {
+  const message = buildOrderMessage({
+    restaurantName: 'NOKSHA TABLE',
+    items: [{ name: 'Thai Basil Rice Combo', quantity: 2, lineTotal: 1380 }],
+    subtotal: 1380,
+    customer: {
+      name: 'Abir',
+      phone: '01304302201',
+      fulfilment: 'delivery',
+      address: 'Gulshan 2, Dhaka',
+      notes: 'Less spicy, please',
+    },
+  });
+  assert.match(message, /Customer: Abir/);
+  assert.match(message, /Contact number: 01304302201/);
+  assert.match(message, /Order method: Delivery/);
+  assert.match(message, /Delivery address: Gulshan 2, Dhaka/);
+  assert.match(message, /Special instructions: Less spicy, please/);
+});
+
+test('limits optional customer details and does not include a delivery address for pickup', () => {
+  const message = buildOrderMessage({
+    restaurantName: 'NOKSHA TABLE',
+    items: [{ name: 'Chicken Pizza', quantity: 1, lineTotal: 550 }],
+    subtotal: 550,
+    customer: { name: 'A'.repeat(150), phone: '1'.repeat(60), fulfilment: 'pickup', address: 'Private address' },
+  });
+  assert.ok(message.includes('Customer: ' + 'A'.repeat(100)));
+  assert.ok(message.includes('Contact number: ' + '1'.repeat(30)));
+  assert.ok(message.includes('Order method: Pickup'));
+  assert.ok(!message.includes('Delivery address:'));
+});
