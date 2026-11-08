@@ -84,9 +84,11 @@ test('requires a delivery address only when delivery is selected', async () => {
 test('rejects unsupported methods and cross-origin requests', async () => {
   const method = await call(validBody, { method: 'GET' });
   const origin = await call(validBody, { headers: { origin: 'https://attacker.example' } });
+  const scheme = await call(validBody, { headers: { origin: 'http://noksa-table.vercel.app' } });
   assert.equal(method.res.statusCode, 405);
   assert.equal(method.res.headers.Allow, 'POST');
   assert.equal(origin.res.statusCode, 403);
+  assert.equal(scheme.res.statusCode, 403);
 });
 
 test('requires the exact JSON media type and rejects oversized requests', async () => {
