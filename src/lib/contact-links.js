@@ -21,3 +21,14 @@ export function buildContactLinks({ phone = '', whatsapp = '', email = '', messa
     email: validEmail ? { href: 'mailto:' + normalizedEmail, label: normalizedEmail } : null,
   }
 }
+
+export function buildEmailLink({ email = '', subject = '', body = '' } = {}) {
+  const normalizedEmail = typeof email === 'string' ? email.trim() : '';
+  const validEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(normalizedEmail) && normalizedEmail.length <= 254;
+  if (!validEmail) return null;
+  const params = new URLSearchParams();
+  if (subject) params.set('subject', subject);
+  if (body) params.set('body', body);
+  const query = params.toString();
+  return { href: 'mailto:' + normalizedEmail + (query ? '?' + query : ''), label: normalizedEmail };
+}
