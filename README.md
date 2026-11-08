@@ -25,14 +25,14 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 ## Features
 
 - Responsive restaurant landing page and mobile navigation
-- Multi-cuisine menu with Thai, Chinese, Indian, Continental, Seafood, Bengali Classics, Asian, and mocktail categories; includes search and filters
+- Multi-cuisine menu with Starters, Chinese, Thai, Indian, Continental, Seafood, Drinks & Mocktails, Desserts and Combos; includes search and filters
 - Individual dish detail routes
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
 - Verified phone / email / directions links driven by public client configuration
 - Homepage featured dishes and full menu support quantity controls, running subtotals and a prefilled email draft containing selected dish names, quantities and subtotal
 - Dish detail pages include an email enquiry action
-- Contact form preview state with native browser validation
+- Contact form prepares an email draft through the visitor's configured email app; it does not send or store messages
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
 - Canonical URL, Open Graph and Twitter sharing metadata
@@ -133,8 +133,8 @@ Replace all fictional/sample content with client-approved assets and information
 - Ordering currently creates a prefilled email draft; it does not submit an order to a backend, confirm availability, calculate delivery fees, collect payment, or guarantee fulfilment. The guest must review and send the draft; the restaurant confirms details directly.
 - The contact form remains a frontend-only preview and does not transmit or store data.
 - Sample menu data is stored locally in `src/data.js`.
-- Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
-- Automated tests cover menu data, reservation input validation, and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
+- Images are remote Unsplash URLs used for concept presentation. The current source audit has explicit photo-page metadata for 10 of 29 menu images; 19 menu images and the gallery set still need source/photographer verification. Do not treat the image set as client-delivery-ready until every asset is checked against its source page and license, and the client approves the final selection.
+- Automated tests cover menu data, cart calculations, contact links, order email construction, reservation input validation and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
 - The canonical and sitemap URLs currently point to the public demo domain and must be updated when a client-owned domain is connected.
 
 ## Reservation backend setup (keep disabled until launch approval)
@@ -156,11 +156,16 @@ The API stores requests as `pending`; it does not confirm tables or send notific
 - [ ] Add multiple dishes, change quantities, verify line totals/subtotal, and confirm the email draft contains the correct item names, quantities and subtotal.
 - [ ] Test reservation date/time, consent, disabled state, API validation, rate limiting and all error states.
 - [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
-- [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
+- [ ] Verify responsive layout at narrow mobile (320/360/390 px), tablet (768 px), laptop (1366 px), and wide desktop (1440 px) widths.
+- [ ] Capture desktop and mobile screenshots for Home, Menu, Our Story, Gallery, Contact and Reservation; review image crop, text wrapping, spacing, overflow, focus and CTA visibility.
+- [ ] Check every menu and gallery image for subject relevance, crop, sharpness, duplicates, successful loading, source URL, photographer, license and client approval.
 - [ ] Check images, font loading, broken links, console errors, and network failures.
 - [ ] Run `npm test` and a production build; verify the deployed commit and domain.
 - [ ] Measure real Core Web Vitals and accessibility with browser tooling before claiming performance or accessibility compliance.
 - [ ] Obtain client approval for content, images, policies, and legal/privacy text.
+- [ ] Keep production reservations disabled until the live database, staff workflow, privacy/retention policy, notification handling and controlled production test are approved.
+- [ ] Keep online payments disabled until a Bangladesh gateway merchant account is approved, sandbox credentials are configured server-side, verified webhook/IPN handling and duplicate protection are tested, and refunds/reconciliation are documented.
+- [ ] Never treat a frontend redirect or success message as proof of payment; verify the transaction server-side with the gateway.
 
 ## Deployment
 
