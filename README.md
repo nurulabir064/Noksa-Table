@@ -45,7 +45,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - PostgreSQL schema for reservation requests and request-rate tracking
 - Server-side validation, same-origin checks, honeypot, payload limits and database-backed rate limiting
 - Privacy consent requirement and disabled-by-default reservation feature flag
-- Automated menu-data, contact-link, reservation validation and API guard tests, executed before production build
+- Automated menu-data, cart, contact-link, gallery metadata, server-side order validation, reservation validation and API guard tests, executed before the production build
 
 ## Technology
 
@@ -67,7 +67,15 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite.
+Open the local URL printed by Vite. This command runs the frontend only; Vite does not execute the Vercel serverless API routes.
+
+To test the complete order API locally, authenticate and link the repository to the Vercel project, then run:
+
+```bash
+npx vercel dev
+```
+
+Use the local URL printed by Vercel CLI. The order API validates the menu and prepares a WhatsApp message but does not store orders. The reservation API remains disabled until its database and privacy environment variables are configured.
 
 ## Production build
 
