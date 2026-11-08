@@ -102,14 +102,14 @@ function DishCard({dish,quantity=0,onAdd,onRemove}){
 function Home(){
   return (
     <main id="main-content">
-      <section className="hero">
+      <section className="hero" aria-labelledby="home-hero-title">
         <img className="hero-bg" fetchPriority="high" decoding="async" width="2000" height="1100"
           src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=90"
           alt="Warm contemporary restaurant dining room"/>
         <div className="hero-shade"/>
         <div className="hero-content">
           <span className="eyebrow light">THAI · CHINESE · INDIAN · CONTINENTAL & MORE</span>
-          <h1>A world of<br/><em>flavour.</em><br/>One welcoming table.</h1>
+          <h1 id="home-hero-title">A world of<br/><em>flavour.</em><br/>One welcoming table.</h1>
           <p>Discover wok-fired favourites, comforting curries, Continental plates, fresh seafood, handcrafted mocktails and indulgent desserts.</p>
           <div className="hero-actions">
             <Link className="button button-light" to="/menu">Explore the menu <ArrowRight size={16}/></Link>
