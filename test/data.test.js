@@ -124,3 +124,16 @@ test('homepage features pizza, Indian dishes, Thai combo, strawberry mocktail an
     assert.ok(dish.imageCredit, 'featured dish needs a source and creator record: ' + dish.name);
   }
 });
+
+
+test('every menu image has a source page, creator and license record', () => {
+  assert.equal(dishes.length, 33);
+  assert.equal(dishes.filter(dish => dish.imageCredit).length, dishes.length);
+
+  for (const dish of dishes) {
+    assert.ok(dish.imageCredit.name, 'missing image creator: ' + dish.name);
+    assert.ok(dish.imageCredit.url.startsWith('https://'), 'missing image source: ' + dish.name);
+    assert.ok(dish.imageCredit.license, 'missing image license: ' + dish.name);
+    assert.ok(dish.imageCredit.licenseUrl.startsWith('https://'), 'missing license URL: ' + dish.name);
+  }
+});
