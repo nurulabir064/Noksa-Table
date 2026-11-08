@@ -7,13 +7,13 @@ export const galleryImages = Object.freeze([
   },
   {
     src: 'https://images.pexels.com/photos/35215474/pexels-photo-35215474/free-photo-of-authentic-thai-basil-chicken-with-rice-and-egg.jpeg?auto=compress&dpr=1&h=750&w=1260',
-    alt: 'Thai basil chicken with rice, fried egg and fresh vegetables',
+    alt: 'Thai Basil Rice Combo with basil chicken, fragrant rice, fried egg and fresh vegetables',
     kind: 'Food',
     credit: { name: 'UNDO KIM / Pexels', url: 'https://www.pexels.com/photo/authentic-thai-basil-chicken-with-rice-and-egg-35215474/', license: 'Pexels License', licenseUrl: 'https://www.pexels.com/license/' },
   },
   {
     src: 'https://images.pexels.com/photos/17321274/pexels-photo-17321274.jpeg?cs=srgb&dl=pexels-shameel-mukkath-3421394-17321274.jpg&fm=jpg',
-    alt: 'Strawberry, lime and mint mocktail served in a glass',
+    alt: 'Strawberry Mojito Mocktail with fresh strawberry, lime and mint served in a glass',
     kind: 'Drinks',
     credit: { name: 'Shameel Mukkath / Pexels', url: 'https://www.pexels.com/photo/a-glass-of-strawberry-and-lime-drink-with-lime-and-mint-17321274/', license: 'Pexels License', licenseUrl: 'https://www.pexels.com/license/' },
   },
