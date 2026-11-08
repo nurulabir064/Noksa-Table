@@ -32,6 +32,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
 - Order preparation API validates menu item IDs, quantities, customer details and server-owned prices before preparing a WhatsApp handoff; it does not store orders or claim that a message was sent
+- Order preparation API validates menu item IDs, quantities, customer details and server-owned prices before preparing a WhatsApp handoff; it does not store orders or claim that a message was sent
 - Verified-format phone, WhatsApp, email and directions links driven by public client configuration
 - Homepage presents 12 curated dishes, including Bangladeshi favourites, pizza and Indian choices, with exactly one Soft Drinks item. The three Bangladesh online-order leaders reported for 2025—Basmati Kacchi, Plain Paratha and Chicken Chap—are included ([Prothom Alo summary of Foodpanda's annual data, 28 Jan 2026](https://www.prothomalo.com/amp/story/lifestyle/shopping/ihcfbpwr9t)); the other nine are editorial selections, not ranked best-sellers. The cart supports quantity controls and running subtotals. Guests can add a name, phone, pickup/delivery choice, delivery address and special instructions; WhatsApp is the primary order handoff and a prefilled email is the alternative
 - Dish detail pages offer WhatsApp ordering first and email enquiry as an alternative
