@@ -17,6 +17,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - [Bengali sales kit](docs/SALES-KIT-BN.md) — positioning, starter package, pricing context and honest demo positioning.
 - [Client onboarding brief](docs/CLIENT-ONBOARDING-BN.md) — business details, content, goals and booking/order discovery.
 - [Payment architecture](docs/PAYMENT-ARCHITECTURE-BN.md) — SSLCOMMERZ recommendation, provider comparison, server-side validation, IPN, refunds and sandbox launch gates.
+- [.env.example](.env.example) — safe variable names for reservation setup and future server-side payment credentials; never commit real values.
 - [Client customization workflow](docs/CLIENT-CUSTOMIZATION-WORKFLOW-BN.md) — replace demo branding, configure verified contact links, content, SEO and deployment safely.
 - [Service agreement draft](docs/SERVICE-AGREEMENT-DRAFT-BN.md) — plain-language working draft; obtain local legal review before signing.
 - [Invoice template](docs/INVOICE-TEMPLATE-BN.md) — BDT invoice layout and payment tracking.
