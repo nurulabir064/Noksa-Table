@@ -2611,3 +2611,44 @@ html.js-enabled [data-reveal] {
 @media(prefers-reduced-motion:reduce) { .featured .dish-image img { transition:none; } }
 
 .gallery-item-drinks { height:100%; }
+
+.order-details-form {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px 18px;
+  margin:20px 0 12px;
+  padding:20px;
+  border:1px solid rgba(35,33,29,.12);
+  background:rgba(255,255,255,.52);
+}
+.order-details-form label {
+  display:grid;
+  gap:7px;
+  color:var(--ink,#28251f);
+  font-size:12px;
+  font-weight:600;
+}
+.order-details-form input,
+.order-details-form select,
+.order-details-form textarea {
+  width:100%;
+  min-width:0;
+  padding:12px 13px;
+  border:1px solid rgba(35,33,29,.18);
+  border-radius:2px;
+  background:#fff;
+  color:var(--ink,#28251f);
+  font:inherit;
+  font-size:13px;
+}
+.order-details-form input:focus-visible,
+.order-details-form select:focus-visible,
+.order-details-form textarea:focus-visible {
+  outline:2px solid #1f6a4a;
+  outline-offset:2px;
+}
+.order-address-field,.order-notes-field { grid-column:1/-1; }
+@media(max-width:620px) {
+  .order-details-form { grid-template-columns:1fr; padding:15px; gap:12px; }
+  .order-address-field,.order-notes-field { grid-column:auto; }
+}
