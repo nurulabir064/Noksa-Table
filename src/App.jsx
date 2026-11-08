@@ -463,6 +463,8 @@ function FormPage({reservation=false}){
   const [sent,setSent]=useState(false);
   const [loading,setLoading]=useState(false);
   const [error,setError]=useState('');
+  const [sentVia,setSentVia]=useState('');
+  const [fallbackEmailHref,setFallbackEmailHref]=useState('');
   const reservationEnabled=import.meta.env.VITE_RESERVATIONS_ENABLED==='true'
     && Boolean(import.meta.env.VITE_PRIVACY_POLICY_URL);
   const privacyUrl=import.meta.env.VITE_PRIVACY_POLICY_URL;
@@ -487,12 +489,42 @@ function FormPage({reservation=false}){
         return;
       }
       window.location.href = emailLink.href;
+      setSentVia('email');
       setSent(true);
       return;
     }
 
     if(!reservationEnabled){
-      setError('Online reservation requests are not active yet. No personal details have been submitted.');
+      const formData=new FormData(form);
+      const message=[
+        'Hello '+siteConfig.brandName+', I would like to request a table reservation.',
+        '',
+        'Name: '+formData.get('name'),
+        'Phone: '+formData.get('phone'),
+        formData.get('email')?'Email: '+formData.get('email'):'',
+        'Date: '+formData.get('date'),
+        'Preferred time: '+formData.get('time'),
+        'Guests: '+formData.get('guestCount'),
+        formData.get('message')?'Notes: '+formData.get('message'):'',
+        '',
+        'Please confirm availability. This is a request, not a confirmed booking.'
+      ].filter(Boolean).join('\\n');
+      const whatsappLink=buildWhatsAppLink({phone:siteConfig.publicWhatsApp,message});
+      const emailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Reservation request — '+siteConfig.brandName,body:message});
+      setFallbackEmailHref(emailLink?.href||'');
+      if(whatsappLink){
+        window.open(whatsappLink.href,'_blank','noopener,noreferrer');
+        setSentVia('whatsapp');
+        setSent(true);
+        return;
+      }
+      if(emailLink){
+        window.location.href=emailLink.href;
+        setSentVia('email');
+        setSent(true);
+        return;
+      }
+      setError('Neither WhatsApp nor email is configured. Please contact the restaurant directly.');
       return;
     }
 
@@ -517,6 +549,7 @@ function FormPage({reservation=false}){
       });
       const result=await response.json();
       if(!response.ok)throw new Error(result.error||'We could not submit your request.');
+      setSentVia('reservation');
       setSent(true);
     }catch(err){
       setError(err instanceof Error?err.message:'A network error occurred. Please try again.');
@@ -531,13 +564,14 @@ function FormPage({reservation=false}){
     <p className="page-intro">{reservation?'Choose your preferred date and time. A request is not a confirmed booking.':'Questions about the menu, a group visit or the restaurant concept? Send an email to the team.'}</p>
     {sent
       ? <div className="success" role="status" aria-live="polite">
-          <h2>{reservation?'Request received.':'Continue in your email app.'}</h2>
-          <p>{reservation?'Your request is pending. The restaurant must contact you to confirm availability.':'If your device opens an email app, review the recipient and message, then press Send. This website cannot confirm that the draft opened or that an email was sent.'}</p>
-          <button type="button" className="under-link" onClick={()=>setSent(false)}>Start again</button>
+          <h2>{reservation?(sentVia==='whatsapp'?'WhatsApp request draft prepared.':'Request received.'):'Continue in your email app.'}</h2>
+          <p>{reservation?(sentVia==='whatsapp'?'If WhatsApp opened, review the reservation details and press Send. The request is not sent or confirmed until the restaurant replies. If WhatsApp did not open, use the email alternative below.':'Your request is pending. The restaurant must contact you to confirm availability.'):'If your device opens an email app, review the recipient and message, then press Send. This website cannot confirm that the draft opened or that an email was sent.'}</p>
+          {reservation&&sentVia==='whatsapp'&&fallbackEmailHref&&<a className="under-link" href={fallbackEmailHref}>Prepare the same request by email</a>}
+          <button type="button" className="under-link" onClick={()=>{setSent(false);setSentVia('');setFallbackEmailHref('')}}>Start again</button>
         </div>
       : <form className="contact-form" onSubmit={handleSubmit}>
           <label>Your name<input required name="name" autoComplete="name" maxLength="80" placeholder="Full name"/></label>
-          <label>Email address<input required type="email" name="email" autoComplete="email" maxLength="254" placeholder="you@example.com"/></label>
+          <label>Email address<input required={!reservation||reservationEnabled} type="email" name="email" autoComplete="email" maxLength="254" placeholder="you@example.com"/></label>
           {reservation&&<>
             <label>Phone number<input required type="tel" name="phone" autoComplete="tel" inputMode="tel" maxLength="25" placeholder="+880 1XXXXXXXXX"/></label>
             <div className="form-row">
@@ -549,10 +583,10 @@ function FormPage({reservation=false}){
           </>}
           <label>{reservation?'Additional notes (optional)':'Your message'}<textarea name="message" rows="4" maxLength={reservation?1000:2000} placeholder="Write your message..." required={!reservation}/></label>
           {reservation&&reservationEnabled&&<label className="consent-field"><input type="checkbox" name="consent" required/><span>I have read the <a href={privacyUrl}>privacy notice</a> and agree that my details may be used to respond to this reservation request.</span></label>}
-          {reservation&&!reservationEnabled&&<p className="sample-note">Online reservations are not enabled. This form will not send or store your personal details.</p>}
+          {reservation&&!reservationEnabled&&<p className="sample-note">Demo request: WhatsApp opens first, with email as a fallback. This website does not store your details; the restaurant must confirm the reservation.</p>}
           {error&&<p className="form-error" role="alert">{error}</p>}
           <button className="button button-dark" type="submit" disabled={loading||(reservation&&!reservationEnabled)}>
-            {loading?'Submitting…':reservation?(reservationEnabled?'Send reservation request':'Reservations coming soon') :'Open email app'} <ArrowRight size={16}/>
+            {loading?'Submitting…':reservation?(reservationEnabled?'Send reservation request':'Prepare WhatsApp request') :'Open email app'} <ArrowRight size={16}/>
           </button>
           <p className="sample-note">{reservation?'A request remains pending until the restaurant confirms it.' :'Your device needs an email app or browser mail handler configured. The message is not sent until you press Send.'}</p>
         </form>}
