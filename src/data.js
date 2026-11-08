@@ -1,5 +1,18 @@
 // Illustrative demo menu data. Confirm every item, price and photo with the restaurant before launch.
-export const featuredDishIds = Object.freeze(['grilled-chicken-steak', 'grilled-prawn-platter', 'blueberry-mojito', 'chocolate-frappe'])
+export const featuredDishIds = Object.freeze([
+  'bbq-chicken-pizza',
+  'chicken-fried-rice',
+  'chicken-chow-mein',
+  'butter-chicken',
+  'chicken-tikka',
+  'grilled-chicken-steak',
+  'grilled-prawn-platter',
+  'thai-rice-combo',
+  'chicken-fried-rice-combo',
+  'strawberry-mojito',
+  'classic-cola',
+  'chocolate-frappe',
+])
 
 export const dishes = [
   { id: 'thai-soup', name: 'Thai Chicken Soup', category: 'Thai', price: 390, description: 'A comforting Thai-style chicken soup with mushrooms, herbs and a gently tangy finish.', image: 'https://images.unsplash.com/photo-1625535608282-8f181a38f9e7?auto=format&fit=crop&w=1000&q=85', imageCredit: { name: 'Ryutaro Uozumi / Unsplash', url: 'https://unsplash.com/photos/soup-in-white-ceramic-bowl-bzsXHiw6O6g', license: 'Unsplash License', licenseUrl: 'https://unsplash.com/license' }, tag: 'Comforting bowl' },
@@ -22,15 +35,16 @@ export const dishes = [
   { id: 'fish-and-chips', name: 'Fish & Chips', category: 'Continental', price: 720, description: 'Golden battered fish with crisp fries, lemon and a creamy dipping sauce.', image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=1000&q=85' },
   { id: 'grilled-prawn-platter', name: 'Grilled Prawn Platter', category: 'Seafood', price: 1180, description: 'Herb-marinated grilled prawns with lemon and seasonal sides, made for sharing.', image: 'https://images.unsplash.com/photo-1737141499796-79082c7388b1?auto=format&fit=crop&w=1000&q=85', imageCredit: { name: 'solo seafood / Unsplash', url: 'https://unsplash.com/photos/a-table-topped-with-a-tray-of-food--_j3ZpyJJnY', license: 'Unsplash License', licenseUrl: 'https://unsplash.com/license' }, tag: 'Made for sharing' },
   { id: 'blueberry-mojito', name: 'Blueberry Mojito Mocktail', category: 'Drinks & Mocktails', price: 260, description: 'A chilled non-alcoholic blend of blueberry, mint, lime and sparkling soda.', image: 'https://images.unsplash.com/photo-1755023033352-e780e7d85637?auto=format&fit=crop&w=1000&q=85', imageCredit: { name: 'Julia Vivcharyk / Unsplash', url: 'https://unsplash.com/photos/blueberries-floating-in-a-bubbly-drink--IHt2wLefDA', license: 'Unsplash License', licenseUrl: 'https://unsplash.com/license' }, tag: 'Fresh & fruity' },
-  { id: 'strawberry-mojito', name: 'Strawberry Mojito Mocktail', category: 'Drinks & Mocktails', price: 250, description: 'Fresh strawberry, mint and lime topped with chilled soda for a bright cooler.', image: 'https://images.unsplash.com/photo-1536935338788846bb9981813?auto=format&fit=crop&w=1000&q=85' },
+  { id: 'strawberry-mojito', name: 'Strawberry Mojito Mocktail', category: 'Drinks & Mocktails', price: 250, description: 'Fresh strawberry, mint and lime topped with chilled soda for a bright cooler.', image: 'https://images.pexels.com/photos/17321274/pexels-photo-17321274.jpeg?cs=srgb&dl=pexels-shameel-mukkath-3421394-17321274.jpg&fm=jpg', imageCredit: { name: 'Shameel Mukkath / Pexels', url: 'https://www.pexels.com/photo/a-glass-of-strawberry-and-lime-drink-with-lime-and-mint-17321274/', license: 'Pexels License', licenseUrl: 'https://www.pexels.com/license/' }, tag: 'Fresh & fruity' },
   { id: 'blue-lagoon', name: 'Blue Lagoon Mocktail', category: 'Drinks & Mocktails', price: 230, description: 'A citrus-forward alcohol-free cooler with lemon and a refreshing sparkling finish.', image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=1000&q=85' },
   { id: 'passion-fruit-cooler', name: 'Passion Fruit Cooler', category: 'Drinks & Mocktails', price: 280, description: 'A tropical passion fruit cooler balanced with citrus and fresh mint.', image: 'https://images.unsplash.com/photo-1775204341640-8a471f66c752?auto=format&fit=crop&w=1000&q=85' },
+  { id: 'classic-cola', name: 'Chilled Cola', category: 'Soft Drinks', price: 120, description: 'A chilled, fizzy cola served over ice.', image: 'https://images.unsplash.com/photo-1773188243488-702914547143?auto=format&fit=crop&w=1000&q=85', imageCredit: { name: 'Brandee Taylor / Unsplash', url: 'https://unsplash.com/photos/cola-pouring-into-a-glass-with-ice-uurg0rkdNjE', license: 'Unsplash License', licenseUrl: 'https://unsplash.com/license' } },
   { id: 'chocolate-frappe', name: 'Chocolate Frappe', category: 'Drinks & Mocktails', price: 320, description: 'A chilled chocolate frappe blended until smooth and finished with a light whipped-cream topping.', image: 'https://images.unsplash.com/photo-1718267050202-9b1b6bfb8545?auto=format&fit=crop&w=1000&q=85', imageCredit: { name: 'Circle Digital Marketing Agency / Unsplash', url: 'https://unsplash.com/photos/a-drink-with-whipped-cream-and-chocolate-sprinkles-on-a-table-OeG0_YsoFgk', license: 'Unsplash License', licenseUrl: 'https://unsplash.com/license' }, tag: 'Chilled chocolate' },
   { id: 'strawberry-crepe', name: 'Strawberry Crepe', category: 'Desserts', price: 350, description: 'A soft crepe with strawberries, cream and a light berry drizzle.', image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1000&q=85' },
   { id: 'classic-cheesecake', name: 'Classic Cheesecake', category: 'Desserts', price: 290, description: 'Creamy baked cheesecake on a buttery crumb base with a berry finish.', image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=1000&q=85' },
   { id: 'chicken-fried-rice-combo', name: 'Chicken Fried Rice Combo', category: 'Combos', price: 620, description: 'Chicken fried rice with crispy chicken bites and a chilled soft drink.', image: 'https://images.unsplash.com/photo-1742936401683-3c803809b420?auto=format&fit=crop&w=1000&q=85', imageCredit: { name: 'Gennady Zakharin / Unsplash', url: 'https://unsplash.com/photos/fried-chicken-rice-salad-and-sauce-on-a-plate-688FcyEGZJg', license: 'Unsplash License', licenseUrl: 'https://unsplash.com/license' }, tag: 'Value combo' },
   { id: 'continental-duo-combo', name: 'Steak & Pasta Duo', category: 'Combos', price: 990, description: 'A grilled chicken steak and creamy pasta pairing designed for two to share.', image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1000&q=85' },
-  { id: 'thai-rice-combo', name: 'Thai Basil Rice Combo', category: 'Combos', price: 690, description: 'Thai basil chicken with fragrant rice and a refreshing non-alcoholic cooler.', image: 'https://images.unsplash.com/photo-1515003197210-e0cd7184f8b5?auto=format&fit=crop&w=1000&q=85' },
+  { id: 'thai-rice-combo', name: 'Thai Basil Rice Combo', category: 'Combos', price: 690, description: 'Thai basil chicken with fragrant rice and a refreshing non-alcoholic cooler.', image: 'https://images.pexels.com/photos/12824412/pexels-photo-12824412.jpeg?auto=compress&dpr=1&h=750&w=1260', imageCredit: { name: 'Manit Seekhao / Pexels', url: 'https://www.pexels.com/photo/cooked-food-on-round-ceramic-plate-12824412/', license: 'Pexels License', licenseUrl: 'https://www.pexels.com/license/' }, tag: 'Thai-inspired combo' },
 ]
 
 export const categories = [
@@ -43,5 +57,6 @@ export const categories = [
   'Seafood',
   'Desserts',
   'Drinks & Mocktails',
+  'Soft Drinks',
   'Combos',
 ]
