@@ -83,7 +83,9 @@ test('menu presents the requested international categories without Bengali dishe
   assert.ok(categories.includes('Combos'));
   assert.ok(dishes.some(dish => dish.id === 'blueberry-mojito'));
   assert.ok(dishes.some(dish => dish.id === 'strawberry-mojito'));
-  assert.ok(dishes.some(dish => dish.id === 'chocolate-crepe'));
+  assert.ok(dishes.some(dish => dish.id === 'chocolate-frappe'));
+  assert.ok(dishes.some(dish => dish.id === 'thai-soup'));
+  assert.ok(dishes.some(dish => dish.id === 'bbq-chicken-pizza'));
   assert.ok(dishes.some(dish => dish.id === 'chicken-fried-rice'));
   assert.ok(dishes.every(dish => dish.category !== 'Bengali Classics'));
 });
