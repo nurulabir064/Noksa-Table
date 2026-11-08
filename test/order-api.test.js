@@ -50,7 +50,7 @@ test('prepares a WhatsApp-ready order using server-owned menu prices', async () 
   assert.equal(res.payload.subtotal, 1630);
   assert.match(res.payload.message, /Thai Basil Rice Combo × 2 — ৳1380/);
   assert.match(res.payload.message, /Strawberry Mojito Mocktail × 1 — ৳250/);
-  assert.match(res.payload.message, /Subtotal: ৳1630/);
+  assert.match(res.payload.message, /Estimated subtotal: ৳1630/);
   assert.match(res.payload.message, /Request reference:/);
   assert.equal(res.payload.deliveryStatus, 'not_sent');
   assert.equal(res.headers['Cache-Control'], 'no-store');
