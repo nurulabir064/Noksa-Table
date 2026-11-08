@@ -25,17 +25,17 @@ export function buildOrderMessage({ restaurantName, items, subtotal, customer = 
   };
 
   return [
-    \`Hello \${safeRestaurantName}, I would like to place an order:\`,
+    `Hello \${safeRestaurantName}, I would like to place an order:`,
     '',
     ...lines,
     '',
-    \`Subtotal: ৳\${subtotal}\`,
+    `Subtotal: ৳\${subtotal}`,
     '',
-    \`Customer: \${safeCustomer.name || 'To be confirmed'}\`,
-    \`Contact number: \${safeCustomer.phone || 'To be shared'}\`,
-    \`Order method: \${safeCustomer.fulfilment}\`,
-    ...(safeCustomer.fulfilment === 'Delivery' ? [\`Delivery address: \${safeCustomer.address || 'To be provided'}\`] : []),
-    ...(safeCustomer.notes ? [\`Special instructions: \${safeCustomer.notes}\`] : []),
+    `Customer: \${safeCustomer.name || 'To be confirmed'}`,
+    `Contact number: \${safeCustomer.phone || 'To be shared'}`,
+    `Order method: \${safeCustomer.fulfilment}`,
+    ...(safeCustomer.fulfilment === 'Delivery' ? [`Delivery address: \${safeCustomer.address || 'To be provided'}`] : []),
+    ...(safeCustomer.notes ? [`Special instructions: \${safeCustomer.notes}`] : []),
     '',
     'Please confirm item availability, delivery or pickup details, final charges and payment options.'
   ].join('\n');
