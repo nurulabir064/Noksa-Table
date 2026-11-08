@@ -75,20 +75,18 @@ test('each sample dish has its own image assignment', () => {
   assert.equal(new Set(imageUrls).size, imageUrls.length, 'dish images should not be accidentally reused across menu items');
 });
 
-test('menu presents the requested international categories without Bengali dishes', () => {
+test('menu includes Bangladesh favourites alongside international and Indian categories', () => {
   assert.ok(categories.includes('Chinese'));
+  assert.ok(categories.includes('Indian'));
+  assert.ok(categories.includes('Bangladeshi Classics'));
   assert.ok(categories.includes('Continental'));
   assert.ok(categories.includes('Drinks & Mocktails'));
   assert.ok(categories.includes('Soft Drinks'));
   assert.ok(categories.includes('Desserts'));
   assert.ok(categories.includes('Combos'));
-  assert.ok(dishes.some(dish => dish.id === 'blueberry-mojito'));
-  assert.ok(dishes.some(dish => dish.id === 'strawberry-mojito'));
-  assert.ok(dishes.some(dish => dish.id === 'chocolate-frappe'));
-  assert.ok(dishes.some(dish => dish.id === 'thai-soup'));
-  assert.ok(dishes.some(dish => dish.id === 'bbq-chicken-pizza'));
-  assert.ok(dishes.some(dish => dish.id === 'chicken-fried-rice'));
-  assert.ok(dishes.every(dish => dish.category !== 'Bengali Classics'));
+  for (const id of ['basmati-kacchi','plain-paratha','chicken-chap','strawberry-mojito','thai-soup','bbq-chicken-pizza','chicken-fried-rice']) {
+    assert.ok(dishes.some(dish => dish.id === id), 'missing requested menu item: ' + id);
+  }
 });
 
 test('homepage featured selection references exactly twelve existing dishes', () => {
@@ -110,13 +108,16 @@ test('homepage featured labels do not claim unverified popularity or rankings', 
 test('homepage features pizza, Indian dishes, Thai combo, strawberry mocktail and exactly one soft drink', () => {
   const featured = dishes.filter(dish => featuredDishIds.includes(dish.id));
   const ids = new Set(featured.map(dish => dish.id));
+  assert.ok(ids.has('basmati-kacchi'));
+  assert.ok(ids.has('plain-paratha'));
+  assert.ok(ids.has('chicken-chap'));
   assert.ok(ids.has('bbq-chicken-pizza'));
   assert.ok(ids.has('butter-chicken'));
   assert.ok(ids.has('chicken-tikka'));
   assert.ok(ids.has('thai-rice-combo'));
   assert.ok(ids.has('strawberry-mojito'));
   assert.equal(featured.filter(dish => dish.category === 'Soft Drinks').length, 1);
-  assert.ok(featured.some(dish => dish.category === 'Seafood'));
+  assert.ok(featured.some(dish => dish.category === 'Bangladeshi Classics'));
   assert.ok(featured.some(dish => dish.category === 'Chinese'));
   for (const dish of featured) {
     assert.ok(dish.imageCredit, 'featured dish needs a source and creator record: ' + dish.name);
