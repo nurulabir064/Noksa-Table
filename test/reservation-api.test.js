@@ -86,6 +86,31 @@ test('requires JSON content type', async () => {
   assert.equal(response.statusCode, 415);
 });
 
+test('rejects media types that only contain the words application/json', async () => {
+  const response = await callHandler({
+    headers: {
+      origin: 'https://noksa-table.example',
+      host: 'noksa-table.example',
+      'x-forwarded-proto': 'https',
+      'content-type': 'application/jsonp',
+    },
+  });
+  assert.equal(response.statusCode, 415);
+});
+
+test('accepts JSON with a charset parameter', async () => {
+  const response = await callHandler({
+    headers: {
+      origin: 'https://noksa-table.example',
+      host: 'noksa-table.example',
+      'x-forwarded-proto': 'https',
+      'content-type': 'application/json; charset=utf-8',
+    },
+    body: { ...validBody, consent: false },
+  });
+  assert.equal(response.statusCode, 422);
+});
+
 test('rejects malformed JSON', async () => {
   const response = await callHandler({ body: '{invalid' });
   assert.equal(response.statusCode, 400);
