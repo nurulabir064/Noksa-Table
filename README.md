@@ -5,7 +5,7 @@ A premium multi-cuisine restaurant website concept built with React, Vite, React
 **Live demo:** https://noksa-table.vercel.app  
 **Repository:** https://github.com/nurulabir064/Noksa-Table
 
-> **Important:** Noksha Table is a fictional concept project, not a real restaurant. Menu items, prices, venue imagery, and Dhaka references are illustrative. The reservation API is included but disabled by default; no real booking is accepted. The contact form is a frontend-only preview and does not send or store messages.
+> **Important:** Noksha Table is a fictional concept project, not a real restaurant. Menu items, prices, venue imagery, and Dhaka references are illustrative. The reservation API is included but disabled by default; no real booking is accepted. The contact form prepares an email draft in the visitor's configured email app; the website cannot confirm that the draft opened or that a message was sent or stored.
 
 ## Sales and client delivery documents
 
@@ -131,8 +131,9 @@ Replace all fictional/sample content with client-approved assets and information
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
 - Ordering currently creates a prefilled email draft; it does not submit an order to a backend, confirm availability, calculate delivery fees, collect payment, or guarantee fulfilment. The guest must review and send the draft; the restaurant confirms details directly.
-- The contact form remains a frontend-only preview and does not transmit or store data.
+- The contact form prepares an email draft only. It does not automatically send, transmit to a backend, or store the message.
 - Sample menu data is stored locally in `src/data.js`.
+- No online payment gateway is implemented. Card payments, server-side transaction verification, IPN/webhooks, idempotency, refunds and transaction history must be designed and sandbox-tested before any payment launch.
 - Images are remote Unsplash URLs used for concept presentation. The current source audit has explicit photo-page metadata for 10 of 29 menu images; 19 menu images and the gallery set still need source/photographer verification. Do not treat the image set as client-delivery-ready until every asset is checked against its source page and license, and the client approves the final selection.
 - Automated tests cover menu data, cart calculations, contact links, order email construction, reservation input validation and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
 - The canonical and sitemap URLs currently point to the public demo domain and must be updated when a client-owned domain is connected.
