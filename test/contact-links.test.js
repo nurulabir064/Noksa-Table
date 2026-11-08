@@ -26,3 +26,13 @@ test('encodes user-facing WhatsApp message content', () => {
   const links = buildContactLinks({ whatsapp: '+8801712345678', message: 'Hi & hello?' })
   assert.ok(links.whatsapp.href.includes('text=Hi%20%26%20hello%3F'))
 })
+
+import { buildEmailLink } from '../src/lib/contact-links.js';
+
+test('builds an encoded email draft and rejects invalid addresses', () => {
+  const link = buildEmailLink({ email: 'nurulabir064@gmail.com', subject: 'Order enquiry', body: 'Chicken fried rice & Thai soup' });
+  assert.ok(link.href.startsWith('mailto:nurulabir064@gmail.com?'));
+  assert.ok(link.href.includes('subject=Order+enquiry'));
+  assert.ok(link.href.includes('body=Chicken+fried+rice+%26+Thai+soup'));
+  assert.equal(buildEmailLink({ email: 'not-an-email' }), null);
+});
