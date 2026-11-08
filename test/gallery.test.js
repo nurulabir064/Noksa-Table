@@ -19,8 +19,8 @@ test('gallery uses unique HTTPS photography with complete source and license rec
 });
 
 test('gallery includes strawberry mocktail and Thai basil rice combo photography', () => {
-  assert.ok(galleryImages.some(image => /strawberry.*mocktail|mocktail.*strawberry/i.test(image.alt)));
-  assert.ok(galleryImages.some(image => /thai basil chicken with rice/i.test(image.alt)));
+  assert.ok(galleryImages.some(image => /strawberry mojito mocktail/i.test(image.alt)));
+  assert.ok(galleryImages.some(image => /thai basil rice combo/i.test(image.alt)));
   assert.ok(galleryImages.some(image => image.kind === 'Drinks'));
   assert.ok(galleryImages.some(image => image.kind === 'Food'));
 });
