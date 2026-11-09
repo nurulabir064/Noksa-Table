@@ -43,7 +43,7 @@ The current priority is **not** to turn on every feature at once. First reconcil
 
 NOKSHA TABLE is a fictional demo and no verified business-owned domain or official restaurant mailbox has been established. Therefore, this document deliberately does **not** invent addresses such as `info@nokshatable.com` or claim that they exist.
 
-The personal Gmail address currently found in source code is not automatically a business inbox. Keep the public email unset until the owner explicitly approves the correct destination. For a real restaurant client, use that client's own domain and mailbox.
+The production baseline reviewed for this blueprint contained a personal Gmail address in public source configuration; it was not established as an approved NOKSHA TABLE business inbox. The PR branch now clears the public email field until the owner explicitly approves a destination. For a real restaurant client, use that client's own domain and mailbox.
 
 ### 2.2 Recommended mailbox structure
 
@@ -328,8 +328,8 @@ Choose one of these per action; do not mix the labels:
 
 ## 5. Immediate next actions — exact order
 
-1. **Contact/email decision:** approve the real public recipient and decide whether Contact/Order should remain email drafts or become server-delivered messages. Do not create or publish invented mailboxes.
-2. **Privacy correction:** remove the personal Gmail from public demo configuration unless explicitly approved for this purpose.
+1. **Contact/email decision:** approve the real public recipient and decide whether Contact/Order should remain email drafts or become server-delivered messages. The PR branch has cleared the unapproved public recipient; add a real address only after owner approval. Do not create or publish invented mailboxes.
+2. **Privacy correction:** <strong>PR branch completed</strong> — public email is blank pending approval; a neutral example address is used in tests. This takes effect on the production site only after the PR is reviewed, merged and deployed.
 3. **Behaviour/documentation consistency:** reconcile the README's WhatsApp-ordering statement with the current `mailto:` implementation.
 4. **Database verification:** check the existing Vercel `DATABASE_URL` entry safely, verify its intended Neon target and run a server-side connection/schema test. Do not expose the secret.
 5. **Reservation operations:** keep reservations disabled until staff workflow, notifications, capacity rules, privacy and tests are complete.
@@ -369,4 +369,5 @@ These references support implementation constraints; they do not imply that an i
 ## 7. Change log
 
 - 2026-11-09: Created this blueprint from the current production deployment commit and reviewed repository source, contact-link helpers, reservation API/validation, SQL schema, tests, README, sales/onboarding/delivery documents and Vercel environment-variable metadata.
-- No application code, database schema, environment-variable value, email account, payment credential or production setting was changed as part of creating this document.
+- 2026-11-09: In this PR branch, cleared the unapproved personal public email, replaced the personal email in the unit-test fixture with a neutral example address, corrected the missing-recipient UI error text, and aligned README descriptions with the current email-draft flow.
+- No database schema, environment-variable value, email account, payment credential or production setting was changed. Production remains unchanged until the PR is reviewed, merged and deployed.
