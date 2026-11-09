@@ -26,8 +26,8 @@
 - About / Story page
 - Gallery page
 - Contact page populated with client-approved public contact details (requires client-specific content configuration)
-- Verified call, email and WhatsApp contact links.
-- Menu selection with quantity controls, running subtotal and a WhatsApp order message containing selected dish names, quantities and subtotal. The restaurant confirms availability, delivery/pickup, final charges and payment directly.
+- Verified phone, email and directions links when client-approved details are configured.
+- Menu selection with quantity controls, running subtotal and a prefilled email draft containing selected dish names, quantities and subtotal. The visitor must review and press Send; the restaurant confirms availability, delivery/pickup, final charges and payment directly.
 - Mobile navigation and basic accessibility features
 - Basic page metadata and deployment to an agreed hosting account
 - One production handover and short owner walkthrough
@@ -50,7 +50,8 @@
 | Add-on | কী দিতে হবে |
 |---|---|
 | Menu update support | নির্দিষ্ট সংখ্যক menu edits/month; scope লিখিতভাবে নির্ধারণ |
-| WhatsApp / call / email CTA | Included in the starter; configure verified client details and test on supported devices |
+| Phone / email / directions CTA | Included when approved client details are configured; test on supported devices |
+| WhatsApp click-to-chat | Not included in the current demo code; quote separately only after implementing and testing it |
 | Google Maps / directions | Client-verified business location and map link |
 | Analytics setup | Account ownership, consent/privacy decision and configuration |
 | CMS / admin dashboard | আলাদা discovery, database, roles, security and testing |
@@ -87,7 +88,7 @@
 - Menu: dish name, description, price, category, availability, allergen/dietary information
 - নিজের তোলা বা licensed photos; ব্যবহারের অনুমতি
 - Brand colours / references (থাকলে)
-- WhatsApp business number (যদি click-to-chat চান)
+- WhatsApp business number (যদি click-to-chat feature আলাদা scope-এ implement করতে চান)
 - Website/domain/hosting account-এর owner এবং authorized contact
 - Privacy notice এবং reservation/order policy (যদি প্রযোজ্য হয়)
 
