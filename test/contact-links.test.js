@@ -18,8 +18,8 @@ test('does not create links for missing or malformed contact data', () => {
 });
 
 test('builds an encoded email draft and rejects invalid addresses', () => {
-  const link = buildEmailLink({ email: 'nurulabir064@gmail.com', subject: 'Order enquiry', body: 'Chicken fried rice & Thai soup' });
-  assert.ok(link.href.startsWith('mailto:nurulabir064@gmail.com?'));
+  const link = buildEmailLink({ email: 'hello@example.com', subject: 'Order enquiry', body: 'Chicken fried rice & Thai soup' });
+  assert.ok(link.href.startsWith('mailto:hello@example.com?'));
   assert.ok(link.href.includes('subject=Order+enquiry'));
   assert.ok(link.href.includes('body=Chicken+fried+rice+%26+Thai+soup'));
   assert.equal(buildEmailLink({ email: 'not-an-email' }), null);
