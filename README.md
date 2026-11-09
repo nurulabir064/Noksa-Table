@@ -7,7 +7,9 @@ A premium multi-cuisine restaurant website concept built with React, Vite, React
 
 > **Important:** Noksha Table is a fictional concept project, not a real restaurant. Menu items, prices, venue imagery, and Dhaka references are illustrative. The reservation API is included but disabled by default; no real booking is accepted. The contact form is a frontend-only preview and does not send or store messages.
 
-## Sales and client delivery documents
+## Product and client delivery documents
+
+- [Verified product blueprint and roadmap](docs/PRODUCT-BLUEPRINT.md) — current implementation evidence, security gates, backend/database/email/reservation/order/payment roadmap and release criteria.
 
 All client-facing documents are templates. Fill in the actual scope and have both parties approve them before work starts.
 
@@ -31,7 +33,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
 - Public phone / email / directions links appear only when approved contact details are configured
 - Menu cart with quantity controls and running subtotal; when an approved email recipient is configured, the order action opens a prefilled email draft for the visitor to review and send
-- Direct WhatsApp order action from each dish detail page
+- Dish detail enquiry that opens a prefilled email draft; the visitor must review and press Send
 - Contact form that opens a prefilled email draft only when an approved recipient is configured; it does not send or store the message itself
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
@@ -96,15 +98,15 @@ The production output is generated in `dist/`.
 │   ├── config/
 │   │   └── site.js
 │   ├── lib/
+│   │   ├── cart.js
 │   │   ├── contact-links.js
-│   │   └── whatsapp-order.js
+│   │   └── order-message.js
 │   ├── App.jsx
 │   ├── data.js
 │   ├── main.jsx
 │   └── styles.css
 ├── test/
 │   ├── contact-links.test.js
-│   ├── whatsapp-order.test.js
 │   ├── data.test.js
 │   ├── reservation-api.test.js
 │   └── reservation-validation.test.js
