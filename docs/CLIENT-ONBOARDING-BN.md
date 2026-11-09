@@ -15,7 +15,11 @@
 
 - Public phone:
 - WhatsApp number (if different):
-- Public email:
+- Public website/contact email (client-owned and approved):
+- Order email: একই monitored inbox/alias, নাকি আলাদা mailbox?
+- Reservation email: একই monitored inbox/alias, নাকি আলাদা mailbox?
+- Email workflow: visitor-এর email app-এ draft খুলবে, নাকি website backend থেকে server-delivered email যাবে?
+- প্রতিটি mailbox/domain-এর owner এবং admin/recovery access কার নিয়ন্ত্রণে থাকবে?
 - Full address:
 - Google Maps pin/link:
 - Opening hours by day:
@@ -80,6 +84,16 @@ Special notices / offers:
 - Customer data access কারা পাবে?
 - Retention and deletion policy:
 - Payment লাগবে কি? কোন provider? Refund process কী?
+
+### Email ownership ও routing approval
+
+- Client কি একটি shared monitored inbox ব্যবহার করবে, নাকি contact/orders/reservations-এর জন্য আলাদা address/alias চাইবে?
+- Alias/forwarding কে configure ও monitor করবে?
+- Public contact address প্রকাশের লিখিত অনুমোদন:
+- Server-delivered email লাগলে verified sending domain এবং provider account-এর owner:
+- Bounce, spam/complaint ও delivery failure কে monitor করবে?
+
+বর্তমান demo-তে contact ও menu order email action visitor-এর device-এ `mailto:` draft খোলে। এটি server থেকে email পাঠায় না। বর্তমান code-এ `publicEmail`-ই email draft recipient; আলাদা order/reservation routing এখনো implement করা হয়নি। আলাদা routing দরকার হলে scope, backend delivery এবং tests আলাদাভাবে approve করতে হবে।
 
 ## G. Technical ownership
 
