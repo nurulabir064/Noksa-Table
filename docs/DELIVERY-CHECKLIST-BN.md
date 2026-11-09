@@ -4,6 +4,8 @@
 
 - [ ] Signed/approved scope matches delivered pages and features
 - [ ] Business name, address, phone, email and hours verified by client
+- [ ] Public email is client-owned/approved; shared inbox vs separate aliases/mailboxes and ownership are documented
+- [ ] Current email draft behaviour is clearly distinguished from server-delivered email; no unimplemented routing is promised
 - [ ] Menu names, descriptions, prices and availability approved
 - [ ] Allergen/dietary statements approved by restaurant
 - [ ] Images are client-owned, licensed or otherwise cleared for commercial use
