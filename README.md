@@ -29,10 +29,10 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - Individual dish detail routes
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
-- Verified phone / WhatsApp / email / directions links driven by public client configuration
-- Menu cart with quantity controls, running subtotal and a WhatsApp order message containing selected dish names, quantities and subtotal
+- Public phone / email / directions links appear only when approved contact details are configured
+- Menu cart with quantity controls and running subtotal; when an approved email recipient is configured, the order action opens a prefilled email draft for the visitor to review and send
 - Direct WhatsApp order action from each dish detail page
-- Contact form preview state with native browser validation
+- Contact form that opens a prefilled email draft only when an approved recipient is configured; it does not send or store the message itself
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
 - Canonical URL, Open Graph and Twitter sharing metadata
@@ -130,8 +130,8 @@ Replace all fictional/sample content with client-approved assets and information
 - The reservation API and PostgreSQL schema are included, but the live reservation feature is deliberately disabled by default.
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
-- WhatsApp ordering opens a prefilled chat; it does not submit an order to a backend, confirm availability, calculate delivery fees, collect payment, or guarantee fulfilment. The restaurant confirms these details directly.
-- The contact form remains a frontend-only preview and does not transmit or store data.
+- Menu/order enquiries use a prefilled email draft when a recipient is configured; the visitor must press Send in their own email app. This does not create a backend order, confirm availability, calculate delivery fees, collect payment, or guarantee fulfilment.
+- The contact form uses a mailto draft only; it does not transmit or store data through the website. The recipient remains unconfigured in this demo.
 - Sample menu data is stored locally in `src/data.js`.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
 - Automated tests cover menu data, reservation input validation, and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
