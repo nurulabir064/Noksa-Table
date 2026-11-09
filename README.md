@@ -27,7 +27,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 ## Features
 
 - Responsive restaurant landing page and mobile navigation
-- Multi-cuisine menu with Thai, Chinese, Indian, Continental, Seafood, Bengali Classics, Asian, and mocktail categories; includes search and filters
+- Multi-cuisine menu with Thai, Chinese, Indian, Continental, Seafood, Asian, and mocktail categories; includes search and filters
 - Individual dish detail routes
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
@@ -155,7 +155,7 @@ The API stores requests as `pending`; it does not confirm tables or send notific
 - [ ] Test every route and refresh each nested route directly on the production domain.
 - [ ] Test mobile menu open/close, keyboard navigation, skip link, and focus visibility.
 - [ ] Test menu category filters, empty search results, and search by description.
-- [ ] Add multiple dishes, change quantities, verify line totals/subtotal, and confirm the WhatsApp draft contains the correct item names, quantities and subtotal.
+- [ ] Add multiple dishes, change quantities, verify line totals/subtotal, and confirm the prefilled email draft contains the correct item names, quantities and subtotal; review the recipient and message before sending.
 - [ ] Test reservation date/time, consent, disabled state, API validation, rate limiting and all error states.
 - [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
 - [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
