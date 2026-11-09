@@ -142,8 +142,8 @@ These are design names, not existing Vercel variables. Keep them out of `VITE_*`
 | Public website | React/Vite pages and route metadata | Implemented in code; production deployment READY | Browser/mobile QA and content review still required |
 | Menu and dish pages | Local data and routes | Implemented as demo content | Verify every item, price, image licence and final client content |
 | Email contact action | `mailto:` helper and Contact form | Draft-opening only; no server email | Approve recipient; decide mailto vs server email |
-| Email order enquiry | `mailto:` built from selected items | Draft-opening only; no backend order | Reconcile README claims; choose email or WhatsApp ordering |
-| WhatsApp contact | Contact config/helper and links in project | Must verify exact rendered path and owner approval | Confirm number ownership; test click-to-chat on mobile/desktop |
+| Email order enquiry | `mailto:` built from selected items | Draft-opening only; no backend order | Keep the email-draft limitation explicit; WhatsApp ordering is not implemented |
+| WhatsApp contact/order | No WhatsApp number/config/helper is present in the reviewed `siteConfig`, `ContactActions` or `App.jsx` | Not implemented in this baseline | Treat as a separate feature; implement and test before quoting it as included |
 | Reservation API | `api/reservations.js` | Implemented but gated; stores pending requests only when fully configured | Verify DB, migrate schema, staff workflow, notifications, availability rules and privacy |
 | Reservation notification | No provider integration or notification code found in reviewed files | Not implemented | Implement after mailbox/provider and staff owner are approved |
 | Database | Neon driver + schema; Vercel `DATABASE_URL` entry exists | Connection and schema state not proven | Safe connection test, migration check, backup/restore test |
@@ -156,7 +156,7 @@ These are design names, not existing Vercel variables. Keep them out of `VITE_*`
 
 ### Documentation mismatch to correct
 
-The repository README describes WhatsApp ordering with a prefilled WhatsApp message. The currently reviewed `src/App.jsx` menu and dish enquiry actions instead construct `mailto:` drafts. The actual behaviour and README are therefore inconsistent. Decide which customer journey is intended, implement and test it, then update README, proposal, sales kit and UI copy together. Do not claim both are implemented unless both are actually available and tested.
+The repository README and the reviewed `src/App.jsx` confirm that menu-cart and dish-detail enquiry actions construct `mailto:` drafts; they do not create backend orders or send WhatsApp messages. This PR also corrects the stale WhatsApp-order claims in the README, sales kit and proposal template. WhatsApp click-to-chat remains a possible separately scoped feature, not a verified feature of this baseline.
 
 ---
 
@@ -334,7 +334,7 @@ Choose one of these per action; do not mix the labels:
 
 1. **Client-specific email setup:** keep demo `publicEmail` blank; during each client onboarding, record the approved client-owned public email, shared inbox vs alias/mailbox routing, mailbox owner and required workflow. Current code uses one `publicEmail` for contact/order drafts; distinct order/reservation routing and server-delivered email are future implementation work.
 2. **Privacy correction:** <strong>PR branch completed</strong> — public email is blank pending approval; a neutral example address is used in tests. This takes effect on the production site only after the PR is reviewed, merged and deployed.
-3. **Behaviour/documentation consistency:** reconcile the README's WhatsApp-ordering statement with the current `mailto:` implementation.
+3. **Behaviour/documentation consistency:** PR branch updates README, sales kit and proposal to describe the implemented email-draft journey accurately; WhatsApp click-to-chat remains unimplemented and must be separately scoped.
 4. **Database verification:** check the existing Vercel `DATABASE_URL` entry safely, verify its intended Neon target and run a server-side connection/schema test. Do not expose the secret.
 5. **Reservation operations:** keep reservations disabled until staff workflow, notifications, capacity rules, privacy and tests are complete.
 6. **Order model:** design and test order records and server-calculated totals before considering online payment.
