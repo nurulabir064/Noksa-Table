@@ -30,14 +30,23 @@ src/config/site.js-এ কেবল public business information বসান:
 | openingHoursLabel | Client-confirmed hours |
 | publicPhone | Public phone, country code সহ |
 | whatsappNumber | Public WhatsApp number, country code সহ |
-| publicEmail | Public business email |
+| publicEmail | Client-approved public contact email; current contact/order email draft recipient |
 | whatsappMessage | Short pre-filled enquiry message |
 | mapUrl | Verified Google Maps share/directions HTTPS link |
 | instagramUrl | Verified public Instagram URL |
 
-Phone, WhatsApp, email ফাঁকা থাকলে ওই action link render হবে না। WhatsApp number wa.me-এর জন্য country code-সহ digit হিসেবে normalize হয়; যেমন Bangladesh number 8801...। নম্বরের মালিকানা client-এর কাছ থেকে confirm করুন।
+Phone, WhatsApp, email ফাঁকা থাকলে ওই action link render হবে না। বর্তমান implementation-এ `publicEmail` contact এবং menu order email draft—দুই জায়গায় ব্যবহৃত হয়; `ordersEmail`/`reservationsEmail` আলাদা routing এখনো supported নয়। WhatsApp number wa.me-এর জন্য country code-সহ digit হিসেবে normalize হয়; যেমন Bangladesh number 8801...। নম্বরের মালিকানা client-এর কাছ থেকে confirm করুন।
 
 **Security:** এই config browser bundle-এ প্রকাশিত হয়। এখানে কখনো password, database URL, API secret, SMTP credential, private token বা customer data রাখবেন না।
+
+### Client-specific email setup (handover requirement)
+
+1. Demo/default config-এ `publicEmail` ফাঁকা রাখুন; ব্যক্তিগত developer email কখনো default business identity হবে না।
+2. Client-এর লিখিত অনুমোদন নিয়ে client-owned public mailbox বসান। শুরুতে একটি shared monitored inbox ব্যবহার করা যায়; client চাইলে provider-side alias/forwarding দিয়ে orders/reservations আলাদা করে route করতে পারে।
+3. মনে রাখুন: alias/forwarding configure করা থাকলেও বর্তমান frontend কেবল একটি `publicEmail`-এ `mailto:` draft তৈরি করে। UI থেকে পৃথক order/reservation inbox বেছে পাঠানো এখনো সম্ভব নয়।
+4. আলাদা routing অথবা website থেকে automatic email delivery চাইলে feature scope, server endpoint, server-only provider credentials, spam/rate limiting, delivery failure handling এবং automated tests implement না করা পর্যন্ত feature-টি promised/active দেখাবেন না।
+5. Email provider API key, SMTP password, webhook secret এবং database credential শুধু server-side environment variable-এ থাকবে; `VITE_*` বা `src/config/site.js`-এ নয়।
+6. Client-এর mailbox/domain ownership, admin/recovery access, forwarding, monitoring এবং handover responsibility লিখিতভাবে নিন। Password/OTP সংগ্রহ করবেন না।
 
 ## 4. Menu, copy ও image replace
 
