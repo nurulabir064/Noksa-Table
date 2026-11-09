@@ -160,6 +160,23 @@ The repository README and the reviewed `src/App.jsx` confirm that menu-cart and 
 
 ---
 
+### Security-first review findings — must resolve before enabling customer-data workflows
+
+The following are code/configuration review findings, not a penetration-test result or a claim of exploitability. Resolve and test them before reservations, staff access, automated email, or payment are enabled.
+
+1. **Public contact privacy:** the deployed Production baseline contains a personal email in public frontend configuration. The PR branch clears it, but Production is unchanged until merge and deployment. Verify the production bundle and rendered Contact page after release.
+2. **Origin validation:** the reservation handler constructs the expected origin from forwarded protocol and host headers. Before enabling it, confirm the trusted-proxy/header contract for the deployment platform and prefer a strict canonical-origin allowlist. Add tests for spoofed/missing/malformed forwarded headers and unexpected hosts.
+3. **Rate-limit identity:** the handler uses `x-real-ip` as the client identity. Confirm the platform overwrites this header and clients cannot supply an arbitrary value through the edge. Retain application-level limits and consider edge/WAF rate limiting; test bypass attempts.
+4. **Duplicate submissions:** there is no idempotency key or duplicate-request constraint in the reviewed reservation flow. A retry/double-click may create more than one pending request. Define a safe idempotency strategy and test retries before real booking launch.
+5. **Consent evidence:** the API requires `consent: true`, but the reviewed schema does not store the privacy-notice version or consent timestamp. Decide what evidence and retention are appropriate with the business owner before collecting real customer data.
+6. **Rate-limit table maintenance:** expired rate-limit rows are deleted during each accepted API execution. Evaluate the write overhead and move cleanup to a bounded/scheduled process if volume makes this expensive.
+7. **Database verification:** a `DATABASE_URL` variable entry exists in Vercel metadata, but its value, target Neon branch/role, schema migration and successful live query remain unverified. Never print or expose the connection string.
+8. **Staff access:** no staff/admin authentication, authorization or secure request-review interface was verified. Keep reservation records inaccessible to the public; do not enable real reservations until least-privilege staff access and auditability exist.
+9. **Security headers:** `vercel.json` defines CSP, frame denial, nosniff, referrer and permissions headers. Verify the actual production response headers and test every external image/font/resource against CSP. The current CSP permits inline styles; tighten only after confirming the app still renders correctly.
+10. **Test coverage:** current automated tests cover menu data/cart, contact links, reservation validation and API guards. They do not prove live DB connectivity, browser E2E, staff authorization, load resilience, or penetration-test readiness.
+
+**Release gate:** keep reservations disabled, do not collect real customer data, and do not enable live payments until the applicable findings are resolved, tested and documented. No raw secrets, customer details, session tokens or payment-card data should be written to logs.
+
 ## 4. Ordered implementation roadmap
 
 Each phase has a gate. Do not skip a gate merely to make the checklist appear complete.
