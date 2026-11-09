@@ -8,7 +8,7 @@ export const siteConfig = Object.freeze({
   addressLabel: 'Gulshan 2 Circle, Gulshan, Dhaka, Bangladesh · Demo area only; exact house and road number must be confirmed.',
   openingHoursLabel: 'Daily · 12:00 PM–11:00 PM · Sample hours, subject to confirmation',
   publicPhone: '',
-  publicEmail: 'nurulabir064@gmail.com',
+  publicEmail: '',
   emailSubject: 'Website enquiry — NOKSHA TABLE',
   mapUrl: 'https://www.google.com/maps/search/?api=1&query=Gulshan+2+Circle+Dhaka+Bangladesh',
   instagramUrl: '',
