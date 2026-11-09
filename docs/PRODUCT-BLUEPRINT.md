@@ -23,7 +23,7 @@ The current priority is **not** to turn on every feature at once. First reconcil
 - The reservation feature is disabled unless the frontend and backend flags are explicitly enabled.
 - The Contact page uses a `mailto:` link. It opens the visitor's email app; the visitor must review and press Send. The website does not send that message through a server.
 - Menu order and dish enquiry actions also currently build `mailto:` drafts from `siteConfig.publicEmail`. They do not create a backend order or send a message automatically.
-- `src/config/site.js` currently contains a personal Gmail address as the public recipient. It has not been established as an approved NOKSHA TABLE business inbox. Do not treat it as the official business address or expose it in a client demo without explicit approval.
+- The Production baseline commit `3752fe3` contained a personal Gmail address in public source configuration. The current documentation PR branch clears `publicEmail` to an empty value; it does not establish a new official NOKSHA TABLE business inbox. Do not treat the personal address as a business identity or expose it in a client demo.
 - The app has no configured transactional email provider, email API endpoint, SMTP credentials, email delivery logs, or notification workflow.
 - The codebase has a PostgreSQL reservation schema and uses `@neondatabase/serverless`; code presence alone does not prove that the live database is reachable or correctly migrated.
 
@@ -39,11 +39,13 @@ The current priority is **not** to turn on every feature at once. First reconcil
 
 ## 2. Email section — complete requirements and correct address roles
 
-### 2.1 Do not invent real addresses
+### 2.1 Do not invent real addresses; configure per client
 
 NOKSHA TABLE is a fictional demo and no verified business-owned domain or official restaurant mailbox has been established. Therefore, this document deliberately does **not** invent addresses such as `info@nokshatable.com` or claim that they exist.
 
-The production baseline reviewed for this blueprint contained a personal Gmail address in public source configuration; it was not established as an approved NOKSHA TABLE business inbox. The PR branch now clears the public email field until the owner explicitly approves a destination. For a real restaurant client, use that client's own domain and mailbox.
+The Production baseline reviewed for this blueprint contained a personal Gmail address in public source configuration. The documentation PR branch clears `publicEmail` to an empty value. This is a demo-safe default, not an official NOKSHA TABLE mailbox.
+
+For each real restaurant client, configure only the client-approved, client-owned public address during onboarding and handover. The default recommendation is one monitored shared inbox, with provider-side aliases/forwarding if the client needs separate operational destinations. Use separate mailboxes only when the restaurant's workflow and ownership justify them. Record who owns the domain/mailbox, who controls admin and recovery access, who monitors incoming mail, and who handles delivery failures. Never make a developer's personal mailbox the reusable product default.
 
 ### 2.2 Recommended mailbox structure
 
@@ -59,6 +61,8 @@ Prefer **one monitored primary mailbox plus aliases/forwarding**, rather than pa
 | Automated sender | `notifications@<verified-domain>` or `no-reply@<verified-domain>` | System-generated confirmations/status messages | Outbound sender identity; replies must have a monitored Reply-To | Not configured |
 | Technical/admin owner | Private owner-controlled account; never shown publicly | Vercel, GitHub, Neon, email provider administration and recovery | Project owner only | Keep private; do not publish |
 
+**Current implementation boundary:** the current frontend config supports one `publicEmail` recipient. Contact and menu order actions use that recipient to open a visitor-side `mailto:` draft. Separate `ordersEmail`/`reservationsEmail` routing is not implemented. Reservation notifications are also not implemented. Do not document or sell separate routing or automatic server email as available until the backend, tests and delivery monitoring are built.
+
 **Important distinctions**
 
 - A public contact address is where customers can write.
@@ -70,8 +74,8 @@ Prefer **one monitored primary mailbox plus aliases/forwarding**, rather than pa
 
 ### 2.3 Minimum practical setup for the current demo
 
-1. Leave the public recipient unset until an approved address is chosen.
-2. Do not publish the personal Gmail address found in the current source as a business email by assumption.
+1. Keep the demo `publicEmail` unset. For a client deployment, add only the client's approved public recipient during the client-specific customization step.
+2. Do not reuse the developer's personal email as the product default or client recipient.
 3. If the demo only needs a click-to-email action, keep the `mailto:` behaviour and label it accurately: it opens a draft; the user must press Send. It may fail if the visitor has no configured mail app.
 4. If the website must reliably receive messages without depending on the visitor's email app, implement a server-side email API workflow. A `mailto:` link is not a substitute for a backend email service.
 5. For production, verify ownership of the sending domain and configure the provider's required DNS authentication (SPF, DKIM and an appropriate DMARC policy). Start with a monitored test inbox and verify delivery, spam placement, bounces and provider logs.
@@ -328,7 +332,7 @@ Choose one of these per action; do not mix the labels:
 
 ## 5. Immediate next actions — exact order
 
-1. **Contact/email decision:** approve the real public recipient and decide whether Contact/Order should remain email drafts or become server-delivered messages. The PR branch has cleared the unapproved public recipient; add a real address only after owner approval. Do not create or publish invented mailboxes.
+1. **Client-specific email setup:** keep demo `publicEmail` blank; during each client onboarding, record the approved client-owned public email, shared inbox vs alias/mailbox routing, mailbox owner and required workflow. Current code uses one `publicEmail` for contact/order drafts; distinct order/reservation routing and server-delivered email are future implementation work.
 2. **Privacy correction:** <strong>PR branch completed</strong> — public email is blank pending approval; a neutral example address is used in tests. This takes effect on the production site only after the PR is reviewed, merged and deployed.
 3. **Behaviour/documentation consistency:** reconcile the README's WhatsApp-ordering statement with the current `mailto:` implementation.
 4. **Database verification:** check the existing Vercel `DATABASE_URL` entry safely, verify its intended Neon target and run a server-side connection/schema test. Do not expose the secret.
@@ -369,5 +373,5 @@ These references support implementation constraints; they do not imply that an i
 ## 7. Change log
 
 - 2026-11-09: Created this blueprint from the current production deployment commit and reviewed repository source, contact-link helpers, reservation API/validation, SQL schema, tests, README, sales/onboarding/delivery documents and Vercel environment-variable metadata.
-- 2026-11-09: In this PR branch, cleared the unapproved personal public email, replaced the personal email in the unit-test fixture with a neutral example address, corrected the missing-recipient UI error text, and aligned README descriptions with the current email-draft flow.
+- 2026-11-09: In this PR branch, cleared the unapproved personal public email, replaced the personal email in the unit-test fixture with a neutral example address, corrected the missing-recipient UI error text, aligned README descriptions with the current email-draft flow, and documented client-owned email setup/shared-inbox vs separate-routing decisions in onboarding, customization and handover checklists.
 - No database schema, environment-variable value, email account, payment credential or production setting was changed. Production remains unchanged until the PR is reviewed, merged and deployed.
