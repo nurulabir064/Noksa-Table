@@ -387,7 +387,7 @@ function FormPage({reservation=false}){
       ].join('\n');
       const emailLink = buildEmailLink({ email: siteConfig.publicEmail, subject: 'Website enquiry — ' + siteConfig.brandName, body });
       if (!emailLink) {
-        setError('The restaurant email address is not configured. Please use the email shown in Contact details.');
+        setError('The restaurant email address is not configured for this demo. No message was sent.');
         return;
       }
       window.location.href = emailLink.href;
