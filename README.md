@@ -90,7 +90,6 @@ The production output is generated in `dist/`.
 │   ├── 404.html
 │   ├── favicon.svg
 │   ├── robots.txt
-│   └── robots.txt
 ├── src/
 │   ├── components/
 │   │   └── ContactActions.jsx
