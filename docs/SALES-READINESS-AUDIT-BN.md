@@ -48,9 +48,9 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 | Browser/device QA | Preview redirects to SSO in the available test environment | Not completed |
 | Baseline automated tests | PR #7 validation record, 9 Nov 2026 | 31/31 passed |
 | Baseline production build | PR #7 validation record | Passed |
-| Current audit branch CI | Run #196 on the previous head passed tests, build and sitemap verification; latest head switches to `npm ci` | New locked-install run not yet verified |
-| Dependency reproducibility | `package-lock.json` is now committed; CI updated to use `npm ci` with npm cache | Lockfile install must pass on the exact latest head |
-| Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and a post-build verifier; CI evidence pending |
+| Current audit branch CI | GitHub Actions run #204 on exact head `203cf69` | Passed: locked dependency install (`npm ci`), automated tests, production build and sitemap verification |
+| Dependency reproducibility | `package-lock.json` is committed; CI uses `npm ci` | Exact latest-head locked install passed in run #204 |
+| Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #204 passed |
 
 The public demo could not be independently inspected with the available browser retrieval. Vercel READY means the deployment completed; it does not prove every route, interaction, responsive layout or integration passed acceptance.
 
@@ -124,8 +124,8 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [x] Reservation feature remains disabled by default.
 - [x] Stale sitemap identified and replaced with route-generated output on the audit branch.
 - [x] Reservation content-type validation tightened and regression test added on the audit branch.
-- [ ] Latest audit-branch CI passes tests, build and sitemap verification.
-- [ ] Repository lockfile generated and committed; clean-install reproducibility verified.
+- [x] Latest audit-branch CI (run #204, exact head `203cf69`) passes locked install, tests, build and sitemap verification.
+- [x] Repository lockfile committed; clean-install reproducibility verified by `npm ci` in run #204.
 - [ ] Authorized Preview browser/mobile/tablet QA completed.
 - [ ] Trusted proxy/IP identity, consent evidence and duplicate-submission controls reviewed before enabling reservations.
 - [ ] Live database migration, connectivity, backup and restore verified if reservations are in client scope.
@@ -135,4 +135,4 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 **Final rule:** Do not mark NOKSHA TABLE fully production/client-ready until every applicable item has evidence. The current work prepares a safer, more verifiable starter; it does not authorize Production deployment or enable reservations/payments.
 
 ### Additional UI review finding
-- Fixed the sticky order bar's `Review` anchor by adding the missing `id="order-summary"` to its target section. The exact latest commit still requires a fresh CI run and browser verification.
+- Fixed the sticky order bar's `Review` anchor by adding the missing `id="order-summary"` to its target section. Exact-head CI run #204 now passes; browser/device verification remains outstanding.
