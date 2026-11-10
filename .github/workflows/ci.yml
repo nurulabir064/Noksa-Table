@@ -37,7 +37,7 @@ jobs:
         run: npm run verify:sitemap
 
   generate-lockfile:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/chore/sales-readiness-release-gates'
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'chore/sales-readiness-release-gates'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -45,6 +45,9 @@ jobs:
     steps:
       - name: Check out audit branch
         uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
