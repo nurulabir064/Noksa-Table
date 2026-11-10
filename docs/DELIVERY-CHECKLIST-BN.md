@@ -5,7 +5,7 @@
 - [ ] Signed/approved scope matches delivered pages and features
 - [ ] Business name, address, phone, email and hours verified by client
 - [ ] Public email is client-owned/approved; shared inbox vs separate aliases/mailboxes and ownership are documented
-- [ ] Current email draft behaviour is clearly distinguished from server-delivered email; no unimplemented routing is promised
+- [ ] WhatsApp request flow is distinguished from backend order acceptance; guest selects pickup/delivery and supplies address for delivery
 - [ ] Menu names, descriptions, prices and availability approved
 - [ ] Allergen/dietary statements approved by restaurant
 - [ ] Images are client-owned, licensed or otherwise cleared for commercial use
@@ -21,10 +21,13 @@
 - [ ] Category filters and empty state work
 - [ ] Dish detail routes show correct content and handle unknown IDs
 - [ ] Phone links use verified client numbers; email links use the approved client-owned address
-- [ ] No WhatsApp ordering/contact integration is claimed unless it is separately implemented and tested
+- [ ] WhatsApp number is client-approved and verified; order message contains items, quantities, subtotal, fulfilment choice, customer contact and delivery address where applicable
 - [ ] Map/directions link points to the verified location
 - [ ] Forms have labels, required-field validation and understandable error states
-- [ ] No form is described as working unless its actual delivery/storage path was tested
+- [ ] Test pickup and delivery request wording; confirm delivery coverage, fee, minimum order, ETA, opening hours, stock availability and pickup details from the client. Never invent them.
+- [ ] Invalid customer details, missing delivery address, empty cart and subtotal mismatch block the WhatsApp continuation.
+- [ ] Guest sees clear wording that the message is a request, not an accepted order.
+- [ ] No form is described as working unless its actual delivery/storage path was tested.
 - [ ] No console errors or broken network assets
 
 ## 3. Responsive and accessibility basics

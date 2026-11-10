@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, NavLink, Route, Routes, useParams, useLocation } from 'react-router-dom'
+import { Link, NavLink, Route, Routes, useParams, useLocation, useSearchParams } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight, Menu as MenuIcon, Search, X } from 'lucide-react'
 import { dishes, categories } from './data'
 import { siteConfig } from './config/site.js'
 import ContactActions from './components/ContactActions.jsx'
-import { buildEmailLink } from './lib/contact-links.js'
+import { buildEmailLink, buildWhatsAppLink } from './lib/contact-links.js'
 import { buildOrderMessage } from './lib/order-message.js'
 import { getCartSummary, updateCartQuantity } from './lib/cart.js'
 
@@ -92,7 +92,7 @@ function DishCard({dish,quantity=0,onAdd,onRemove}){
             : <div className="quantity-control" aria-label={dish.name+' quantity'}>
                 <button type="button" onClick={()=>onRemove(dish.id)} aria-label={'Remove one '+dish.name}>−</button>
                 <output aria-live="polite">{quantity}</output>
-                <button type="button" onClick={()=>onAdd(dish.id)} aria-label={'Add one '+dish.name}>+</button>
+                <button type="button" onClick={()=>onAdd(dish.id)} disabled={quantity>=99} aria-label={quantity>=99?dish.name+' quantity limit reached':'Add one '+dish.name}>+</button>
                 <span>৳{dish.price*quantity}</span>
               </div>}
         </div>}
@@ -214,21 +214,92 @@ function Home(){
     </main>
   );
 }
-function Menu(){const [cat,setCat]=useState('All'),[q,setQ]=useState(''),[cart,setCart]=useState({});const normalizedQuery=q.trim().toLocaleLowerCase();const shown=useMemo(()=>dishes.filter(d=>(cat==='All'||d.category===cat)&&[d.name,d.category,d.description].some(value=>value.toLocaleLowerCase().includes(normalizedQuery))),[cat,normalizedQuery]);const order=getCartSummary(cart,dishes);const orderMessage=buildOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal});const orderEmailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Menu order enquiry — '+siteConfig.brandName,body:orderMessage});const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));return <main id="main-content" className="page section-wrap menu-page"><div className="eyebrow">A THOUGHTFUL SELECTION</div><h1 className="page-title">The <em>menu.</em></h1><p className="page-intro">Browse a considered mix of Chinese, Thai, Indian and Continental favourites, plus seafood, mocktails, desserts and easy-to-share combos.</p><div className="menu-tools"><div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(c=><button type="button" aria-pressed={cat===c} className={cat===c?'filter active':'filter'} key={c} onClick={()=>setCat(c)}>{c}</button>)}</div><label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={e=>setQ(e.target.value)} placeholder="Find a dish"/></label></div><p className="results-count" aria-live="polite">{shown.length} {shown.length===1?'dish':'dishes'} found</p><div className="dish-grid menu-grid" key={cat+"-"+q}>{shown.map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}</div>{!shown.length&&<p className="empty">No dishes match your search. Try another name, description, or category.</p>}<section id="order-summary" className="order-summary" aria-labelledby="order-summary-title"><div><div className="eyebrow">YOUR SELECTION</div><h2 id="order-summary-title">Your order <em>so far.</em></h2></div>{order.items.length===0?<p className="empty-order">Choose a dish above to see your quantity and running total here.</p>:<><ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul><div className="order-total"><span>Subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div><p className="sample-note">Your selected dishes and subtotal will be added to an email draft addressed to the restaurant. The restaurant must confirm availability, delivery or pickup details, final charges and payment directly. This website does not process online payments.</p>{orderEmailLink?<a className="button button-dark order-email-button" href={orderEmailLink.href}>Prepare order email <ArrowRight size={16}/></a>:<Link className="button button-dark" to="/contact">Contact the restaurant <ArrowRight size={16}/></Link>}</>}</section><p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>{order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order"><div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div><a className="sticky-view-order" href="#order-summary">Review</a>{orderEmailLink?<a className="sticky-email" href={orderEmailLink.href}>Email order <ArrowRight size={15}/></a>:<Link className="sticky-email" to="/contact">Contact to order <ArrowRight size={15}/></Link>}</div>}</main>}
+function Menu(){
+  const [searchParams]=useSearchParams();
+  const [cat,setCat]=useState('All');
+  const [q,setQ]=useState('');
+  const [cart,setCart]=useState(()=>{
+    const initialDishId=searchParams.get('add');
+    return dishes.some(dish=>dish.id===initialDishId)?{[initialDishId]:1}:{};
+  });
+  const [fulfilment,setFulfilment]=useState('pickup');
+  const [customerName,setCustomerName]=useState('');
+  const [customerPhone,setCustomerPhone]=useState('');
+  const [deliveryAddress,setDeliveryAddress]=useState('');
+  const [orderNote,setOrderNote]=useState('');
+  const normalizedQuery=q.trim().toLocaleLowerCase();
+  const shown=useMemo(()=>dishes.filter(d=>(cat==='All'||d.category===cat)&&[d.name,d.category,d.description].some(value=>value.toLocaleLowerCase().includes(normalizedQuery))),[cat,normalizedQuery]);
+  const order=getCartSummary(cart,dishes);
+  const orderMessage=buildOrderMessage({
+    restaurantName:siteConfig.brandName,
+    items:order.items,
+    subtotal:order.subtotal,
+    fulfilment,
+    customerName,
+    customerPhone,
+    deliveryAddress,
+    orderNote,
+  });
+  const orderWhatsAppLink=buildWhatsAppLink({phone:siteConfig.whatsappNumber,message:orderMessage});
+  const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));
+  const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));
+  const canPrepareOrder=order.items.length>0&&Boolean(orderWhatsAppLink);
+  return <main id="main-content" className="page section-wrap menu-page">
+    <div className="eyebrow">A THOUGHTFUL SELECTION</div>
+    <h1 className="page-title">The <em>menu.</em></h1>
+    <p className="page-intro">Browse a considered mix of Chinese, Thai, Indian and Continental favourites, plus seafood, mocktails, desserts and easy-to-share combos.</p>
+    <div className="menu-tools">
+      <div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(category=><button type="button" aria-pressed={cat===category} className={cat===category?'filter active':'filter'} key={category} onClick={()=>setCat(category)}>{category}</button>)}</div>
+      <label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={event=>setQ(event.target.value)} placeholder="Find a dish"/></label>
+    </div>
+    <p className="results-count" aria-live="polite">{shown.length} {shown.length===1?'dish':'dishes'} found</p>
+    <div className="dish-grid menu-grid" key={cat+"-"+q}>{shown.map(dish=><DishCard key={dish.id} dish={dish} quantity={cart[dish.id]||0} onAdd={addItem} onRemove={removeItem}/>)}</div>
+    {!shown.length&&<p className="empty">No dishes match your search. Try another name, description, or category.</p>}
+    <section id="order-summary" className="order-summary" aria-labelledby="order-summary-title">
+      <div><div className="eyebrow">YOUR SELECTION</div><h2 id="order-summary-title">Your order <em>so far.</em></h2></div>
+      {order.items.length===0?<p className="empty-order">Choose a dish above to see your quantity and running total here.</p>:<>
+        <ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul>
+        <div className="order-total"><span>Food subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div>
+        <div className="fulfilment-panel">
+          <div className="eyebrow">HOW WOULD YOU LIKE TO RECEIVE IT?</div>
+          <fieldset className="fulfilment-options">
+            <legend className="visually-hidden">Choose pickup or delivery request</legend>
+            <label className={fulfilment==='pickup'?'fulfilment-option selected':'fulfilment-option'}>
+              <input type="radio" name="fulfilment" value="pickup" checked={fulfilment==='pickup'} onChange={()=>setFulfilment('pickup')}/>
+              <span><strong>Pickup</strong><small>Collect from the restaurant. Collection details will be confirmed.</small></span>
+            </label>
+            <label className={fulfilment==='delivery'?'fulfilment-option selected':'fulfilment-option'}>
+              <input type="radio" name="fulfilment" value="delivery" checked={fulfilment==='delivery'} onChange={()=>setFulfilment('delivery')}/>
+              <span><strong>Delivery request</strong><small>Subject to the restaurant confirming your area and availability.</small></span>
+            </label>
+          </fieldset>
+          <div className="order-customer-fields">
+            <label>Your name<input autoComplete="name" value={customerName} onChange={event=>setCustomerName(event.target.value)} maxLength={80} placeholder="Name for this request" required/></label>
+            <label>Contact number<input autoComplete="tel" type="tel" inputMode="tel" value={customerPhone} onChange={event=>setCustomerPhone(event.target.value)} maxLength={20} placeholder="Your phone number" required/></label>
+            {fulfilment==='delivery'&&<label className="delivery-address-field">Delivery address<input autoComplete="street-address" value={deliveryAddress} onChange={event=>setDeliveryAddress(event.target.value)} maxLength={300} placeholder="House, road, area and city" required/><small>We will send this as a delivery request. Coverage, delivery fee and estimated time must be confirmed by the restaurant.</small></label>}
+            <label>Special instructions <span className="optional-label">(optional)</span><textarea value={orderNote} onChange={event=>setOrderNote(event.target.value)} maxLength={500} rows={3} placeholder="Allergies, directions or other requests"/></label>
+          </div>
+        </div>
+        <p className="sample-note order-disclaimer">This opens a WhatsApp draft addressed to the restaurant. Review the name, phone and address before sending; these details are shared only if you send the message. This is a request, not an accepted order. The restaurant must confirm item availability, delivery coverage or pickup arrangements, delivery fee, estimated time and final total. No online payment is taken on this website.</p>
+        {orderWhatsAppLink&&canPrepareOrder
+          ?<a className="button button-dark whatsapp-order-button" href={orderWhatsAppLink.href} target="_blank" rel="noopener noreferrer">Continue to WhatsApp <ArrowRight size={16}/></a>
+          :<button className="button button-dark whatsapp-order-button" type="button" disabled>{orderWhatsAppLink?'Complete the required details':'WhatsApp ordering unavailable'}</button>}
+        {!orderWhatsAppLink&&<p className="form-error">WhatsApp ordering is unavailable until a verified restaurant WhatsApp number is configured.</p>}
+        {orderWhatsAppLink&&!canPrepareOrder&&<p className="order-validation-hint" role="status">Enter your name and a valid contact number{fulfilment==='delivery'?' and a complete delivery address':''} to continue.</p>}
+      </>}
+    </section>
+    <p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>
+    {order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order">
+      <div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div>
+      <a className="sticky-view-order" href="#order-summary">Review</a>
+      {orderWhatsAppLink&&canPrepareOrder?<a className="sticky-email" href={orderWhatsAppLink.href} target="_blank" rel="noopener noreferrer">WhatsApp order <ArrowRight size={15}/></a>:<a className="sticky-email" href="#order-summary">Complete details to order</a>}
+    </div>}
+  </main>
+}
 function Detail(){
   const {id}=useParams();
   const dish=dishes.find(item=>item.id===id);
   if(!dish)return <main id="main-content" className="page section-wrap"><h1>Dish not found</h1><Link to="/menu">Back to menu</Link></main>;
-
-  const emailLink=buildEmailLink({
-    email:siteConfig.publicEmail,
-    subject:'Dish enquiry — '+siteConfig.brandName,
-    body:buildOrderMessage({
-      restaurantName:siteConfig.brandName,
-      items:[{name:dish.name,quantity:1,lineTotal:dish.price}],
-      subtotal:dish.price
-    })
-  });
 
   return (
     <main id="main-content" className="detail section-wrap">
@@ -252,9 +323,7 @@ function Detail(){
         <h1>{dish.name}</h1>
         <strong className="detail-price">৳{dish.price}</strong>
         <p>{dish.description}</p>
-        {emailLink
-          ? <a className="button button-dark" href={emailLink.href}>Enquire about this dish <ArrowRight size={16}/></a>
-          : <Link className="button button-dark" to="/contact">Contact to place an order <ArrowRight size={16}/></Link>}
+        <Link className="button button-dark" to={"/menu?add="+encodeURIComponent(dish.id)+"#order-summary"}>Add to order & choose pickup or delivery <ArrowRight size={16}/></Link>
         {dish.imageCredit&&<p className="image-credit">Photo: <a href={dish.imageCredit.url} target="_blank" rel="noreferrer">{dish.imageCredit.name}</a> · <a href={dish.imageCredit.licenseUrl} target="_blank" rel="noreferrer">{dish.imageCredit.license}</a></p>}
         <p className="sample-note">Illustrative menu item and price.</p>
       </div>
@@ -516,4 +585,4 @@ function FormPage({reservation=false}){
   </main>
 }
 function Contact(){return <><FormPage/><section className="contact-details section-wrap" data-reveal><div><div className="eyebrow">PLAN YOUR VISIT</div><h2>Find your way to <em>our table.</em></h2><p className="page-intro">Plan a visit with the sample location and hours below. These details are for the NOKSHA TABLE demo concept only and must be replaced with the restaurant’s verified information before launch.</p></div><div className="contact-details-card"><ContactActions/></div></section></>}
-export default function App(){const {pathname}=useLocation();useEffect(()=>{const brand=siteConfig.brandName;const siteBaseUrl=siteConfig.siteUrl.endsWith('/')?siteConfig.siteUrl.slice(0,-1):siteConfig.siteUrl;const titles={'/':brand+' | '+siteConfig.descriptor,'/menu':'Menu | '+brand,'/about':'Our Story | '+brand,'/gallery':'Gallery | '+brand,'/reservation':'Reserve a Table | '+brand,'/contact':'Contact | '+brand};const descriptions={'/':siteConfig.tagline,'/menu':'Explore the illustrative multi-cuisine menu at ' + brand + '.','/about':'Discover the multi-cuisine idea behind ' + brand + '.', '/gallery':'Explore the gallery for ' + brand + '.','/reservation':'Send a demonstration table reservation request for ' + brand + '.','/contact':'Contact ' + brand + '.'};document.title=titles[pathname]||(pathname.startsWith('/menu/')?'Dish Details | ' + brand + '':'Page Not Found | ' + brand + '');const description=document.querySelector('meta[name="description"]');if(description)description.setAttribute('content',descriptions[pathname]||(pathname.startsWith('/menu/')?'Explore a sample multi-cuisine dish at ' + brand + '.':'The requested page could not be found on ' + brand + '.'));const canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.setAttribute('href',siteBaseUrl+(pathname==='/'?'/':pathname));const meta=(selector,value)=>{const node=document.querySelector(selector);if(node)node.setAttribute('content',value)};const pageTitle=titles[pathname]||(pathname.startsWith('/menu/')?'Dish Details | ' + brand + '':'Page Not Found | ' + brand + '');const pageDescription=descriptions[pathname]||(pathname.startsWith('/menu/')?'Explore a sample multi-cuisine dish at ' + brand + '.':'The requested page could not be found on ' + brand + '.');meta('meta[property="og:title"]',pageTitle);meta('meta[property="og:description"]',pageDescription);meta('meta[property="og:url"]',siteBaseUrl+(pathname==='/'?'/':pathname));meta('meta[name="twitter:title"]',pageTitle);meta('meta[name="twitter:description"]',pageDescription);meta('meta[name="twitter:url"]',siteBaseUrl+(pathname==='/'?'/':pathname));meta('meta[name="robots"]',titles[pathname]||pathname.startsWith('/menu/')?'index,follow':'noindex,follow');window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduceMotion){document.querySelectorAll('[data-reveal]').forEach(node=>node.classList.add('is-visible'));return}const nodes=document.querySelectorAll('[data-reveal]');if(!('IntersectionObserver' in window)){nodes.forEach(node=>node.classList.add('is-visible'));return}const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}})},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});nodes.forEach(node=>observer.observe(node));return()=>observer.disconnect()},[pathname]);return <><Header/><Routes><Route path="/" element={<Home/>}/><Route path="/menu" element={<Menu/>}/><Route path="/menu/:id" element={<Detail/>}/><Route path="/about" element={<About/>}/><Route path="/gallery" element={<Gallery/>}/><Route path="/reservation" element={<FormPage reservation/>}/><Route path="/contact" element={<Contact/>}/><Route path="*" element={<main id="main-content" className="page section-wrap"><h1>Page not found</h1><Link to="/">Return home</Link></main>}/></Routes><Footer/></>}
+export default function App(){const {pathname}=useLocation();useEffect(()=>{const brand=siteConfig.brandName;const siteBaseUrl=siteConfig.siteUrl.endsWith('/')?siteConfig.siteUrl.slice(0,-1):siteConfig.siteUrl;const titles={'/':brand+' | '+siteConfig.descriptor,'/menu':'Menu | '+brand,'/about':'Our Story | '+brand,'/gallery':'Gallery | '+brand,'/reservation':'Reserve a Table | '+brand,'/contact':'Contact | '+brand};const descriptions={'/':siteConfig.tagline,'/menu':'Explore the illustrative multi-cuisine menu at ' + brand + '.','/about':'Discover the multi-cuisine idea behind ' + brand + '.', '/gallery':'Explore the gallery for ' + brand + '.','/reservation':'Send a demonstration table reservation request for ' + brand + '.','/contact':'Contact ' + brand + '.'};document.title=titles[pathname]||(pathname.startsWith('/menu/')?'Dish Details | ' + brand + '':'Page Not Found | ' + brand + '');const description=document.querySelector('meta[name="description"]');if(description)description.setAttribute('content',descriptions[pathname]||(pathname.startsWith('/menu/')?'Explore a sample multi-cuisine dish at ' + brand + '.':'The requested page could not be found on ' + brand + '.'));const canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.setAttribute('href',siteBaseUrl+(pathname==='/'?'/':pathname));const meta=(selector,value)=>{const node=document.querySelector(selector);if(node)node.setAttribute('content',value)};const pageTitle=titles[pathname]||(pathname.startsWith('/menu/')?'Dish Details | ' + brand + '':'Page Not Found | ' + brand + '');const pageDescription=descriptions[pathname]||(pathname.startsWith('/menu/')?'Explore a sample multi-cuisine dish at ' + brand + '.':'The requested page could not be found on ' + brand + '.');meta('meta[property="og:title"]',pageTitle);meta('meta[property="og:description"]',pageDescription);meta('meta[property="og:url"]',siteBaseUrl+(pathname==='/'?'/':pathname));meta('meta[name="twitter:title"]',pageTitle);meta('meta[name="twitter:description"]',pageDescription);meta('meta[name="twitter:url"]',siteBaseUrl+(pathname==='/'?'/':pathname));meta('meta[name="robots"]',titles[pathname]||pathname.startsWith('/menu/')?'index,follow':'noindex,follow');if(window.location.hash){const target=document.getElementById(decodeURIComponent(window.location.hash.slice(1)));target?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}else{window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduceMotion){document.querySelectorAll('[data-reveal]').forEach(node=>node.classList.add('is-visible'));return}const nodes=document.querySelectorAll('[data-reveal]');if(!('IntersectionObserver' in window)){nodes.forEach(node=>node.classList.add('is-visible'));return}const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target)}})},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});nodes.forEach(node=>observer.observe(node));return()=>observer.disconnect()},[pathname]);return <><Header/><Routes><Route path="/" element={<Home/>}/><Route path="/menu" element={<Menu/>}/><Route path="/menu/:id" element={<Detail/>}/><Route path="/about" element={<About/>}/><Route path="/gallery" element={<Gallery/>}/><Route path="/reservation" element={<FormPage reservation/>}/><Route path="/contact" element={<Contact/>}/><Route path="*" element={<main id="main-content" className="page section-wrap"><h1>Page not found</h1><Link to="/">Return home</Link></main>}/></Routes><Footer/></>}
