@@ -5,6 +5,7 @@ export default function ContactActions() {
   const links = buildContactLinks({
     phone: siteConfig.publicPhone,
     email: siteConfig.publicEmail,
+    whatsapp: siteConfig.whatsappNumber,
   })
 
   return (
@@ -18,6 +19,7 @@ export default function ContactActions() {
         <span>{siteConfig.openingHoursLabel}</span>
       </div>
       {links.phone && <a href={links.phone.href}>Call: {links.phone.label}</a>}
+      {links.whatsapp && <a href={links.whatsapp.href} target='_blank' rel='noopener noreferrer'>Chat on WhatsApp</a>}
       {links.email && <a href={links.email.href}>Email: {links.email.label}</a>}
       {siteConfig.mapUrl?.startsWith('https://') && (
         <a href={siteConfig.mapUrl} target="_blank" rel="noopener noreferrer">Get directions</a>
