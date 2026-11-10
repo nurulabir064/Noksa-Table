@@ -316,7 +316,7 @@ function Gallery(){
     {id:'photo-1559847844-5315695dadae',alt:'A Thai noodle dish served fresh',kind:'Food'},
     {id:'photo-1532550907401-a500c9a57435',alt:'Grilled chicken steak with sides',kind:'Food'},
     {id:'photo-1527477396000-e27163b481c2',alt:'Crispy chicken wings for sharing',kind:'Food'},
-    {id:'photo-1515003197210-e0cd7184f8b5',alt:'A colourful rice and curry plate',kind:'Food'}
+    {id:'photo-1775198178204-f127498a97a5',alt:'Thai basil stir-fry with rice',kind:'Food'}
   ];
   const [selected,setSelected]=useState(null);
   const [category,setCategory]=useState('All');
