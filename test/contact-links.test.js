@@ -37,3 +37,8 @@ test('creates an encoded WhatsApp order draft and rejects invalid targets', () =
   assert.equal(buildWhatsAppLink({ phone: 'abc', message: 'Hello' }), null);
   assert.equal(buildWhatsAppLink({ phone: '01304302201', message: ' ' }), null);
 });
+
+test('normalizes a local Bangladesh phone number for the telephone link', () => {
+  const links = buildContactLinks({ phone: '01304302201' });
+  assert.equal(links.phone.href, 'tel:+8801304302201');
+});
