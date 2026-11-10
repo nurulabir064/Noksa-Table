@@ -100,6 +100,15 @@ function routeMetadataPages() {
             source: withPageMetadata(baseHtml, page),
           })
         }
+
+        const sitemap = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+          ...pages.map(page => '  <url><loc>' + siteUrl + (page.route === '/' ? '/' : page.route) + '</loc></url>'),
+          '</urlset>',
+          '',
+        ].join('\n')
+        this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap })
       },
     },
   }
