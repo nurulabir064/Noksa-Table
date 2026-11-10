@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS reservations (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   request_code UUID NOT NULL UNIQUE,
   idempotency_key UUID NOT NULL UNIQUE,
+  request_fingerprint CHAR(64) NOT NULL,
   customer_name VARCHAR(80) NOT NULL,
   customer_email VARCHAR(254) NOT NULL,
   customer_phone VARCHAR(25) NOT NULL,
