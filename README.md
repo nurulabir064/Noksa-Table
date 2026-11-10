@@ -159,7 +159,9 @@ The API stores requests as `pending`; it does not confirm tables or send notific
 - [ ] Test every route and refresh each nested route directly on the production domain.
 - [ ] Test mobile menu open/close, keyboard navigation, skip link, and focus visibility.
 - [ ] Test menu category filters, empty search results, and search by description.
-- [ ] Add multiple dishes, change quantities (including the 99-item limit), verify line totals/subtotal and WhatsApp request content.\n- [ ] Select pickup and verify pickup request wording. Select delivery and verify address is required and included; delivery area, fee, ETA, availability and final total must remain subject to restaurant confirmation.\n- [ ] Test invalid name/phone/address, empty cart and mismatched subtotal; no WhatsApp action should be enabled.
+- [ ] Add multiple dishes, change quantities (including the 99-item limit), verify line totals/subtotal and WhatsApp request content.
+- [ ] Select pickup and verify pickup request wording. Select delivery and verify address is required and included; delivery area, fee, ETA, availability and final total must remain subject to restaurant confirmation.
+- [ ] Test invalid name/phone/address, empty cart and mismatched subtotal; no WhatsApp action should be enabled.
 - [ ] Test reservation date/time, consent, disabled state, API validation, rate limiting and all error states.
 - [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
 - [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
