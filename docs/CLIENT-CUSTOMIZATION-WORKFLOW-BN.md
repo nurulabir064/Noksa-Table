@@ -5,7 +5,7 @@
 ## 1. Client discovery ও scope approval
 
 1. docs/CLIENT-ONBOARDING-BN.md পূরণ করুন।
-2. Client-এর কাছ থেকে business name, branch, public phone/WhatsApp/email, ঠিকানা, opening hours, menu, approved photos, policies ও website goal নিন।
+2. Client-এর কাছ থেকে business name, branch, public phone/email, ঠিকানা, opening hours, menu, approved photos, policies ও website goal নিন।
 3. Booking/order চাইলে সেটি brochure website-এর scope নয়—আলাদা business rules, database, notification, staff workflow, privacy ও QA scope লিখুন।
 4. docs/CLIENT-PROPOSAL-TEMPLATE-BN.md এবং quotation-এ included/excluded features লিখে written approval নিন।
 5. Client-এর account password, OTP বা private API key চাইবেন না। Client-কে hosting/domain provider-এ আপনাকে invite করতে বলুন।
@@ -29,13 +29,13 @@ src/config/site.js-এ কেবল public business information বসান:
 | locationLabel | Verified branch/location label |
 | openingHoursLabel | Client-confirmed hours |
 | publicPhone | Public phone, country code সহ |
-| whatsappNumber | Public WhatsApp number, country code সহ |
+
 | publicEmail | Public business email |
-| whatsappMessage | Short pre-filled enquiry message |
+
 | mapUrl | Verified Google Maps share/directions HTTPS link |
 | instagramUrl | Verified public Instagram URL |
 
-Phone, WhatsApp, email ফাঁকা থাকলে ওই action link render হবে না। WhatsApp number wa.me-এর জন্য country code-সহ digit হিসেবে normalize হয়; যেমন Bangladesh number 8801...। নম্বরের মালিকানা client-এর কাছ থেকে confirm করুন।
+Phone বা email ফাঁকা থাকলে সংশ্লিষ্ট action link render হবে না। Public email-এ contact ও order enquiry draft তৈরি হয়; ব্যবহারকারীকে email app-এ Send চাপতে হয়।
 
 **Security:** এই config browser bundle-এ প্রকাশিত হয়। এখানে কখনো password, database URL, API secret, SMTP credential, private token বা customer data রাখবেন না।
 
@@ -58,7 +58,7 @@ Phone, WhatsApp, email ফাঁকা থাকলে ওই action link render
 
 ## 6. Contact বনাম form — গুরুত্বপূর্ণ পার্থক্য
 
-- Reusable contact actions (src/components/ContactActions.jsx) কেবল verified phone/WhatsApp/email/directions link তৈরি করে। WhatsApp click করলে user WhatsApp-এ যাবে; এটি chat message auto-send করে না।
+- Reusable contact actions (src/components/ContactActions.jsx) কেবল verified phone/email/directions link তৈরি করে। Email action একটি draft খোলে; এটি নিজে থেকে message পাঠায় না।
 - Contact form বর্তমানে demo preview; এটি message email করে না, database-এও রাখে না।
 - Reservation API/schema repository-তে থাকলেও reservation feature default-এ disabled। Database, privacy notice, staff workflow, notifications, availability/capacity rules, access control ও production E2E test ছাড়া enable করবেন না।
 - Client-এর যদি message form দরকার হয়, approved delivery channel (secure backend/email provider/CRM) implement করে success, failure, spam, rate limit, privacy ও retention test করুন। Frontend-only success screen-কে “message sent” বলবেন না।
@@ -84,7 +84,7 @@ Phone, WhatsApp, email ফাঁকা থাকলে ওই action link render
 
 - [ ] Client-owned domain এবং hosting access verified
 - [ ] সব fictional/sample branding ও content সরানো হয়েছে
-- [ ] Phone/WhatsApp/email/location/hour client-confirmed
+- [ ] Phone/email/location/hour client-confirmed
 - [ ] Images licensed/approved
 - [ ] Menu and prices approved
 - [ ] Form/booking capability সত্যি implement ও tested, অথবা স্পষ্টভাবে disabled
