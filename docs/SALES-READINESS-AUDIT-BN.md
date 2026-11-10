@@ -50,7 +50,7 @@ Opening or sending an email draft is an enquiry, not an accepted or confirmed or
 - Live reservation confirmation or table availability.
 - Staff/admin dashboard or CMS.
 - Backend order storage, order status, or delivery management.
-- Automated email/SMS/WhatsApp notifications.
+- Automated email/SMS notifications.
 - Online payment, refunds, or transaction reconciliation.
 - POS, inventory, or delivery-platform integrations.
 - Ongoing menu/content maintenance unless contracted.
