@@ -15,13 +15,13 @@ export function buildWhatsAppOrderMessage({
   const safeRestaurantName = typeof restaurantName === 'string' && restaurantName.trim()
     ? restaurantName.trim().slice(0, 100)
     : 'the restaurant';
-  const safeName = typeof customerName === 'string' ? customerName.trim() : '';
-  const safePhone = typeof customerPhone === 'string' ? customerPhone.trim() : '';
-  const safeAddress = typeof deliveryAddress === 'string' ? deliveryAddress.trim() : '';
-  const safeNote = typeof orderNote === 'string' ? orderNote.trim().slice(0, 500) : '';
+  const cleanText = value => typeof value === 'string' ? value.replace(/[\\u0000-\\u001f\\u007f]/g, ' ').replace(/\\s+/g, ' ').trim() : '';\n  const safeName = cleanText(customerName);
+  const safePhone = cleanText(customerPhone);
+  const safeAddress = cleanText(deliveryAddress);
+  const safeNote = cleanText(orderNote).slice(0, 500);
 
   if (safeName.length < 2 || safeName.length > 80) return '';
-  if (!/^[+0-9()\\s-]{7,20}$/.test(safePhone)) return '';
+  const phoneDigits = safePhone.replace(/\\D/g, '');\n  if (!/^[+0-9()\\s-]{7,20}$/.test(safePhone) || phoneDigits.length < 7 || phoneDigits.length > 15) return '';
   if (fulfilment === 'delivery' && (safeAddress.length < 8 || safeAddress.length > 300)) return '';
 
   const lines = items.map(item => {
@@ -31,7 +31,7 @@ export function buildWhatsAppOrderMessage({
     return `• ${item.name.trim().slice(0, 120)} × ${item.quantity} — ৳${item.lineTotal}`;
   }).filter(Boolean);
 
-  if (lines.length !== items.length) return '';
+  if (lines.length !== items.length) return '';\n  if (items.reduce((total, item) => total + item.lineTotal, 0) !== subtotal) return '';
 
   const fulfilmentLine = fulfilment === 'delivery'
     ? ['Fulfilment: DELIVERY REQUEST (not confirmed)', `Requested address: ${safeAddress}`]
