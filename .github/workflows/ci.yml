@@ -32,6 +32,8 @@ jobs:
         run: npm ci
       - name: Audit production dependencies
         run: npm audit --omit=dev
+      - name: Audit all dependencies for high-severity advisories
+        run: npm audit --audit-level=high
       - name: Run automated tests
         run: npm test
       - name: Build production bundle
