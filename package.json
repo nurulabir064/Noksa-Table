@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm audit --omit=dev && npm audit --audit-level=high && npm test && vite build && npm run verify:sitemap && npm run verify:routes && npm run verify:images",
     "preview": "vite preview",
     "test": "node --test",
     "verify:sitemap": "node scripts/verify-sitemap.mjs",
