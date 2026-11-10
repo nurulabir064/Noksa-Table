@@ -194,7 +194,7 @@ function Home(){
         <div className="home-gallery-grid">
           <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85" alt="Warm contemporary restaurant interior" loading="lazy" decoding="async"/>
           <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=900&q=85" alt="Chicken fried rice served fresh" loading="lazy" decoding="async"/>
-          <img src="https://images.unsplash.com/photo-1513558161293-cdaf765edfd4?auto=format&fit=crop&w=900&q=85" alt="Refreshing fruit and mint mocktail" loading="lazy" decoding="async"/>
+          <img src="https://images.unsplash.com/photo-1755023033352-e780e7d85637?auto=format&fit=crop&w=900&q=85" alt="Refreshing fruit and mint mocktail" loading="lazy" decoding="async"/>
           <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=85" alt="Freshly prepared pasta" loading="lazy" decoding="async"/>
         </div>
       </section>
@@ -309,8 +309,8 @@ function Gallery(){
     {id:'photo-1473093295043-cdd812d0e601',alt:'Pasta served with a creamy sauce',kind:'Food'},
     {id:'photo-1599487488170-d11ec9c172f0',alt:'A platter of grilled tandoori-style food',kind:'Food'},
     {id:'photo-1559737558-2f5a35f4523b',alt:'Seafood platter prepared for sharing',kind:'Food'},
-    {id:'photo-1513558161293-cdaf765edfd4',alt:'A chilled fruit and mint mocktail',kind:'Drinks'},
-    {id:'photo-1536935338788846bb9981813',alt:'A strawberry and lime mocktail',kind:'Drinks'},
+    {id:'photo-1755023033352-e780e7d85637',alt:'A chilled blueberry and mint mocktail',kind:'Drinks'},
+    {id:'photo-1750224907018-c89edc4930be',alt:'A strawberry mojito with fresh mint',kind:'Drinks'},
     {id:'photo-1488477181946-6428a0291777',alt:'A strawberry crepe dessert with cream',kind:'Dessert'},
     {id:'photo-1533134242443-d4fd215305ad',alt:'A slice of classic cheesecake',kind:'Dessert'},
     {id:'photo-1559847844-5315695dadae',alt:'A Thai noodle dish served fresh',kind:'Food'},
