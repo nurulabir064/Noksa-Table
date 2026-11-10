@@ -127,6 +127,7 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [x] Audit-branch CI checkpoint (run #206, commit `004ec32`) passed locked install, tests, build and sitemap verification.
 - [x] Repository lockfile committed; clean-install reproducibility verified by `npm ci` in run #206.
 - [ ] Authorized Preview browser/mobile/tablet QA completed.
+- [ ] Gallery lightbox keyboard/screen-reader QA completed (initial focus, focus containment, Escape close, focus restoration).
 - [ ] Trusted proxy/IP identity, consent evidence and duplicate-submission controls reviewed before enabling reservations.
 - [ ] Live database migration, connectivity, backup and restore verified if reservations are in client scope.
 - [ ] Client content, asset rights, domain and contact details approved.
@@ -136,3 +137,4 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 
 ### Additional UI review finding
 - Fixed the sticky order bar's `Review` anchor by adding the missing `id="order-summary"` to its target section. CI run #206 passed for the audited checkpoint; subsequent documentation-only commits still require the configured CI check, and browser/device verification remains outstanding.
+- Improved gallery lightbox keyboard accessibility: focus moves to Close on open, Tab/Shift+Tab remain within the dialog, Escape closes it, and focus returns to the image trigger. This is code-level work only; manual keyboard/screen-reader verification remains outstanding.
