@@ -214,7 +214,7 @@ html.js-enabled [data-reveal]{opacity:0;transform:translateY(24px);transition:op
 .quantity-control button{width:34px;height:34px;font-size:18px;line-height:1}
 .quantity-control output{min-width:18px;text-align:center;font-weight:600;font-size:13px}
 .quantity-control>span{margin-left:auto;font-size:12px;font-weight:600;color:#24241f}
-.order-summary{margin-top:70px;padding:32px;background:#eeebe3;border-top:2px solid #a65d42}
+.order-summary{margin-top:70px;padding:32px;background:#eeebe3;border-top:2px solid #a65d42;scroll-margin-top:100px}
 .order-summary h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,38px);font-weight:500;margin:10px 0 20px}
 .order-summary h2 em{color:#a45e44}
 .empty-order{font-size:13px;color:#716b61}
