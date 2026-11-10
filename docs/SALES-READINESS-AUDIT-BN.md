@@ -48,9 +48,9 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 | Browser/device QA | Preview redirects to SSO in the available test environment | Not completed |
 | Baseline automated tests | PR #7 validation record, 9 Nov 2026 | 31/31 passed |
 | Baseline production build | PR #7 validation record | Passed |
-| Current audit branch CI | GitHub Actions run #212 on checkpoint `8223765` | Passed: locked dependency install (`npm ci`), automated tests, production build and sitemap verification |
-| Dependency reproducibility | `package-lock.json` is committed; CI uses `npm ci` | Locked install passed in run #212 |
-| Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #212 passed |
+| Current audit branch CI | GitHub Actions run #215 on head `9eb7a37` | Passed: locked dependency install (`npm ci`), production dependency audit (`npm audit --omit=dev`), automated tests, production build and sitemap verification |
+| Dependency reproducibility | `package-lock.json` is committed; CI uses `npm ci` | Locked install and production dependency audit passed in run #215 |
+| Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #215 passed |
 
 The public demo could not be independently inspected with the available browser retrieval. Vercel READY means the deployment completed; it does not prove every route, interaction, responsive layout or integration passed acceptance.
 
@@ -79,6 +79,7 @@ A successful API response means **request received / pending**, not a confirmed 
 ## 5. CI, SEO and maintainability changes in this audit branch
 
 - CI now validates pushes and pull requests on all branches, supports manual dispatch, cancels superseded runs and has a 15-minute job timeout.
+- CI runs `npm audit --omit=dev` after the locked install to check production dependencies; run #215 passed this gate.
 - Production build is a separate CI step after automated tests.
 - The static sitemap with stale dish URLs is removed. Vite now generates `dist/sitemap.xml` from the current page and dish route catalogue.
 - A post-build verifier checks that every expected route appears exactly once and that stale or unexpected URLs are absent.
@@ -124,8 +125,8 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [x] Reservation feature remains disabled by default.
 - [x] Stale sitemap identified and replaced with route-generated output on the audit branch.
 - [x] Reservation content-type validation tightened and regression test added on the audit branch.
-- [x] Audit-branch CI checkpoint (run #212, commit `8223765`) passed locked install, tests, build and sitemap verification.
-- [x] Repository lockfile committed; clean-install reproducibility verified by `npm ci` in run #212.
+- [x] Audit-branch CI checkpoint (run #215, commit `9eb7a37`) passed locked install, production dependency audit, tests, build and sitemap verification.
+- [x] Repository lockfile committed; clean-install reproducibility and production dependency audit verified in run #215.
 - [ ] Authorized Preview browser/mobile/tablet QA completed.
 - [ ] Gallery lightbox keyboard/screen-reader QA completed (initial focus, focus containment, Escape close, focus restoration).
 - [ ] Trusted proxy/IP identity, consent evidence and duplicate-submission controls reviewed before enabling reservations.
