@@ -399,6 +399,18 @@ function Gallery(){
 function getLocalDateValue(){const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Dhaka',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const values=Object.fromEntries(parts.map(part=>[part.type,part.value]));return values.year+'-'+values.month+'-'+values.day}
 function FormPage({reservation=false}){
   const [sent,setSent]=useState(false);
+  const [idempotencyKey,setIdempotencyKey]=useState(()=>{
+    if(!reservation)return '';
+    try{
+      const existing=sessionStorage.getItem('noksha-reservation-idempotency-key');
+      if(existing)return existing;
+      const generated=crypto.randomUUID();
+      sessionStorage.setItem('noksha-reservation-idempotency-key',generated);
+      return generated;
+    }catch{
+      return crypto.randomUUID();
+    }
+  });
   const [loading,setLoading]=useState(false);
   const [error,setError]=useState('');
   const reservationEnabled=import.meta.env.VITE_RESERVATIONS_ENABLED==='true'
@@ -450,12 +462,14 @@ function FormPage({reservation=false}){
           guestCount:formData.get('guestCount'),
           message:formData.get('message'),
           website:formData.get('website'),
-          consent:formData.get('consent')==='on'
+          consent:formData.get('consent')==='on',
+          idempotencyKey
         })
       });
       const result=await response.json();
       if(!response.ok)throw new Error(result.error||'We could not submit your request.');
       setSent(true);
+      try{sessionStorage.removeItem('noksha-reservation-idempotency-key')}catch{}
     }catch(err){
       setError(err instanceof Error?err.message:'A network error occurred. Please try again.');
     }finally{
@@ -471,7 +485,7 @@ function FormPage({reservation=false}){
       ? <div className="success" role="status" aria-live="polite">
           <h2>{reservation?'Request received.':'Email draft opened.'}</h2>
           <p>{reservation?'Your request is pending. The restaurant must contact you to confirm availability.':'Your email app should open with the recipient and message filled in. Review it and press Send to deliver it.'}</p>
-          <button type="button" className="under-link" onClick={()=>setSent(false)}>Start again</button>
+          <button type="button" className="under-link" onClick={()=>{setSent(false);if(reservation){const next=crypto.randomUUID();setIdempotencyKey(next);try{sessionStorage.setItem('noksha-reservation-idempotency-key',next)}catch{}}}}>Start again</button>
         </div>
       : <form className="contact-form" onSubmit={handleSubmit}>
           <label>Your name<input required name="name" autoComplete="name" maxLength="80" placeholder="Full name"/></label>
