@@ -24,7 +24,7 @@
 | Discovery and setup | Requirement confirmation, project setup | |
 | Website pages | Approved page list and page count | |
 | Menu | Client-provided menu, category/search if agreed | |
-| Contact actions | Only agreed call/email/WhatsApp/map links | |
+| Contact actions | Only agreed call/email/map links | |
 | Responsive QA | Agreed mobile, tablet and desktop checks | |
 | Deployment | Agreed hosting/domain account setup | |
 | Handover | Source/access handover and walkthrough | |
@@ -35,7 +35,7 @@
 - Online ordering, payment gateway, delivery management
 - Live booking confirmation or table availability
 - CMS/admin panel/database unless explicitly listed above
-- Automated email/SMS/WhatsApp notifications unless explicitly listed
+- Automated email/SMS notifications unless explicitly listed
 - Copywriting, translation, photography, logo/brand design unless listed
 - Domain, hosting, email, paid plugins, subscriptions and third-party fees
 - Ongoing maintenance and unlimited revisions
