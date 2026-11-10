@@ -4,13 +4,14 @@
 **Repository:** https://github.com/nurulabir064/Noksa-Table  
 **Audited working branch:** `feat/premium-homepage-ordering-gallery-contact`  
 **Audited commit:** `3752fe3542c341feef083cbbcfa3586b9e8dc395`  
+**Audit changes branch:** `chore/sales-readiness-audit`  
 **Production domain:** https://noksa-table.vercel.app
 
 ## Executive decision
 
 **Status: NOT APPROVED for unrestricted production client delivery.**
 
-The repository contains a useful restaurant website starter and a set of sales/delivery templates. The inspected production deployment is marked READY and the Vercel project domain is verified. Those facts do not establish that every browser journey, third-party integration, database workflow, security control, or client-specific configuration has passed acceptance testing.
+The repository contains a useful restaurant website starter and a set of sales/delivery templates. The inspected production deployment is marked READY and the Vercel project domain is verified. The audit branch's automated CI run also passed. These facts do not establish that every browser journey, third-party integration, database workflow, security control, or client-specific configuration has passed acceptance testing.
 
 Sell only the explicitly scoped **restaurant website starter** after the client-specific content, assets, contact actions, deployment, and acceptance checks are completed. Do not represent the current demo as a live restaurant, confirmed reservation platform, backend order management system, or online payment platform.
 
@@ -25,8 +26,9 @@ Sell only the explicitly scoped **restaurant website starter** after the client-
 | Frontend configuration | `src/config/site.js` | Contains sample venue details; phone is blank; email is configured |
 | Reservation API | `api/reservations.js` | Implemented with server-side guards; feature disabled by default |
 | Database | `db/schema.sql` | Schema exists; live database operation not verified |
-| Automated tests | `test/*.test.js`, package scripts | Test suite exists; this audit did not execute it |
-| CI workflow | `.github/workflows/ci.yml` | Previously ran push checks only on `main`; updated separately on audit branch |
+| Automated tests | GitHub Actions run #137, commit `5815ad5` | Passed |
+| Production build | GitHub Actions run #137, commit `5815ad5` | Passed |
+| CI workflow | `.github/workflows/ci.yml` | Updated on audit branch to validate all branch pushes and support manual runs |
 | Browser QA | No live browser test evidence collected | Not verified |
 | Payment gateway | No payment integration found in inspected repository tree | Not implemented |
 
@@ -114,7 +116,9 @@ Use it only when the client supplies approved content and usable licensed images
 
 ## 7. Verification record and limitations
 
-This audit is based on repository file inspection and Vercel deployment/domain metadata. It is not a substitute for running the test suite, browser automation, manual device testing, live database integration, penetration testing, accessibility assessment, load testing, or a client acceptance session.
+The audit is based on repository file inspection, Vercel deployment/domain metadata, and GitHub Actions. Run #137 completed successfully for commit `5815ad5`: dependency installation, automated tests, and production build all passed.
+
+This is not a substitute for browser automation, manual device testing, live database integration, penetration testing, accessibility assessment, load testing, or a client acceptance session. The public website could not be independently inspected with the available browser retrieval, so visual and live interaction claims remain unverified.
 
 Do not mark a checklist item complete without recording the test, environment, date, result, and relevant evidence.
 
@@ -124,7 +128,7 @@ Do not mark a checklist item complete without recording the test, environment, d
 - [x] Sales and delivery documents inspected.
 - [x] Demo limitations documented in repository README and sales materials.
 - [x] CI workflow gap identified and corrected on the audit branch.
-- [ ] Automated CI run on the audit branch observed passing.
+- [x] Automated CI run on the audit branch passed (run #137).
 - [ ] Browser QA completed.
 - [ ] Client-specific configuration and asset rights verified.
 - [ ] Live database/reservation workflow accepted, if included in client scope.
