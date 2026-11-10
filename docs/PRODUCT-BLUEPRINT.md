@@ -36,7 +36,7 @@ The current priority is **not** to turn on every feature at once. First reconcil
 - No email-provider environment variable was present in the Vercel variable metadata returned during this review.
 - The baseline CI workflow only triggered on `main`; it did not validate pushes/PRs targeting the active feature/documentation branches. A release-readiness change now broadens CI to all branches and adds concurrency cancellation and a job timeout.
 - The committed `public/sitemap.xml` contains old dish slugs that do not match the current menu data. A release-readiness change generates the sitemap from the same route catalogue used by the build and removes the stale static file.
-- No `package-lock.json` is committed. `npm install` currently works in the recorded Vercel build, but a clean `npm ci` cannot be used until a lockfile is generated and committed; dependency reproducibility remains open.
+- `package-lock.json` is committed on the sales-readiness audit branch. Its CI uses `npm ci` for a clean locked install and `npm audit --omit=dev` to check production dependencies; GitHub Actions run #215 passed both checks, the automated tests, production build and sitemap verification on commit `9eb7a37`. This production-only audit does not establish that every development dependency is free of advisories. The earlier Production deployment predates this branch and has not been redeployed.
 - Do not copy, print, commit, screenshot or send any secret value.
 
 ---
