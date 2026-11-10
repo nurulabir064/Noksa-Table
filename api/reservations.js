@@ -69,6 +69,7 @@ export default async function handler(req, res) {
   const databaseUrl = process.env.DATABASE_URL;
   const rateLimitSecret = process.env.RATE_LIMIT_SECRET;
   const privacyPolicyUrl = process.env.PRIVACY_POLICY_URL;
+  const privacyPolicyVersion = process.env.PRIVACY_POLICY_VERSION;
   let hasApprovedPrivacyPolicy = false;
 
   try {
@@ -77,7 +78,7 @@ export default async function handler(req, res) {
     hasApprovedPrivacyPolicy = false;
   }
 
-  if (!databaseUrl || !rateLimitSecret || !hasApprovedPrivacyPolicy) {
+  if (!databaseUrl || !rateLimitSecret || !hasApprovedPrivacyPolicy || !/^[A-Za-z0-9._-]{1,40}$/.test(privacyPolicyVersion || '')) {
     return respond(res, 503, { error: 'Reservation service is not configured.' });
   }
 
@@ -116,20 +117,25 @@ export default async function handler(req, res) {
     }
 
     const requestCode = randomUUID();
-    await sql`
+    const result = await sql`
       INSERT INTO reservations (
-        request_code, customer_name, customer_email, customer_phone,
-        reservation_date, reservation_time, guest_count, customer_message
+        request_code, idempotency_key, customer_name, customer_email, customer_phone,
+        reservation_date, reservation_time, guest_count, customer_message,
+        consent_at, privacy_policy_version
       ) VALUES (
-        ${requestCode}, ${validation.data.name}, ${validation.data.email},
+        ${requestCode}, ${validation.data.idempotencyKey}, ${validation.data.name}, ${validation.data.email},
         ${validation.data.phone}, ${validation.data.date}, ${validation.data.time},
-        ${validation.data.guestCount}, ${validation.data.message}
+        ${validation.data.guestCount}, ${validation.data.message}, NOW(), ${privacyPolicyVersion}
       )
+      ON CONFLICT (idempotency_key) DO UPDATE
+        SET idempotency_key = EXCLUDED.idempotency_key
+      RETURNING request_code
     `;
+    const savedRequestCode = result[0]?.request_code;
 
     return respond(res, 201, {
       message: 'Your reservation request was received. It is not confirmed until the restaurant contacts you.',
-      reference: requestCode,
+      reference: savedRequestCode,
       status: 'pending',
     });
   } catch {
