@@ -133,3 +133,6 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [ ] Production smoke test and client acceptance recorded.
 
 **Final rule:** Do not mark NOKSHA TABLE fully production/client-ready until every applicable item has evidence. The current work prepares a safer, more verifiable starter; it does not authorize Production deployment or enable reservations/payments.
+
+### Additional UI review finding
+- Fixed the sticky order bar's `Review` anchor by adding the missing `id="order-summary"` to its target section. The exact latest commit still requires a fresh CI run and browser verification.
