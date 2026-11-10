@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 24
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Audit production dependencies
         run: npm audit --omit=dev
       - name: Audit full dependency tree for high and critical vulnerabilities
