@@ -63,7 +63,7 @@ Requirements: Node.js 24.x and npm.
 ```bash
 git clone https://github.com/nurulabir064/Noksa-Table.git
 cd Noksa-Table
-npm install
+npm ci
 npm run dev
 ```
 
@@ -75,6 +75,8 @@ Open the local URL printed by Vite.
 npm test
 npm run build
 npm run verify:sitemap
+npm run verify:routes
+npm run verify:images
 npm run preview
 ```
 
@@ -89,11 +91,12 @@ The production output is generated in `dist/`.
 │   │   └── reservation-validation.js
 │   └── reservations.js
 ├── db/
+│   ├── migrations/
+│   │   └── 001_reservation_consent_idempotency.sql
 │   └── schema.sql
 ├── public/
 │   ├── favicon.svg
-│   ├── robots.txt
-│   └── sitemap.xml
+│   └── robots.txt
 ├── src/
 │   ├── components/
 │   │   └── ContactActions.jsx
@@ -108,10 +111,15 @@ The production output is generated in `dist/`.
 │   ├── main.jsx
 │   └── styles.css
 ├── scripts/
-│   └── verify-sitemap.mjs
+│   ├── verify-sitemap.mjs
+│   ├── verify-routes.mjs
+│   └── verify-image-assets.mjs
 ├── test/
+│   ├── cart.test.js
 │   ├── contact-links.test.js
 │   ├── data.test.js
+│   ├── gallery-accessibility.test.js
+│   ├── order-message.test.js
 │   ├── reservation-api.test.js
 │   └── reservation-validation.test.js
 ├── package.json
@@ -147,10 +155,10 @@ Replace all fictional/sample content with client-approved assets and information
 
 1. Create a Neon PostgreSQL project and copy its pooled connection string.
 2. Run `db/schema.sql` against the database.
-3. Add server-side Vercel environment variables: `DATABASE_URL`, `RATE_LIMIT_SECRET`, `PRIVACY_POLICY_URL`, and `RESERVATIONS_ENABLED=false`. Never prefix database secrets with `VITE_`.
-4. Add frontend build variables: `VITE_RESERVATIONS_ENABLED=false` and `VITE_PRIVACY_POLICY_URL=`.
+3. Add server-side Vercel environment variables: `DATABASE_URL`, `RATE_LIMIT_SECRET`, `PRIVACY_POLICY_URL`, `PRIVACY_POLICY_VERSION`, and `RESERVATIONS_ENABLED=false`. Never prefix database secrets with `VITE_`.
+4. Add frontend build variables: `VITE_RESERVATIONS_ENABLED=false`, `VITE_PRIVACY_POLICY_URL=`, and `VITE_PRIVACY_POLICY_VERSION=`.
 5. Before accepting real requests, publish and review the restaurant privacy notice, retention/deletion process, opening hours and booking rules; implement admin access and notifications; test the live database and recovery process.
-6. Only after those checks, set both reservation flags to `true`, set the public privacy URL in both environments, redeploy, and submit a controlled end-to-end test.
+6. Only after those checks, set both reservation flags to `true`, set the approved privacy URL and matching policy version in both environments, redeploy, and submit a controlled end-to-end test.
 
 The API stores requests as `pending`; it does not confirm tables or send notifications. The database rate limiter stores a keyed hash of the request IP, not the raw address. Old rate-limit hashes are pruned during new requests; define and document the retention and deletion process for reservation records before launch.
 

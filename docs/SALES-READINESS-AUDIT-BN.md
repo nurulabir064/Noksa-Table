@@ -3,7 +3,7 @@
 **Audit date:** 11 November 2026  
 **Repository:** https://github.com/nurulabir064/Noksa-Table  
 **Production domain:** https://noksa-table.vercel.app  
-**Production deployment:** READY — `feat/premium-homepage-ordering-gallery-contact` / `3752fe3542c341feef083cbbcfa3586b9e8dc395`  
+**Production deployment:** READY — `chore/sales-readiness-release-gates` / `79c51071377506280fbe4cd5002d05ae00c513db` · `dpl_5m4wxZCSCiTfygocEddFWmL2mkPD`  
 **Reviewed working baseline:** `docs/verified-product-blueprint` / `8733c723f562ac12f36914090608622ef541e3d8`  
 **Audit branch:** `chore/sales-readiness-release-gates`
 
@@ -43,18 +43,18 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 
 | Area | Evidence | Status |
 |---|---|---|
-| Production deployment | Vercel deployment for commit `3752fe3` | READY; production unchanged |
+| Production deployment | Vercel deployment `dpl_5m4wxZCSCiTfygocEddFWmL2mkPD` for commit `79c5107` on `chore/sales-readiness-release-gates` | READY; deployed directly to Production |
 | Product blueprint Preview | Vercel Preview for commit `8733c72` | READY; protected by Vercel SSO |
 | Sales-readiness branch Preview | Vercel deployment `dpl_4QcX4ZWWRbd9MMbYt95i9K5Y2dBJ`, commit `f7c5156` | READY; separate Preview deployment, no Production alias assigned |
 | HTTP route/header smoke checks | Preview `/`, `/menu`, `/about`, `/gallery`, `/reservation`, `/contact`, `/menu/thai-soup`, `/sitemap.xml`, `/robots.txt`, `/favicon.svg` | All returned HTTP 200; key security headers present; interactive browser/device QA still not completed |
 | Unknown-route handling | Preview `/not-a-real-page` | HTTP 404 with custom `Page not found | NOKSHA TABLE` response; verified after removing catch-all rewrite and adding `public/404.html` |
 | Baseline automated tests | PR #7 validation record, 9 Nov 2026 | 31/31 passed |
 | Baseline production build | PR #7 validation record | Passed |
-| Current audit branch CI | GitHub Actions run #296 on head `f7c5156` | Passed: locked install (`npm ci`), production and full-tree high-severity dependency audits, automated tests, production build, sitemap verification and explicit-route/custom-404 verification |
-| Dependency reproducibility | `package-lock.json` is committed; GitHub Actions uses `npm ci` | Locked install passed in run #296; `vercel.json` now explicitly sets `installCommand: npm ci` to align Vercel Preview/Production builds with CI; latest Preview build confirmed `npm ci` |
+| Current CI evidence | GitHub Actions run #301 checked PR #9 merge commit `f2e5cb3` (the merge of head `79c5107` into base `8733c72`) | Passed: 36/36 automated tests, locked install, production/full-tree high-severity audits, build, sitemap, route/404 and 48 remote image URL checks. This is a PR merge-ref run, not a standalone status check on the Production SHA. |
+| Dependency reproducibility | `package-lock.json` is committed; GitHub Actions uses `npm ci` | Locked install passed in run #301; `vercel.json` now explicitly sets `installCommand: npm ci` to align Vercel Preview/Production builds with CI; latest Preview build confirmed `npm ci` |
 | Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #296 passed |
 
-The latest audit-branch Preview for code commit `f7c5156` is READY. The preceding Preview's HTTP smoke checks returned 200 for `/`, `/menu`, `/gallery`, `/reservation` and dish pages; `/not-a-real-page` returned 404; GET `/api/reservations` returned 405. The Vercel fetch connector could not resolve the newest Preview URL during the final HTTP check, so the latest code's route-level HTTP smoke checks remain pending. This verifies route reachability only, not reservation POST/database behavior. The user-provided desktop screenshot visually confirms the homepage hero restaurant photograph loads and the desktop composition is intact. The narrow-window screenshot was captured while the page was scrolled; it does not prove a header/hero overlap defect, so no speculative CSS change was made. The homepage HTML and Vite-generated route metadata previously described the demo as a Bengali dining house and used a soup photo for social previews; these were corrected to the current multi-cuisine concept and restaurant-interior hero image. Latest Preview HTML checks confirm consistent titles, descriptions, canonical URLs and Open Graph images on home, menu, story, gallery and dish-detail routes. Route-level HTTP checks and response-header checks passed for the paths listed above. This is not a substitute for a real browser session: visual layout, React hydration, keyboard interaction, screen-reader behavior, mobile breakpoints, form behavior and browser console/network errors remain unverified. The Preview is protected by Vercel SSO; use the temporary share URL only with intended reviewers.
+The latest previously confirmed audit-branch Preview for code commit `f7c5156` is READY; the later `79c5107` commit was deployed directly to Production. The preceding Preview's HTTP smoke checks returned 200 for `/`, `/menu`, `/gallery`, `/reservation` and dish pages; `/not-a-real-page` returned 404; GET `/api/reservations` returned 405. The Vercel fetch connector could not resolve the newest Preview URL during the final HTTP check, so the latest code's route-level HTTP smoke checks remain pending. This verifies route reachability only, not reservation POST/database behavior. The user-provided desktop screenshot visually confirms the homepage hero restaurant photograph loads and the desktop composition is intact. The narrow-window screenshot was captured while the page was scrolled; it does not prove a header/hero overlap defect, so no speculative CSS change was made. The homepage HTML and Vite-generated route metadata previously described the demo as a Bengali dining house and used a soup photo for social previews; these were corrected to the current multi-cuisine concept and restaurant-interior hero image. Latest Preview HTML checks confirm consistent titles, descriptions, canonical URLs and Open Graph images on home, menu, story, gallery and dish-detail routes. Route-level HTTP checks and response-header checks passed for the paths listed above. This is not a substitute for a real browser session: visual layout, React hydration, keyboard interaction, screen-reader behavior, mobile breakpoints, form behavior and browser console/network errors remain unverified. The Preview is protected by Vercel SSO; use the temporary share URL only with intended reviewers.
 
 ## 4. Backend, database and privacy review
 
@@ -94,7 +94,7 @@ A successful API response means **request received / pending**, not a confirmed 
 - Gallery thumbnails and lightbox images now show an explicit fallback when a remote photo fails to load. Added source-level regression tests for fallback markup and dialog keyboard semantics.
 - Removed the catch-all SPA rewrite that caused unknown paths to return HTTP 200; added an accessible static `public/404.html` and a CI verifier for explicit application rewrites/custom 404 presence. Run #245 passed the new verifier. Latest Preview HTTP check confirmed unknown paths return 404 with the custom page.
 
-These changes are on the audit branch only. They are not in Production until reviewed, merged and deployed through an approved release.
+Release-state correction (11 Nov 2026): Vercel currently has a READY Production deployment created directly from `chore/sales-readiness-release-gates` at `79c5107`. That release branch is not the repository default branch; GitHub `main` remains at `34f16da`. PR #7 and PR #9 have no submitted approving reviews in the inspected review records. Therefore Production is live, but the repository's default-branch/release governance is not reconciled. Do not merge automatically: first review the stacked PR bases, required checks and exact merge result, then make the release branch the reviewed source of truth.
 
 ## 6. Client-specific delivery requirements
 
@@ -141,7 +141,7 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [x] CI verified 48 unique remote image URLs return image content types (run #296).
 - [x] Replaced broken assets and corrected identified dish-photo mismatches; source/license links added for confirmed credits.
 - [ ] Visually inspect all menu/gallery crops and the remaining dish subjects in a real browser.
-- [x] Added gallery image-load fallback and source-level dialog accessibility regression tests (CI #296).
+- [x] Added gallery image-load fallback and source-level dialog accessibility regression tests (CI #301).
 - [ ] Gallery lightbox keyboard/screen-reader QA completed in a real browser (initial focus, focus containment, Escape close, focus restoration).
 - [x] Removed the catch-all rewrite, added a custom 404 page and added CI route-verification (run #296).
 - [x] Preceding Preview confirms unknown routes return HTTP 404 with the custom 404 page.
@@ -155,8 +155,19 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [ ] Client content, asset rights, domain and contact details approved.
 - [ ] Production smoke test and client acceptance recorded.
 
-**Final rule:** Do not mark NOKSHA TABLE fully production/client-ready until every applicable item has evidence. The current work prepares a safer, more verifiable starter; it does not authorize Production deployment or enable reservations/payments.
+**Final rule:** The demo is deployed to Vercel Production, but this is not equivalent to client acceptance or a fully verified production product. Do not claim client-ready until applicable browser/device, integration, security and client-content gates have evidence. Reservation and payment remain disabled/not implemented.
 
 ### Additional UI review finding
 - Fixed the sticky order bar's `Review` anchor by adding the missing `id="order-summary"` to its target section. CI run #212 passed for checkpoint `8223765`; browser/device verification remains outstanding.
 - Improved gallery lightbox keyboard accessibility: focus moves to Close on open, Tab/Shift+Tab remain within the dialog, Escape closes it, and focus returns to the image trigger. This is code-level work only; manual keyboard/screen-reader verification remains outstanding.
+
+
+## 11. Latest deployment and repository consistency correction
+
+- Vercel project metadata confirms the latest Production deployment is `dpl_5m4wxZCSCiTfygocEddFWmL2mkPD`, READY, from commit `79c51071377506280fbe4cd5002d05ae00c513db` on `chore/sales-readiness-release-gates`.
+- The deployment record exposes a generated branch alias. The project domain `noksa-table.vercel.app` is verified and attached to the project, but direct HTTP checks from the current audit environment could not resolve the domain; do not report live route smoke checks as freshly re-performed here.
+- The repository default branch `main` is `34f16da6ece588a2c672f4bf0284106318809ade`; the Production commit is 151 commits ahead of that base and includes the release-gate changes. Production source is therefore not yet the default branch's checked-out source.
+- GitHub Actions run #301 passed on PR #9's synthetic merge ref `f2e5cb3`, not as a standalone commit status for `79c5107`. The log shows 36/36 tests passed, both npm audits reported zero vulnerabilities, the build and sitemap/route checks passed, and 48 unique remote image URLs returned image content types.
+- Runtime error aggregation returned no error clusters for the last 24 hours. Individual runtime-log query for 24 hours was unavailable on the current Hobby retention; a 45-minute error/fatal query returned no logs. This is limited observability evidence, not proof that no user-facing errors occurred.
+- The latest run emitted a GitHub Actions warning because `actions/checkout@v4` and `actions/setup-node@v4` still target Node 20, which runners now force to Node 24. A follow-up branch pins Node-24-compatible immutable v7 releases; its CI result is pending.
+- README setup instructions now need `PRIVACY_POLICY_VERSION` and `VITE_PRIVACY_POLICY_VERSION` in addition to the existing URL and enable flags. This follow-up branch corrects those instructions; the currently deployed commit's README still omits them.
