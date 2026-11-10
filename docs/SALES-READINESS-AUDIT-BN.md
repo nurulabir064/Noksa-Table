@@ -80,6 +80,7 @@ A successful API response means **request received / pending**, not a confirmed 
 
 - CI now validates pushes and pull requests on all branches, supports manual dispatch, cancels superseded runs and has a 15-minute job timeout.
 - CI runs `npm audit --omit=dev` after the locked install to check production dependencies; run #215 passed this gate.
+- CI also runs `npm audit --audit-level=high` against the full dependency tree, so high/critical advisories in development dependencies fail the workflow. Moderate advisories remain visible for follow-up; this gate was added after run #219 and awaits its first result.
 - Production build is a separate CI step after automated tests.
 - The static sitemap with stale dish URLs is removed. Vite now generates `dist/sitemap.xml` from the current page and dish route catalogue.
 - A post-build verifier checks that every expected route appears exactly once and that stale or unexpected URLs are absent.
