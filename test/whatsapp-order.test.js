@@ -15,13 +15,13 @@ const validOrder = {
 
 test('builds a pickup request with items, subtotal and contact details', () => {
   const message = buildWhatsAppOrderMessage(validOrder);
-  assert.match(message, /Chicken Tikka × 2 — ৳960/);
-  assert.match(message, /Borhani × 1 — ৳120/);
-  assert.match(message, /Food subtotal: ৳1080/);
-  assert.match(message, /Fulfilment: PICKUP REQUEST/);
-  assert.match(message, /Customer name: Abir/);
-  assert.match(message, /Customer contact: \\+8801304302201/);
-  assert.match(message, /not an accepted or confirmed order/);
+  assert.ok(message.includes('Chicken Tikka × 2 — ৳960'));
+  assert.ok(message.includes('Borhani × 1 — ৳120'));
+  assert.ok(message.includes('Food subtotal: ৳1080'));
+  assert.ok(message.includes('Fulfilment: PICKUP REQUEST'));
+  assert.ok(message.includes('Customer name: Abir'));
+  assert.ok(message.includes('Customer contact: +8801304302201'));
+  assert.ok(message.includes('not an accepted or confirmed order'));
 });
 
 test('builds a delivery request with address and explicit restaurant confirmation', () => {
@@ -30,11 +30,11 @@ test('builds a delivery request with address and explicit restaurant confirmatio
     fulfilment: 'delivery',
     deliveryAddress: 'House 10, Road 4, Dhanmondi, Dhaka',
   });
-  assert.match(message, /Fulfilment: DELIVERY REQUEST/);
-  assert.match(message, /Requested address: House 10, Road 4, Dhanmondi, Dhaka/);
-  assert.match(message, /whether this delivery area is served/);
-  assert.match(message, /delivery fee/);
-  assert.match(message, /estimated preparation\\/delivery time/);
+  assert.ok(message.includes('Fulfilment: DELIVERY REQUEST'));
+  assert.ok(message.includes('Requested address: House 10, Road 4, Dhanmondi, Dhaka'));
+  assert.ok(message.includes('whether this delivery area is served'));
+  assert.ok(message.includes('delivery fee'));
+  assert.ok(message.includes('estimated preparation/delivery time'));
 });
 
 test('rejects a delivery request without a usable address', () => {
@@ -58,9 +58,15 @@ test('rejects an empty cart, malformed lines, invalid total and unknown fulfilme
   }), '');
   assert.equal(buildWhatsAppOrderMessage({ ...validOrder, subtotal: -1 }), '');
   assert.equal(buildWhatsAppOrderMessage({ ...validOrder, fulfilment: 'courier' }), '');
+  assert.equal(buildWhatsAppOrderMessage({ ...validOrder, subtotal: 999 }), '');
 });
 
-test('includes optional special instructions safely', () => {
-  const message = buildWhatsAppOrderMessage({ ...validOrder, orderNote: 'No onions, please.' });
-  assert.match(message, /Special instructions: No onions, please\\./);
+test('normalizes control characters and includes optional instructions', () => {
+  const message = buildWhatsAppOrderMessage({
+    ...validOrder,
+    customerName: 'Abir Admin approved',
+    orderNote: 'No onions, please.',
+  });
+  assert.ok(message.includes('Customer name: Abir Admin approved'));
+  assert.ok(message.includes('Special instructions: No onions, please.'));
 });
