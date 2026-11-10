@@ -51,7 +51,7 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 | Baseline automated tests | PR #7 validation record, 9 Nov 2026 | 31/31 passed |
 | Baseline production build | PR #7 validation record | Passed |
 | Current audit branch CI | GitHub Actions run #231 on head `2378187` | Passed: locked install (`npm ci`), production and full-tree high-severity dependency audits, automated tests, production build and sitemap verification |
-| Dependency reproducibility | `package-lock.json` is committed; GitHub Actions uses `npm ci` | Locked install passed in run #231; `vercel.json` now explicitly sets `installCommand: npm ci` to align Vercel Preview/Production builds with CI |
+| Dependency reproducibility | `package-lock.json` is committed; GitHub Actions uses `npm ci` | Locked install passed in run #231; `vercel.json` now explicitly sets `installCommand: npm ci` to align Vercel Preview/Production builds with CI; latest Preview build confirmed `npm ci` |
 | Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #231 passed |
 
 The latest audit-branch Preview is READY and was fetched successfully through Vercel's protected-preview access. Route-level HTTP checks and response-header checks passed for the paths listed above. This is not a substitute for a real browser session: visual layout, React hydration, keyboard interaction, screen-reader behavior, mobile breakpoints, form behavior and browser console/network errors remain unverified. The Preview is protected by Vercel SSO; use the temporary share URL only with intended reviewers.
@@ -77,7 +77,7 @@ A successful API response means **request received / pending**, not a confirmed 
 - The live database connection and schema migration have not been tested. Vercel metadata showed a `DATABASE_URL` variable entry, but its value was not read and no live query was performed.
 - The repository declares CSP, frame, content-type, referrer and permissions headers. Vercel's Response Headers documentation says the platform automatically returns HSTS with a default `max-age=63072000`. Confirm the effective response headers on every client domain, especially if another proxy/CDN is introduced.
 - No penetration test, load test, accessibility audit or live data-retention test has been completed.
-- Preview build log reports Vercel ran `npm install` (not `npm ci`) and emitted npm configuration/install-script warnings, including an `esbuild` postinstall approval warning; the Vite production build nevertheless completed and deployment reached READY. Review Vercel project install settings and align them with the committed lockfile before relying on Vercel's own clean-build reproducibility. The audit branch now explicitly sets `installCommand: npm ci` in `vercel.json`; a fresh Preview from the updated commit is required to verify the setting takes effect and confirm whether the warnings disappear.
+- Preview build log reports Vercel ran `npm install` (not `npm ci`) and emitted npm configuration/install-script warnings, including an `esbuild` postinstall approval warning; the Vite production build nevertheless completed and deployment reached READY. Review Vercel project install settings and align them with the committed lockfile before relying on Vercel's own clean-build reproducibility. The audit branch explicitly sets `installCommand: npm ci` in `vercel.json`, and the latest Preview build confirmed it. The `esbuild` install-script approval and unknown `cache-dir` configuration warnings remain visible, although the Vite build succeeded.
 
 ## 5. CI, SEO and maintainability changes in this audit branch
 
@@ -134,7 +134,7 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [ ] Authorized Preview browser/mobile/tablet QA completed (HTTP smoke checks alone are insufficient).
 - [ ] Gallery lightbox keyboard/screen-reader QA completed (initial focus, focus containment, Escape close, focus restoration).
 - [ ] Unknown routes return a proper 404 status rather than a 200 soft-404.
-- [ ] Vercel project install command is aligned with `npm ci`; confirm no project setting changes break Production.
+- [x] Vercel build uses `npm ci` via the committed `vercel.json` install command (confirmed in latest Preview logs).
 - [ ] Trusted proxy/IP identity, consent evidence and duplicate-submission controls reviewed before enabling reservations.
 - [ ] Live database migration, connectivity, backup and restore verified if reservations are in client scope.
 - [ ] Client content, asset rights, domain and contact details approved.
