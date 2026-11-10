@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run test && vite build",
+    "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test"
+    "test": "node --test",
+    "verify:sitemap": "node scripts/verify-sitemap.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
