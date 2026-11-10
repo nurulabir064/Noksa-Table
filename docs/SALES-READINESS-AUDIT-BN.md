@@ -48,8 +48,8 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 | Browser/device QA | Preview redirects to SSO in the available test environment | Not completed |
 | Baseline automated tests | PR #7 validation record, 9 Nov 2026 | 31/31 passed |
 | Baseline production build | PR #7 validation record | Passed |
-| Current audit branch CI | CI is being expanded to all branch pushes and PR targets | Latest audit head must pass before review |
-| Dependency reproducibility | No committed `package-lock.json` | Open blocker; `npm ci` is not available on a clean checkout |
+| Current audit branch CI | Run #196 on the previous head passed tests, build and sitemap verification; latest head switches to `npm ci` | New locked-install run not yet verified |
+| Dependency reproducibility | `package-lock.json` is now committed; CI updated to use `npm ci` with npm cache | Lockfile install must pass on the exact latest head |
 | Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and a post-build verifier; CI evidence pending |
 
 The public demo could not be independently inspected with the available browser retrieval. Vercel READY means the deployment completed; it does not prove every route, interaction, responsive layout or integration passed acceptance.
