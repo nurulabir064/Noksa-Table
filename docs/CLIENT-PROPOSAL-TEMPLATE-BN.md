@@ -32,7 +32,7 @@
 
 1. Customer opens the website on mobile.
 2. Customer views menu and restaurant details.
-3. Customer selects dishes and quantities, then opens a prefilled WhatsApp order message.
+3. Customer selects dishes and quantities, then opens a prefilled WhatsApp order request.
 4. Restaurant confirms item availability, delivery or pickup, final charges and payment directly with the customer.
 5. Customer can also use verified phone, email or directions.
 
