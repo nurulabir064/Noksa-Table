@@ -45,16 +45,16 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 |---|---|---|
 | Production deployment | Vercel deployment for commit `3752fe3` | READY; production unchanged |
 | Product blueprint Preview | Vercel Preview for commit `8733c72` | READY; protected by Vercel SSO |
-| Sales-readiness branch Preview | Vercel deployment `dpl_HTWezuRHfhiiWUzgquVwmRWPXF5m`, commit `df42818` | READY; separate Preview deployment, no Production alias assigned |
+| Sales-readiness branch Preview | Vercel deployment `dpl_3GH5d5Nfr48oX4HexHchYRnQ65q5`, commit `044f71a` | READY; separate Preview deployment, no Production alias assigned |
 | HTTP route/header smoke checks | Preview `/`, `/menu`, `/about`, `/gallery`, `/reservation`, `/contact`, `/menu/thai-soup`, `/sitemap.xml`, `/robots.txt`, `/favicon.svg` | All returned HTTP 200; key security headers present; interactive browser/device QA still not completed |
 | Unknown-route handling | Preview `/not-a-real-page` | HTTP 404 with custom `Page not found | NOKSHA TABLE` response; verified after removing catch-all rewrite and adding `public/404.html` |
 | Baseline automated tests | PR #7 validation record, 9 Nov 2026 | 31/31 passed |
 | Baseline production build | PR #7 validation record | Passed |
-| Current audit branch CI | GitHub Actions run #253 on head `df42818` | Passed: locked install (`npm ci`), production and full-tree high-severity dependency audits, automated tests, production build, sitemap verification and explicit-route/custom-404 verification |
-| Dependency reproducibility | `package-lock.json` is committed; GitHub Actions uses `npm ci` | Locked install passed in run #253; `vercel.json` now explicitly sets `installCommand: npm ci` to align Vercel Preview/Production builds with CI; latest Preview build confirmed `npm ci` |
+| Current audit branch CI | GitHub Actions run #277 on head `044f71a` | Passed: locked install (`npm ci`), production and full-tree high-severity dependency audits, automated tests, production build, sitemap verification and explicit-route/custom-404 verification |
+| Dependency reproducibility | `package-lock.json` is committed; GitHub Actions uses `npm ci` | Locked install passed in run #277; `vercel.json` now explicitly sets `installCommand: npm ci` to align Vercel Preview/Production builds with CI; latest Preview build confirmed `npm ci` |
 | Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #253 passed |
 
-The latest audit-branch Preview is READY and was fetched successfully through Vercel's protected-preview access. The user-provided desktop screenshot visually confirms the homepage hero restaurant photograph loads and the desktop composition is intact. The narrow-window screenshot was captured while the page was scrolled; it does not prove a header/hero overlap defect, so no speculative CSS change was made. The homepage HTML and Vite-generated route metadata previously described the demo as a Bengali dining house and used a soup photo for social previews; these were corrected to the current multi-cuisine concept and restaurant-interior hero image. Latest Preview HTML checks confirm consistent titles, descriptions, canonical URLs and Open Graph images on home, menu, story, gallery and dish-detail routes. Route-level HTTP checks and response-header checks passed for the paths listed above. This is not a substitute for a real browser session: visual layout, React hydration, keyboard interaction, screen-reader behavior, mobile breakpoints, form behavior and browser console/network errors remain unverified. The Preview is protected by Vercel SSO; use the temporary share URL only with intended reviewers.
+The latest audit-branch Preview for code commit `044f71a` is READY and was fetched successfully through Vercel's protected-preview access. The user-provided desktop screenshot visually confirms the homepage hero restaurant photograph loads and the desktop composition is intact. The narrow-window screenshot was captured while the page was scrolled; it does not prove a header/hero overlap defect, so no speculative CSS change was made. The homepage HTML and Vite-generated route metadata previously described the demo as a Bengali dining house and used a soup photo for social previews; these were corrected to the current multi-cuisine concept and restaurant-interior hero image. Latest Preview HTML checks confirm consistent titles, descriptions, canonical URLs and Open Graph images on home, menu, story, gallery and dish-detail routes. Route-level HTTP checks and response-header checks passed for the paths listed above. This is not a substitute for a real browser session: visual layout, React hydration, keyboard interaction, screen-reader behavior, mobile breakpoints, form behavior and browser console/network errors remain unverified. The Preview is protected by Vercel SSO; use the temporary share URL only with intended reviewers.
 
 ## 4. Backend, database and privacy review
 
@@ -88,6 +88,10 @@ A successful API response means **request received / pending**, not a confirmed 
 - The static sitemap with stale dish URLs is removed. Vite now generates `dist/sitemap.xml` from the current page and dish route catalogue.
 - A post-build verifier checks that every expected route appears exactly once and that stale or unexpected URLs are absent.
 - The reservation API now checks the exact JSON media type, with a regression test for charset and JSONP cases.
+- Reservation submissions now require a UUID v4 idempotency key. The browser reuses the key from session storage after network retries; the API stores a request fingerprint and returns the original reference for an identical retry, while rejecting changed payloads that reuse the key.
+- Reservation consent evidence is now persisted as server timestamp plus `PRIVACY_POLICY_VERSION`. Both frontend and backend require an HTTPS privacy notice and a configured policy version before enabling the form.
+- Added `db/migrations/001_reservation_consent_idempotency.sql`. It deliberately leaves historical consent evidence NULL rather than fabricating past consent; a NOT VALID check enforces evidence on new writes. Apply and verify this migration on the client-owned database before reservation activation.
+- Gallery thumbnails and lightbox images now show an explicit fallback when a remote photo fails to load. Added source-level regression tests for fallback markup and dialog keyboard semantics.
 - Removed the catch-all SPA rewrite that caused unknown paths to return HTTP 200; added an accessible static `public/404.html` and a CI verifier for explicit application rewrites/custom 404 presence. Run #245 passed the new verifier. Latest Preview HTTP check confirmed unknown paths return 404 with the custom page.
 
 These changes are on the audit branch only. They are not in Production until reviewed, merged and deployed through an approved release.
@@ -130,16 +134,19 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [x] Reservation feature remains disabled by default.
 - [x] Stale sitemap identified and replaced with route-generated output on the audit branch.
 - [x] Reservation content-type validation tightened and regression test added on the audit branch.
-- [x] Audit-branch CI checkpoint (run #253, commit `df42818`) passed locked install, production dependency audit, tests, build and sitemap verification.
+- [x] Audit-branch CI checkpoint (run #253, commit `044f71a`) passed locked install, production dependency audit, tests, build and sitemap verification.
 - [x] Repository lockfile committed; clean-install reproducibility and production dependency audit verified in run #215.
 - [ ] Authorized Preview browser/mobile/tablet QA completed (HTTP smoke checks alone are insufficient).
 - [ ] Independently verify every remote Unsplash image URL and its subject/credit against the actual rendered Menu, Gallery and detail pages. The provided screenshot verifies the homepage hero image only; HTTP fetch of external Unsplash assets was unavailable in this review environment.
-- [ ] Gallery lightbox keyboard/screen-reader QA completed (initial focus, focus containment, Escape close, focus restoration).
+- [x] Added gallery image-load fallback and source-level dialog accessibility regression tests (CI #277).
+- [ ] Gallery lightbox keyboard/screen-reader QA completed in a real browser (initial focus, focus containment, Escape close, focus restoration).
 - [x] Removed the catch-all rewrite, added a custom 404 page and added CI route-verification (run #253).
 - [x] Latest Preview confirms unknown routes return HTTP 404 with the custom 404 page.
 - [x] Homepage and route SEO/social metadata corrected to multi-cuisine restaurant positioning; Preview HTML verified for home, menu, story, gallery and dish detail.
 - [x] Vercel build uses `npm ci` via the committed `vercel.json` install command (confirmed in latest Preview logs).
-- [ ] Trusted proxy/IP identity, consent evidence and duplicate-submission controls reviewed before enabling reservations.
+- [x] Implemented consent timestamp/version persistence and durable idempotency-key/fingerprint logic in code; CI #277 passed.
+- [ ] Apply the new reservation migration to a non-production database and verify concurrent duplicate requests, payload mismatch (409), and consent audit fields with integration tests.
+- [ ] Trusted proxy/IP identity and production data-retention/backup controls reviewed before enabling reservations.
 - [ ] Live database migration, connectivity, backup and restore verified if reservations are in client scope.
 - [ ] Client content, asset rights, domain and contact details approved.
 - [ ] Production smoke test and client acceptance recorded.
