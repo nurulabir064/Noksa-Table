@@ -3,6 +3,9 @@ import { dishes } from '../src/data.js';
 import { siteConfig } from '../src/config/site.js';
 
 const xml = await readFile('dist/sitemap.xml', 'utf8');
+const baseUrl = siteConfig.siteUrl.endsWith('/')
+  ? siteConfig.siteUrl.slice(0, -1)
+  : siteConfig.siteUrl;
 const expected = [
   '/',
   '/menu',
@@ -11,8 +14,8 @@ const expected = [
   '/reservation',
   '/contact',
   ...dishes.map(dish => '/menu/' + dish.id),
-].map(route => siteConfig.siteUrl.replace(/\\/+$/, '') + (route === '/' ? '/' : route));
-const locations = [...xml.matchAll(/<loc>([^<]+)<\\/loc>/g)].map(match => match[1]);
+].map(route => baseUrl + (route === '/' ? '/' : route));
+const locations = xml.split('<loc>').slice(1).map(part => part.split('</loc>')[0]);
 
 if (locations.length !== expected.length) {
   throw new Error('Sitemap URL count mismatch: expected ' + expected.length + ', found ' + locations.length);
