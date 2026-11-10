@@ -91,11 +91,12 @@ The production output is generated in `dist/`.
 │   │   └── reservation-validation.js
 │   └── reservations.js
 ├── db/
+│   ├── migrations/
+│   │   └── 001_reservation_consent_idempotency.sql
 │   └── schema.sql
 ├── public/
 │   ├── favicon.svg
-│   ├── robots.txt
-│   └── sitemap.xml
+│   └── robots.txt
 ├── src/
 │   ├── components/
 │   │   └── ContactActions.jsx
@@ -114,8 +115,11 @@ The production output is generated in `dist/`.
 │   ├── verify-routes.mjs
 │   └── verify-image-assets.mjs
 ├── test/
+│   ├── cart.test.js
 │   ├── contact-links.test.js
 │   ├── data.test.js
+│   ├── gallery-accessibility.test.js
+│   ├── order-message.test.js
 │   ├── reservation-api.test.js
 │   └── reservation-validation.test.js
 ├── package.json
