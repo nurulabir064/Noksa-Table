@@ -27,12 +27,12 @@
 - Gallery page
 - Contact page populated with client-approved public contact details (requires client-specific content configuration)
 - Verified phone, email and directions links when client-approved details are configured.
-- Menu selection with quantity controls, running subtotal and a prefilled email draft containing selected dish names, quantities and subtotal. The visitor must review and press Send; the restaurant confirms availability, delivery/pickup, final charges and payment directly.
+- Menu selection with quantity controls, running food subtotal, pickup request or delivery request with address, customer details and a WhatsApp message containing the selected dishes. The guest reviews and sends the WhatsApp message; the restaurant must confirm delivery coverage, availability, pickup arrangements, fee, estimated time, final total and acceptance.
 - Mobile navigation and basic accessibility features
 - Basic page metadata and deployment to an agreed hosting account
 - One production handover and short owner walkthrough
 
-**Template status:** the current NOKSHA TABLE repository is a visual/code starter. Client-specific contact details, real links, content, domain, and any requested integrations must be configured and tested before delivery. The current demo's Contact form is a preview only; it does not send or store messages. The Reservation page is a disabled UI preview; it does not accept real bookings.
+**Template status:** the current NOKSHA TABLE repository is a visual/code starter. Client-specific contact details, real links, content, domain, and any requested integrations must be configured and tested before delivery. The current demo's Contact form is a preview only; it does not send or store messages. The Reservation page is a disabled UI preview; it does not accept real bookings. WhatsApp order flow only initiates a request; it is not backend order acceptance, stock reservation, delivery dispatch, fee calculation, ETA calculation or payment processing.
 
 ### অন্তর্ভুক্ত নয়
 
@@ -51,7 +51,7 @@
 |---|---|
 | Menu update support | নির্দিষ্ট সংখ্যক menu edits/month; scope লিখিতভাবে নির্ধারণ |
 | Phone / email / directions CTA | Included when approved client details are configured; test on supported devices |
-| WhatsApp click-to-chat | Not included in the current demo code; quote separately only after implementing and testing it |
+| WhatsApp order enquiry | Included as a request-only flow; restaurant number must be client-approved and delivery rules configured before launch |
 | Google Maps / directions | Client-verified business location and map link |
 | Analytics setup | Account ownership, consent/privacy decision and configuration |
 | CMS / admin dashboard | আলাদা discovery, database, roles, security and testing |
@@ -88,7 +88,7 @@
 - Menu: dish name, description, price, category, availability, allergen/dietary information
 - নিজের তোলা বা licensed photos; ব্যবহারের অনুমতি
 - Brand colours / references (থাকলে)
-- WhatsApp business number (যদি click-to-chat feature আলাদা scope-এ implement করতে চান)
+- WhatsApp business number, delivery areas, fee/minimum-order rules, delivery hours, realistic ETA, pickup address and instructions
 - Website/domain/hosting account-এর owner এবং authorized contact
 - Privacy notice এবং reservation/order policy (যদি প্রযোজ্য হয়)
 
