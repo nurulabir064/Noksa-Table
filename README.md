@@ -36,13 +36,13 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
 - Canonical URL, Open Graph and Twitter sharing metadata
-- XML sitemap, robots.txt, and custom SVG favicon
+- Route-generated XML sitemap, robots.txt, branded static 404 page, and custom SVG favicon
 - CSS-based interaction and entrance animations
-- Baseline security response headers and explicit direct-route rewrites to prerendered HTML
+- Baseline security response headers, explicit direct-route rewrites to prerendered HTML, and real static 404 handling
 - PostgreSQL schema for reservation requests and request-rate tracking
 - Server-side validation, same-origin checks, honeypot, payload limits and database-backed rate limiting
 - Privacy consent requirement and disabled-by-default reservation feature flag
-- Automated menu-data, contact-link, reservation validation and API guard tests, executed before production build
+- Automated menu-data, cart, WhatsApp order-request, contact-link, reservation validation and API guard tests, executed before production build
 
 ## Technology
 
@@ -134,7 +134,7 @@ Replace all fictional/sample content with client-approved assets and information
 - The contact form remains a frontend-only preview and does not transmit or store data.
 - Sample menu data is stored locally in `src/data.js`.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
-- Automated tests cover menu data, reservation input validation, and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
+- Automated tests cover menu data, cart calculations, WhatsApp order-request validation, reservation input validation, and API request guards. Route and sitemap build verifiers check the generated static output. These do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
 - The canonical and sitemap URLs currently point to the public demo domain and must be updated when a client-owned domain is connected.
 
 ## Reservation backend setup (keep disabled until launch approval)
@@ -158,7 +158,7 @@ The API stores requests as `pending`; it does not confirm tables or send notific
 - [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
 - [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
 - [ ] Check images, font loading, broken links, console errors, and network failures.
-- [ ] Run `npm test` and a production build; verify the deployed commit and domain.
+- [ ] Run `npm test`, `npm run build`, `npm run verify:routes` and `npm run verify:sitemap`; verify the deployed commit and domain.
 - [ ] Measure real Core Web Vitals and accessibility with browser tooling before claiming performance or accessibility compliance.
 - [ ] Obtain client approval for content, images, policies, and legal/privacy text.
 
