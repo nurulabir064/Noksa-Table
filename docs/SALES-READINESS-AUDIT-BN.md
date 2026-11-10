@@ -72,7 +72,7 @@ A successful API response means **request received / pending**, not a confirmed 
 - Vercel's official Request Headers documentation says `host` is the domain used by the visitor, `x-forwarded-host` mirrors it, and `x-forwarded-proto` carries the forwarded protocol. The API's origin comparison is consistent with these documented headers. If a separate proxy/CDN is placed in front of Vercel, re-check the full trusted-proxy chain and canonical host policy before enabling reservations.
 - Rate limiting uses `x-real-ip`. Vercel documents this as identical to its `x-forwarded-for` value and says it overwrites `x-forwarded-for` to prevent IP spoofing. This supports the current use on a direct Vercel deployment; an external proxy may cause Vercel to see the proxy IP unless a supported Trusted Proxy configuration is used.
 - The audit branch now persists consent timestamp and `PRIVACY_POLICY_VERSION` on new reservation rows. Historical rows remain NULL after migration rather than receiving fabricated consent evidence; database migration/integration verification remains pending.
-- Duplicate submissions are not protected by a durable idempotency key. A user retry or double submission could create more than one pending request.
+- The audit branch implements a durable UUID v4 idempotency key and request fingerprint. Identical retries return the original reference; reusing a key with changed data returns 409. The migration and concurrent database integration tests remain pending.
 - There is no staff/admin interface, notification delivery, availability engine or operational review workflow.
 - The live database connection and schema migration have not been tested. Vercel metadata showed a `DATABASE_URL` variable entry, but its value was not read and no live query was performed.
 - The repository declares CSP, frame, content-type, referrer and permissions headers. Vercel's Response Headers documentation says the platform automatically returns HSTS with a default `max-age=63072000`. Confirm the effective response headers on every client domain, especially if another proxy/CDN is introduced.
@@ -82,8 +82,8 @@ A successful API response means **request received / pending**, not a confirmed 
 ## 5. CI, SEO and maintainability changes in this audit branch
 
 - CI now validates pushes and pull requests on all branches, supports manual dispatch, cancels superseded runs and has a 15-minute job timeout.
-- CI runs `npm audit --omit=dev` after the locked install to check production dependencies; run #253 passed this gate.
-- CI also runs `npm audit --audit-level=high` against the full dependency tree, so high/critical advisories in development dependencies fail the workflow. Moderate advisories remain visible for follow-up; run #253 passed the full-tree high-severity gate.
+- CI runs `npm audit --omit=dev` after the locked install to check production dependencies; run #296 passed this gate.
+- CI also runs `npm audit --audit-level=high` against the full dependency tree, so high/critical advisories in development dependencies fail the workflow. Moderate advisories remain visible for follow-up; run #296 passed the full-tree high-severity gate.
 - Production build is a separate CI step after automated tests.
 - The static sitemap with stale dish URLs is removed. Vite now generates `dist/sitemap.xml` from the current page and dish route catalogue.
 - A post-build verifier checks that every expected route appears exactly once and that stale or unexpected URLs are absent.
@@ -134,19 +134,21 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [x] Reservation feature remains disabled by default.
 - [x] Stale sitemap identified and replaced with route-generated output on the audit branch.
 - [x] Reservation content-type validation tightened and regression test added on the audit branch.
-- [x] Audit-branch CI checkpoint (run #253, commit `044f71a`) passed locked install, production dependency audit, tests, build and sitemap verification.
+- [x] Audit-branch CI run #296 (code commit `f7c5156`) passed locked install, dependency audits, tests, build, sitemap, routes/404 and 48 image URL checks.
 - [x] Repository lockfile committed; clean-install reproducibility and production dependency audit verified in run #215.
 - [x] Preview HTTP smoke checks: home/menu/gallery/reservation/dish pages 200, custom 404 404, reservation API GET 405.
 - [ ] Real-browser desktop/tablet/mobile QA completed (HTTP smoke checks alone are insufficient).
-- [ ] Independently verify every remote Unsplash image URL and its subject/credit against the actual rendered Menu, Gallery and detail pages. The provided screenshot verifies the homepage hero image only; HTTP fetch of external Unsplash assets was unavailable in this review environment.
-- [x] Added gallery image-load fallback and source-level dialog accessibility regression tests (CI #277).
+- [x] CI verified 48 unique remote image URLs return image content types (run #296).
+- [x] Replaced broken assets and corrected identified dish-photo mismatches; source/license links added for confirmed credits.
+- [ ] Visually inspect all menu/gallery crops and the remaining dish subjects in a real browser.
+- [x] Added gallery image-load fallback and source-level dialog accessibility regression tests (CI #296).
 - [ ] Gallery lightbox keyboard/screen-reader QA completed in a real browser (initial focus, focus containment, Escape close, focus restoration).
-- [x] Removed the catch-all rewrite, added a custom 404 page and added CI route-verification (run #253).
+- [x] Removed the catch-all rewrite, added a custom 404 page and added CI route-verification (run #296).
 - [x] Preceding Preview confirms unknown routes return HTTP 404 with the custom 404 page.
 - [ ] Re-run route-level HTTP smoke checks against latest Preview commit `f7c5156`.
 - [x] Homepage and route SEO/social metadata corrected to multi-cuisine restaurant positioning; Preview HTML verified for home, menu, story, gallery and dish detail.
 - [x] Vercel build uses `npm ci` via the committed `vercel.json` install command (confirmed in latest Preview logs).
-- [x] Implemented consent timestamp/version persistence and durable idempotency-key/fingerprint logic in code; CI #277 passed.
+- [x] Implemented consent timestamp/version persistence and durable idempotency-key/fingerprint logic in code; CI #296 passed.
 - [ ] Apply the new reservation migration to a non-production database and verify concurrent duplicate requests, payload mismatch (409), and consent audit fields with integration tests.
 - [ ] Trusted proxy/IP identity and production data-retention/backup controls reviewed before enabling reservations.
 - [ ] Live database migration, connectivity, backup and restore verified if reservations are in client scope.
