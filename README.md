@@ -60,7 +60,7 @@ Requirements: Node.js 24.x and npm.
 ```bash
 git clone https://github.com/nurulabir064/Noksa-Table.git
 cd Noksa-Table
-npm install
+npm ci
 npm run dev
 ```
 
