@@ -377,7 +377,8 @@ function Gallery(){
 
       <div className="gallery-grid">
         {visibleImages.map((image,i)=><button type="button" className="gallery-item" key={image.id} onClick={event=>{triggerRef.current=event.currentTarget;setSelected(image)}} aria-label={'View image: '+image.alt}>
-          <img loading="lazy" decoding="async" width="1000" height="750" src={'https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85'} alt={image.alt}/>
+          <img loading="lazy" decoding="async" width="1000" height="750" src={'https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85'} alt={image.alt} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/>
+          <span className="image-fallback" aria-hidden="true">Photo unavailable — replace this demo image before launch</span>
           <span className="gallery-item-caption"><span>{image.kind}</span><strong>{image.alt}</strong></span>
         </button>)}
       </div>
@@ -387,7 +388,8 @@ function Gallery(){
       {selected&&<div className="gallery-lightbox" role="presentation" onClick={()=>setSelected(null)}>
         <div ref={lightboxPanelRef} className="gallery-lightbox-panel" role="dialog" aria-modal="true" aria-label={selected.alt} aria-describedby="gallery-lightbox-caption" onClick={event=>event.stopPropagation()}>
           <button ref={closeButtonRef} type="button" className="gallery-lightbox-close" onClick={()=>setSelected(null)} aria-label="Close image">×</button>
-          <img src={'https://images.unsplash.com/'+selected.id+'?auto=format&fit=max&w=1800&q=90'} alt={selected.alt}/>
+          <img src={'https://images.unsplash.com/'+selected.id+'?auto=format&fit=max&w=1800&q=90'} alt={selected.alt} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/>
+          <span className="image-fallback" aria-hidden="true">Photo unavailable — replace this demo image before launch</span>
           <p id="gallery-lightbox-caption">{selected.alt}</p>
         </div>
       </div>}
