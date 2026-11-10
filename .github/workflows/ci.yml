@@ -42,3 +42,5 @@ jobs:
         run: npm run verify:sitemap
       - name: Verify explicit routes and custom 404
         run: npm run verify:routes
+      - name: Verify remote menu and gallery image URLs
+        run: npm run verify:images
