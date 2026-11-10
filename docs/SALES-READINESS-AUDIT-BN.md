@@ -45,14 +45,14 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 |---|---|---|
 | Production deployment | Vercel deployment for commit `3752fe3` | READY; production unchanged |
 | Product blueprint Preview | Vercel Preview for commit `8733c72` | READY; protected by Vercel SSO |
-| Sales-readiness branch Preview | Vercel deployment `dpl_Farh8gSSharZzGhopLCCxGGoBy3V`, commit `1f9aa06` | READY; separate Preview deployment, no Production alias assigned |
+| Sales-readiness branch Preview | Vercel deployment `dpl_Farh8gSSharZzGhopLCCxGGoBy3V`, commit `2378187` | READY; separate Preview deployment, no Production alias assigned |
 | HTTP route/header smoke checks | Preview `/`, `/menu`, `/about`, `/gallery`, `/reservation`, `/contact`, `/menu/thai-soup`, `/sitemap.xml`, `/robots.txt`, `/favicon.svg` | All returned HTTP 200; key security headers present; interactive browser/device QA still not completed |
 | Unknown-route handling | Preview `/not-a-real-page` | Returns HTTP 200 with root fallback HTML (soft-404 risk); fix/verify before SEO release |
 | Baseline automated tests | PR #7 validation record, 9 Nov 2026 | 31/31 passed |
 | Baseline production build | PR #7 validation record | Passed |
-| Current audit branch CI | GitHub Actions run #228 on head `1f9aa06` | Passed: locked install (`npm ci`), production and full-tree high-severity dependency audits, automated tests, production build and sitemap verification |
-| Dependency reproducibility | `package-lock.json` is committed; GitHub Actions uses `npm ci` | Locked install passed in run #228; Vercel build log used `npm install` instead, so align Vercel install command with `npm ci` after confirming project settings |
-| Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #228 passed |
+| Current audit branch CI | GitHub Actions run #231 on head `2378187` | Passed: locked install (`npm ci`), production and full-tree high-severity dependency audits, automated tests, production build and sitemap verification |
+| Dependency reproducibility | `package-lock.json` is committed; GitHub Actions uses `npm ci` | Locked install passed in run #231; `vercel.json` now explicitly sets `installCommand: npm ci` to align Vercel Preview/Production builds with CI |
+| Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #231 passed |
 
 The latest audit-branch Preview is READY and was fetched successfully through Vercel's protected-preview access. Route-level HTTP checks and response-header checks passed for the paths listed above. This is not a substitute for a real browser session: visual layout, React hydration, keyboard interaction, screen-reader behavior, mobile breakpoints, form behavior and browser console/network errors remain unverified. The Preview is protected by Vercel SSO; use the temporary share URL only with intended reviewers.
 
@@ -77,13 +77,13 @@ A successful API response means **request received / pending**, not a confirmed 
 - The live database connection and schema migration have not been tested. Vercel metadata showed a `DATABASE_URL` variable entry, but its value was not read and no live query was performed.
 - The repository declares CSP, frame, content-type, referrer and permissions headers. Vercel's Response Headers documentation says the platform automatically returns HSTS with a default `max-age=63072000`. Confirm the effective response headers on every client domain, especially if another proxy/CDN is introduced.
 - No penetration test, load test, accessibility audit or live data-retention test has been completed.
-- Preview build log reports Vercel ran `npm install` (not `npm ci`) and emitted npm configuration/install-script warnings, including an `esbuild` postinstall approval warning; the Vite production build nevertheless completed and deployment reached READY. Review Vercel project install settings and align them with the committed lockfile before relying on Vercel's own clean-build reproducibility.
+- Preview build log reports Vercel ran `npm install` (not `npm ci`) and emitted npm configuration/install-script warnings, including an `esbuild` postinstall approval warning; the Vite production build nevertheless completed and deployment reached READY. Review Vercel project install settings and align them with the committed lockfile before relying on Vercel's own clean-build reproducibility. The audit branch now explicitly sets `installCommand: npm ci` in `vercel.json`; a fresh Preview from the updated commit is required to verify the setting takes effect and confirm whether the warnings disappear.
 
 ## 5. CI, SEO and maintainability changes in this audit branch
 
 - CI now validates pushes and pull requests on all branches, supports manual dispatch, cancels superseded runs and has a 15-minute job timeout.
-- CI runs `npm audit --omit=dev` after the locked install to check production dependencies; run #228 passed this gate.
-- CI also runs `npm audit --audit-level=high` against the full dependency tree, so high/critical advisories in development dependencies fail the workflow. Moderate advisories remain visible for follow-up; run #228 passed the full-tree high-severity gate.
+- CI runs `npm audit --omit=dev` after the locked install to check production dependencies; run #231 passed this gate.
+- CI also runs `npm audit --audit-level=high` against the full dependency tree, so high/critical advisories in development dependencies fail the workflow. Moderate advisories remain visible for follow-up; run #231 passed the full-tree high-severity gate.
 - Production build is a separate CI step after automated tests.
 - The static sitemap with stale dish URLs is removed. Vite now generates `dist/sitemap.xml` from the current page and dish route catalogue.
 - A post-build verifier checks that every expected route appears exactly once and that stale or unexpected URLs are absent.
