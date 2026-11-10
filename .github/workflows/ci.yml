@@ -40,3 +40,5 @@ jobs:
         run: npm run build
       - name: Verify generated sitemap
         run: npm run verify:sitemap
+      - name: Verify explicit routes and custom 404
+        run: npm run verify:routes
