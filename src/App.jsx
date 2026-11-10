@@ -92,7 +92,7 @@ function DishCard({dish,quantity=0,onAdd,onRemove}){
             : <div className="quantity-control" aria-label={dish.name+' quantity'}>
                 <button type="button" onClick={()=>onRemove(dish.id)} aria-label={'Remove one '+dish.name}>−</button>
                 <output aria-live="polite">{quantity}</output>
-                <button type="button" onClick={()=>onAdd(dish.id)} aria-label={'Add one '+dish.name}>+</button>
+                <button type="button" onClick={()=>onAdd(dish.id)} disabled={quantity>=99} aria-label={quantity>=99?dish.name+' quantity limit reached':'Add one '+dish.name}>+</button>
                 <span>৳{dish.price*quantity}</span>
               </div>}
         </div>}
