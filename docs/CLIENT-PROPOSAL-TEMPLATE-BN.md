@@ -25,7 +25,7 @@
 | About | Restaurant story | |
 | Gallery | Client-approved photos | |
 | Contact | Verified phone, address, hours and links | |
-| Menu order enquiry via email draft | Selected dishes, quantities and subtotal are placed in a prefilled email draft; visitor reviews and presses Send | Included only if an approved recipient is configured |
+| Menu order request via WhatsApp | Guest selects pickup or delivery request; delivery requires an address; items and food subtotal are included in a prefilled WhatsApp message | Included after client approves the WhatsApp number |
 | Reservation / advanced ordering | Live booking, order database, staff dashboard or order status workflow | Separate scope | |
 
 ## 4. Expected customer journey
@@ -36,7 +36,7 @@
 4. Restaurant confirms item availability, delivery or pickup, final charges and payment directly with the customer.
 5. Customer can also use verified phone, email or directions links when configured.
 
-Email draft খোলা মানেই message পাঠানো বা order confirmed নয়; customer-কে email app থেকে Send চাপতে হয়। Website কোনো online payment নেয় না। Live reservation, order database, admin dashboard, delivery tracking বা payment gateway না থাকলে সেগুলো proposal-এর exclusions-এ স্পষ্টভাবে লিখুন।
+WhatsApp draft খোলা মানেই message পাঠানো বা order confirmed নয়; customer-কে WhatsApp-এ Send চাপতে হয়। Delivery request accepted হবে কি না, delivery fee, ETA ও final total restaurant নিশ্চিত করবে। Website কোনো online payment নেয় না। Live reservation, order database, admin dashboard, delivery tracking বা payment gateway না থাকলে সেগুলো proposal-এর exclusions-এ স্পষ্টভাবে লিখুন।
 
 ## 5. Deliverables and exclusions
 
