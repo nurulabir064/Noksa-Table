@@ -95,11 +95,11 @@ function routeMetadataPages() {
           const loc = siteUrl + (page.route === '/' ? '/' : page.route)
           const priority = page.route === '/' ? '1.0' : page.route === '/menu' ? '0.9' : page.route.startsWith('/menu/') ? '0.6' : '0.5'
           return '  <url><loc>' + escapeAttribute(loc) + '</loc><changefreq>monthly</changefreq><priority>' + priority + '</priority></url>'
-        }).join('\\n')
+        }).join('\n')
         this.emitFile({
           type: 'asset',
           fileName: 'sitemap.xml',
-          source: '<?xml version="1.0" encoding="UTF-8"?>\\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n' + sitemapEntries + '\\n</urlset>\\n',
+          source: '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + sitemapEntries + '\n</urlset>\n',
         })
 
         for (const page of pages) {
