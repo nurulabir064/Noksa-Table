@@ -4,7 +4,7 @@ import { siteConfig } from '../src/config/site.js';
 
 const sitemapPath = new URL('../dist/sitemap.xml', import.meta.url);
 const sitemap = await readFile(sitemapPath, 'utf8');
-const baseUrl = siteConfig.siteUrl.replace(/\\/+$/, '');
+const baseUrl = siteConfig.siteUrl.replace(/\/+$/, '');
 const routes = [
   '/',
   '/menu',
@@ -15,7 +15,7 @@ const routes = [
   ...dishes.map(dish => '/menu/' + dish.id),
 ];
 const expectedUrls = routes.map(route => baseUrl + (route === '/' ? '/' : route));
-const actualUrls = [...sitemap.matchAll(/<loc>([^<]+)<\\/loc>/g)].map(([, url]) => url);
+const actualUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, url]) => url);
 const uniqueUrls = new Set(actualUrls);
 const missingUrls = expectedUrls.filter(url => !uniqueUrls.has(url));
 const unexpectedUrls = actualUrls.filter(url => !expectedUrls.includes(url));
