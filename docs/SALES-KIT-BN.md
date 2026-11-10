@@ -27,12 +27,12 @@
 - Gallery page
 - Contact page populated with client-approved public contact details (requires client-specific content configuration)
 - Verified call, email and WhatsApp contact links.
-- Menu selection with quantity controls, running subtotal and a WhatsApp order message containing selected dish names, quantities and subtotal. The restaurant confirms availability, delivery/pickup, final charges and payment directly.
+- Menu selection with quantity controls, running food subtotal, pickup request or delivery request, delivery address, customer contact details and a WhatsApp request containing the selected items. The restaurant must confirm delivery coverage, item availability, pickup arrangements, delivery fee, estimated time, final total and payment directly. A request is not an accepted order.
 - Mobile navigation and basic accessibility features
 - Basic page metadata and deployment to an agreed hosting account
 - One production handover and short owner walkthrough
 
-**Template status:** the current NOKSHA TABLE repository is a visual/code starter. Client-specific contact details, real links, content, domain, and any requested integrations must be configured and tested before delivery. The current demo's Contact form is a preview only; it does not send or store messages. The Reservation page is a disabled UI preview; it does not accept real bookings.
+**Template status:** the current NOKSHA TABLE repository is a visual/code starter. Client-specific contact details, real links, content, domain, and any requested integrations must be configured and tested before delivery. The current demo's Contact form is a preview only; it does not send or store messages. The Reservation page is a disabled UI preview; it does not accept real bookings. The cart can prepare a pickup or delivery request in WhatsApp, but cannot verify service coverage, accept an order, calculate a delivery charge or ETA, or guarantee fulfilment.
 
 ### অন্তর্ভুক্ত নয়
 
@@ -55,7 +55,7 @@
 | Analytics setup | Account ownership, consent/privacy decision and configuration |
 | CMS / admin dashboard | আলাদা discovery, database, roles, security and testing |
 | Reservation request workflow | Database, privacy notice, staff workflow, notifications, abuse protection and end-to-end testing |
-| Advanced online ordering | Order database, staff dashboard, status tracking, fulfilment workflow and operational testing |
+| Advanced online ordering | Order database, staff dashboard, stock/availability controls, service-area and fee rules, realistic ETA, order acceptance/status tracking, fulfilment workflow and operational testing |
 
 কোনো add-on-কে “ready” বলবেন না যতক্ষণ সেটি implement, test এবং client environment-এ verify করা হয়নি।
 
