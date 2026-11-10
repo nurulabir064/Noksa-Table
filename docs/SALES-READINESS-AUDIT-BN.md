@@ -45,6 +45,7 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 |---|---|---|
 | Production deployment | Vercel deployment for commit `3752fe3` | READY; production unchanged |
 | Product blueprint Preview | Vercel Preview for commit `8733c72` | READY; protected by Vercel SSO |
+| Sales-readiness branch Preview | Vercel deployment lookup for branch `chore/sales-readiness-release-gates` and head `65368d8` | No deployment record found; this branch still needs a Preview deployment before visual QA |
 | Browser/device QA | Preview redirects to SSO in the available test environment | Not completed |
 | Baseline automated tests | PR #7 validation record, 9 Nov 2026 | 31/31 passed |
 | Baseline production build | PR #7 validation record | Passed |
@@ -52,7 +53,7 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 | Dependency reproducibility | `package-lock.json` is committed; CI uses `npm ci` | Locked install and production dependency audit passed in run #215 |
 | Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #215 passed |
 
-The public demo could not be independently inspected with the available browser retrieval. Vercel READY means the deployment completed; it does not prove every route, interaction, responsive layout or integration passed acceptance.
+The public demo could not be independently inspected with the available browser retrieval. Vercel READY means the deployment completed; it does not prove every route, interaction, responsive layout or integration passed acceptance. The Vercel project currently has SSO protection enabled for deployment URLs except custom domains; the existing READY Preview belongs to PR #7's base branch, not the latest PR #9 audit branch.
 
 ## 4. Backend, database and privacy review
 
