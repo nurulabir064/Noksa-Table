@@ -1,7 +1,7 @@
 export function updateCartQuantity(cart, dishId, change) {
   if (!cart || typeof cart !== 'object' || !Number.isInteger(change) || !dishId) return cart;
   const current = Number.isInteger(cart[dishId]) && cart[dishId] > 0 ? cart[dishId] : 0;
-  const next = Math.max(0, current + change);
+  const next = Math.min(99, Math.max(0, current + change));
   const updated = { ...cart };
   if (next === 0) delete updated[dishId];
   else updated[dishId] = next;
