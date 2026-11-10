@@ -47,7 +47,7 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 | Product blueprint Preview | Vercel Preview for commit `8733c72` | READY; protected by Vercel SSO |
 | Sales-readiness branch Preview | Vercel deployment `dpl_Farh8gSSharZzGhopLCCxGGoBy3V`, commit `f57f6c4` | READY; separate Preview deployment, no Production alias assigned |
 | HTTP route/header smoke checks | Preview `/`, `/menu`, `/about`, `/gallery`, `/reservation`, `/contact`, `/menu/thai-soup`, `/sitemap.xml`, `/robots.txt`, `/favicon.svg` | All returned HTTP 200; key security headers present; interactive browser/device QA still not completed |
-| Unknown-route handling | Preview `/not-a-real-page` | Previously returned HTTP 200 with root fallback HTML (soft-404); catch-all rewrite removed and custom `public/404.html` added on the audit branch; latest Preview response still needs verification |
+| Unknown-route handling | Preview `/not-a-real-page` | HTTP 404 with custom `Page not found | NOKSHA TABLE` response; verified after removing catch-all rewrite and adding `public/404.html` |
 | Baseline automated tests | PR #7 validation record, 9 Nov 2026 | 31/31 passed |
 | Baseline production build | PR #7 validation record | Passed |
 | Current audit branch CI | GitHub Actions run #245 on head `f57f6c4` | Passed: locked install (`npm ci`), production and full-tree high-severity dependency audits, automated tests, production build, sitemap verification and explicit-route/custom-404 verification |
@@ -88,7 +88,7 @@ A successful API response means **request received / pending**, not a confirmed 
 - The static sitemap with stale dish URLs is removed. Vite now generates `dist/sitemap.xml` from the current page and dish route catalogue.
 - A post-build verifier checks that every expected route appears exactly once and that stale or unexpected URLs are absent.
 - The reservation API now checks the exact JSON media type, with a regression test for charset and JSONP cases.
-- Removed the catch-all SPA rewrite that caused unknown paths to return HTTP 200; added an accessible static `public/404.html` and a CI verifier for explicit application rewrites/custom 404 presence. Run #245 passed the new verifier. A fresh Preview HTTP check must still confirm Vercel serves unknown paths with status 404.
+- Removed the catch-all SPA rewrite that caused unknown paths to return HTTP 200; added an accessible static `public/404.html` and a CI verifier for explicit application rewrites/custom 404 presence. Run #245 passed the new verifier. Latest Preview HTTP check confirmed unknown paths return 404 with the custom page.
 
 These changes are on the audit branch only. They are not in Production until reviewed, merged and deployed through an approved release.
 
@@ -135,7 +135,7 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [ ] Authorized Preview browser/mobile/tablet QA completed (HTTP smoke checks alone are insufficient).
 - [ ] Gallery lightbox keyboard/screen-reader QA completed (initial focus, focus containment, Escape close, focus restoration).
 - [x] Removed the catch-all rewrite, added a custom 404 page and added CI route-verification (run #245).
-- [ ] Latest Preview confirms unknown routes return HTTP 404 rather than a soft-404.
+- [x] Latest Preview confirms unknown routes return HTTP 404 with the custom 404 page.
 - [x] Vercel build uses `npm ci` via the committed `vercel.json` install command (confirmed in latest Preview logs).
 - [ ] Trusted proxy/IP identity, consent evidence and duplicate-submission controls reviewed before enabling reservations.
 - [ ] Live database migration, connectivity, backup and restore verified if reservations are in client scope.
