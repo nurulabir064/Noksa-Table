@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildContactLinks, buildEmailLink } from '../src/lib/contact-links.js';
+import { buildContactLinks, buildEmailLink, buildWhatsAppLink } from '../src/lib/contact-links.js';
 
 test('builds safe phone and email links from public contact details', () => {
   const links = buildContactLinks({
@@ -23,4 +23,17 @@ test('builds an encoded email draft and rejects invalid addresses', () => {
   assert.ok(link.href.includes('subject=Order+enquiry'));
   assert.ok(link.href.includes('body=Chicken+fried+rice+%26+Thai+soup'));
   assert.equal(buildEmailLink({ email: 'not-an-email' }), null);
+});
+
+test('normalizes the approved Bangladesh number for WhatsApp', () => {
+  const links = buildContactLinks({ whatsapp: '01304302201' });
+  assert.equal(links.whatsapp.href, 'https://wa.me/8801304302201');
+});
+
+test('creates an encoded WhatsApp order draft and rejects invalid targets', () => {
+  const link = buildWhatsAppLink({ phone: '01304302201', message: 'Pickup request & subtotal ৳500' });
+  assert.ok(link.href.startsWith('https://wa.me/8801304302201?text='));
+  assert.ok(link.href.includes('%26'));
+  assert.equal(buildWhatsAppLink({ phone: 'abc', message: 'Hello' }), null);
+  assert.equal(buildWhatsAppLink({ phone: '01304302201', message: ' ' }), null);
 });
