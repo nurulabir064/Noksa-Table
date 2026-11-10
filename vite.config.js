@@ -107,7 +107,7 @@ function routeMetadataPages() {
           ...pages.map(page => '  <url><loc>' + siteUrl + (page.route === '/' ? '/' : page.route) + '</loc></url>'),
           '</urlset>',
           '',
-        ].join('\\n')
+        ].join('\n')
         this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap })
       },
     },
