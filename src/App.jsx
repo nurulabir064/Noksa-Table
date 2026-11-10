@@ -413,9 +413,14 @@ function FormPage({reservation=false}){
   });
   const [loading,setLoading]=useState(false);
   const [error,setError]=useState('');
-  const reservationEnabled=import.meta.env.VITE_RESERVATIONS_ENABLED==='true'
-    && Boolean(import.meta.env.VITE_PRIVACY_POLICY_URL);
   const privacyUrl=import.meta.env.VITE_PRIVACY_POLICY_URL;
+  const privacyPolicyVersion=import.meta.env.VITE_PRIVACY_POLICY_VERSION;
+  const hasSecurePrivacyNotice=(()=>{
+    try{return new URL(privacyUrl).protocol==='https:'}catch{return false}
+  })();
+  const reservationEnabled=import.meta.env.VITE_RESERVATIONS_ENABLED==='true'
+    && hasSecurePrivacyNotice
+    && Boolean(privacyPolicyVersion);
 
   async function handleSubmit(event){
     event.preventDefault();
