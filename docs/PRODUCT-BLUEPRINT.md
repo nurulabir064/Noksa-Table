@@ -1,10 +1,10 @@
 # NOKSHA TABLE — Verified Product Blueprint & Delivery Roadmap
 
 > **Document status:** Verified working blueprint, not a claim that every feature is complete.  
-> **Last reviewed:** 9 November 2026  
+> **Last reviewed:** 11 November 2026  
 > **Repository:** https://github.com/nurulabir064/Noksa-Table  
 > **Production demo:** https://noksa-table.vercel.app  
-> **Working baseline:** `feat/premium-homepage-ordering-gallery-contact` at commit `3752fe3542c341feef083cbbcfa3586b9e8dc395`  
+> **Working baseline:** `docs/verified-product-blueprint` at commit `8733c723f562ac12f36914090608622ef541e3d8`  
 > **Product status:** Fictional restaurant concept/demo. It is not a real restaurant or a live booking/payment service.
 
 ---
@@ -31,8 +31,12 @@ The current priority is **not** to turn on every feature at once. First reconcil
 
 - Vercel project: `noksa-table`.
 - Latest production deployment checked: **READY**, from branch `feat/premium-homepage-ordering-gallery-contact`, commit `3752fe3542c341feef083cbbcfa3586b9e8dc395`.
+- Preview deployment checked: **READY**, from branch `docs/verified-product-blueprint`, commit `8733c723f562ac12f36914090608622ef541e3d8`; the Preview is protected by Vercel SSO, so automated visual/browser QA was not completed.
 - Vercel environment-variable metadata shows a `DATABASE_URL` entry scoped to Production, Preview and Development. The secret value was not read. This confirms only that a variable entry exists; it does **not** prove that the value is correct, that it points to the intended Neon database, that the schema has been applied, or that a live query succeeds.
 - No email-provider environment variable was present in the Vercel variable metadata returned during this review.
+- The baseline CI workflow only triggered on `main`; it did not validate pushes/PRs targeting the active feature/documentation branches. A release-readiness change now broadens CI to all branches and adds concurrency cancellation and a job timeout.
+- The committed `public/sitemap.xml` contains old dish slugs that do not match the current menu data. A release-readiness change generates the sitemap from the same route catalogue used by the build and removes the stale static file.
+- No `package-lock.json` is committed. `npm install` currently works in the recorded Vercel build, but a clean `npm ci` cannot be used until a lockfile is generated and committed; dependency reproducibility remains open.
 - Do not copy, print, commit, screenshot or send any secret value.
 
 ---
@@ -391,4 +395,5 @@ These references support implementation constraints; they do not imply that an i
 
 - 2026-11-09: Created this blueprint from the current production deployment commit and reviewed repository source, contact-link helpers, reservation API/validation, SQL schema, tests, README, sales/onboarding/delivery documents and Vercel environment-variable metadata.
 - 2026-11-09: In this PR branch, cleared the unapproved personal public email, replaced the personal email in the unit-test fixture with a neutral example address, corrected the missing-recipient UI error text, aligned README descriptions with the current email-draft flow, and documented client-owned email setup/shared-inbox vs separate-routing decisions in onboarding, customization and handover checklists.
+- 2026-11-11: Rechecked production and Preview deployment metadata, identified the stale sitemap and branch-limited CI triggers, and prepared fixes on a branch based on this verified blueprint. The Preview still requires an authorized browser/device acceptance pass; the lockfile/reproducible-install gap remains open.
 - No database schema, environment-variable value, email account, payment credential or production setting was changed. Production remains unchanged until the PR is reviewed, merged and deployed.
