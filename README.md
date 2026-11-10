@@ -32,7 +32,7 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - Verified phone / email / directions links driven by public client configuration
 - Menu cart with quantity controls, running subtotal and a prefilled email order enquiry containing selected dish names, quantities and subtotal
 - Direct email enquiry action from each dish detail page
-- Contact form preview state with native browser validation
+- Contact form that opens a prefilled email draft with native browser validation
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
 - Canonical URL, Open Graph and Twitter sharing metadata
@@ -131,7 +131,7 @@ Replace all fictional/sample content with client-approved assets and information
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
 - The menu order action opens a prefilled email draft; it is not sent automatically and does not submit an order to a backend, confirm availability, calculate delivery fees, collect payment, or guarantee fulfilment. The customer must press Send, and the restaurant confirms these details directly.
-- The contact form remains a frontend-only preview and does not transmit or store data.
+- The contact form opens a prefilled email draft; the user must press Send. The website itself does not transmit or store the message.
 - Sample menu data is stored locally in `src/data.js`.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
 - Automated tests cover menu data, reservation input validation, and API request guards. They do not replace live database integration, browser end-to-end, accessibility, load, or penetration tests.
