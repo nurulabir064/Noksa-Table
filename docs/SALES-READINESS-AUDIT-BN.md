@@ -45,14 +45,14 @@ The demo's `publicEmail` and `publicPhone` defaults are blank. Configure only a 
 |---|---|---|
 | Production deployment | Vercel deployment for commit `3752fe3` | READY; production unchanged |
 | Product blueprint Preview | Vercel Preview for commit `8733c72` | READY; protected by Vercel SSO |
-| Sales-readiness branch Preview | Vercel deployment `dpl_Farh8gSSharZzGhopLCCxGGoBy3V`, commit `2378187` | READY; separate Preview deployment, no Production alias assigned |
+| Sales-readiness branch Preview | Vercel deployment `dpl_Farh8gSSharZzGhopLCCxGGoBy3V`, commit `f57f6c4` | READY; separate Preview deployment, no Production alias assigned |
 | HTTP route/header smoke checks | Preview `/`, `/menu`, `/about`, `/gallery`, `/reservation`, `/contact`, `/menu/thai-soup`, `/sitemap.xml`, `/robots.txt`, `/favicon.svg` | All returned HTTP 200; key security headers present; interactive browser/device QA still not completed |
-| Unknown-route handling | Preview `/not-a-real-page` | Returns HTTP 200 with root fallback HTML (soft-404 risk); fix/verify before SEO release |
+| Unknown-route handling | Preview `/not-a-real-page` | Previously returned HTTP 200 with root fallback HTML (soft-404); catch-all rewrite removed and custom `public/404.html` added on the audit branch; latest Preview response still needs verification |
 | Baseline automated tests | PR #7 validation record, 9 Nov 2026 | 31/31 passed |
 | Baseline production build | PR #7 validation record | Passed |
-| Current audit branch CI | GitHub Actions run #231 on head `2378187` | Passed: locked install (`npm ci`), production and full-tree high-severity dependency audits, automated tests, production build and sitemap verification |
+| Current audit branch CI | GitHub Actions run #245 on head `f57f6c4` | Passed: locked install (`npm ci`), production and full-tree high-severity dependency audits, automated tests, production build, sitemap verification and explicit-route/custom-404 verification |
 | Dependency reproducibility | `package-lock.json` is committed; GitHub Actions uses `npm ci` | Locked install passed in run #231; `vercel.json` now explicitly sets `installCommand: npm ci` to align Vercel Preview/Production builds with CI; latest Preview build confirmed `npm ci` |
-| Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #231 passed |
+| Sitemap | Old static file contained menu slugs not present in current data | Replaced with build-generated route sitemap and post-build verifier; run #245 passed |
 
 The latest audit-branch Preview is READY and was fetched successfully through Vercel's protected-preview access. Route-level HTTP checks and response-header checks passed for the paths listed above. This is not a substitute for a real browser session: visual layout, React hydration, keyboard interaction, screen-reader behavior, mobile breakpoints, form behavior and browser console/network errors remain unverified. The Preview is protected by Vercel SSO; use the temporary share URL only with intended reviewers.
 
@@ -82,12 +82,13 @@ A successful API response means **request received / pending**, not a confirmed 
 ## 5. CI, SEO and maintainability changes in this audit branch
 
 - CI now validates pushes and pull requests on all branches, supports manual dispatch, cancels superseded runs and has a 15-minute job timeout.
-- CI runs `npm audit --omit=dev` after the locked install to check production dependencies; run #231 passed this gate.
-- CI also runs `npm audit --audit-level=high` against the full dependency tree, so high/critical advisories in development dependencies fail the workflow. Moderate advisories remain visible for follow-up; run #231 passed the full-tree high-severity gate.
+- CI runs `npm audit --omit=dev` after the locked install to check production dependencies; run #245 passed this gate.
+- CI also runs `npm audit --audit-level=high` against the full dependency tree, so high/critical advisories in development dependencies fail the workflow. Moderate advisories remain visible for follow-up; run #245 passed the full-tree high-severity gate.
 - Production build is a separate CI step after automated tests.
 - The static sitemap with stale dish URLs is removed. Vite now generates `dist/sitemap.xml` from the current page and dish route catalogue.
 - A post-build verifier checks that every expected route appears exactly once and that stale or unexpected URLs are absent.
 - The reservation API now checks the exact JSON media type, with a regression test for charset and JSONP cases.
+- Removed the catch-all SPA rewrite that caused unknown paths to return HTTP 200; added an accessible static `public/404.html` and a CI verifier for explicit application rewrites/custom 404 presence. Run #245 passed the new verifier. A fresh Preview HTTP check must still confirm Vercel serves unknown paths with status 404.
 
 These changes are on the audit branch only. They are not in Production until reviewed, merged and deployed through an approved release.
 
@@ -133,7 +134,8 @@ The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation rec
 - [x] Repository lockfile committed; clean-install reproducibility and production dependency audit verified in run #215.
 - [ ] Authorized Preview browser/mobile/tablet QA completed (HTTP smoke checks alone are insufficient).
 - [ ] Gallery lightbox keyboard/screen-reader QA completed (initial focus, focus containment, Escape close, focus restoration).
-- [ ] Unknown routes return a proper 404 status rather than a 200 soft-404.
+- [x] Removed the catch-all rewrite, added a custom 404 page and added CI route-verification (run #245).
+- [ ] Latest Preview confirms unknown routes return HTTP 404 rather than a soft-404.
 - [x] Vercel build uses `npm ci` via the committed `vercel.json` install command (confirmed in latest Preview logs).
 - [ ] Trusted proxy/IP identity, consent evidence and duplicate-submission controls reviewed before enabling reservations.
 - [ ] Live database migration, connectivity, backup and restore verified if reservations are in client scope.
