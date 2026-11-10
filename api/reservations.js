@@ -117,21 +117,28 @@ export default async function handler(req, res) {
     }
 
     const requestCode = randomUUID();
+    const requestFingerprint = createHash('sha256')
+      .update(JSON.stringify({ ...validation.data, privacyPolicyVersion }))
+      .digest('hex');
     const result = await sql`
       INSERT INTO reservations (
-        request_code, idempotency_key, customer_name, customer_email, customer_phone,
+        request_code, idempotency_key, request_fingerprint, customer_name, customer_email, customer_phone,
         reservation_date, reservation_time, guest_count, customer_message,
         consent_at, privacy_policy_version
       ) VALUES (
-        ${requestCode}, ${validation.data.idempotencyKey}, ${validation.data.name}, ${validation.data.email},
+        ${requestCode}, ${validation.data.idempotencyKey}, ${requestFingerprint}, ${validation.data.name}, ${validation.data.email},
         ${validation.data.phone}, ${validation.data.date}, ${validation.data.time},
         ${validation.data.guestCount}, ${validation.data.message}, NOW(), ${privacyPolicyVersion}
       )
       ON CONFLICT (idempotency_key) DO UPDATE
         SET idempotency_key = EXCLUDED.idempotency_key
+        WHERE reservations.request_fingerprint = EXCLUDED.request_fingerprint
       RETURNING request_code
     `;
     const savedRequestCode = result[0]?.request_code;
+    if (!savedRequestCode) {
+      return respond(res, 409, { error: 'This request key was already used with different details. Refresh the form and try again.' });
+    }
 
     return respond(res, 201, {
       message: 'Your reservation request was received. It is not confirmed until the restaurant contacts you.',
