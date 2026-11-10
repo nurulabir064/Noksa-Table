@@ -479,3 +479,8 @@ html.js-enabled [data-reveal] {
 .featured .dish-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:1000px){.featured .dish-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.featured .dish-grid{grid-template-columns:1fr}}
+
+/* Gallery image failures must remain visible and understandable in the grid and lightbox. */
+.gallery-item.image-missing .image-fallback { position: absolute; inset: 0; display: grid; min-height: 0; }
+.gallery-item.image-missing .gallery-item-caption { display: none; }
+.gallery-lightbox-panel.image-missing .image-fallback { display: grid; min-height: 240px; }
