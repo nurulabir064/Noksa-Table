@@ -24,7 +24,10 @@
 - [ ] WhatsApp number is client-approved and verified; order message contains items, quantities, subtotal, fulfilment choice, customer contact and delivery address where applicable
 - [ ] Map/directions link points to the verified location
 - [ ] Forms have labels, required-field validation and understandable error states
-- [ ] Test pickup and delivery request wording; confirm delivery coverage, fee, minimum order, ETA, opening hours, stock availability and pickup details from the client. Never invent them.\n- [ ] Invalid customer details, missing delivery address, empty cart and subtotal mismatch block the WhatsApp continuation.\n- [ ] Guest sees clear wording that the message is a request, not an accepted order.\n- [ ] No form is described as working unless its actual delivery/storage path was tested
+- [ ] Test pickup and delivery request wording; confirm delivery coverage, fee, minimum order, ETA, opening hours, stock availability and pickup details from the client. Never invent them.
+- [ ] Invalid customer details, missing delivery address, empty cart and subtotal mismatch block the WhatsApp continuation.
+- [ ] Guest sees clear wording that the message is a request, not an accepted order.
+- [ ] No form is described as working unless its actual delivery/storage path was tested.
 - [ ] No console errors or broken network assets
 
 ## 3. Responsive and accessibility basics
