@@ -5,7 +5,7 @@ A premium multi-cuisine restaurant website concept built with React, Vite, React
 **Live demo:** https://noksa-table.vercel.app  
 **Repository:** https://github.com/nurulabir064/Noksa-Table
 
-> **Important:** Noksha Table is a fictional concept project, not a real restaurant. Menu items, prices, venue imagery, and Dhaka references are illustrative. The reservation API is included but disabled by default; no real booking is accepted. The contact form is a frontend-only preview and does not send or store messages.
+> **Important:** Noksha Table is a fictional concept project, not a real restaurant. Menu items, prices, venue imagery, and Dhaka references are illustrative. The reservation API is included but disabled by default; no real booking is accepted. The contact form opens a prefilled email draft; the customer must review and send it. The website does not transmit or store the message.
 
 ## Sales and client delivery documents
 
@@ -29,9 +29,9 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - Individual dish detail routes
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
-- Verified phone / WhatsApp / email / directions links driven by public client configuration
-- Menu cart with quantity controls, running subtotal and a WhatsApp order message containing selected dish names, quantities and subtotal
-- Direct WhatsApp order action from each dish detail page
+- Verified phone / email / directions links driven by public client configuration
+- Menu cart with quantity controls, running subtotal and a prefilled email order enquiry containing selected dish names, quantities and subtotal
+- Direct email enquiry action from each dish detail page
 - Contact form preview state with native browser validation
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
@@ -97,14 +97,14 @@ The production output is generated in `dist/`.
 │   │   └── site.js
 │   ├── lib/
 │   │   ├── contact-links.js
-│   │   └── whatsapp-order.js
+│   │   └── order-message.js
 │   ├── App.jsx
 │   ├── data.js
 │   ├── main.jsx
 │   └── styles.css
 ├── test/
 │   ├── contact-links.test.js
-│   ├── whatsapp-order.test.js
+│   ├── order-message.test.js
 │   ├── data.test.js
 │   ├── reservation-api.test.js
 │   └── reservation-validation.test.js
@@ -130,7 +130,7 @@ Replace all fictional/sample content with client-approved assets and information
 - The reservation API and PostgreSQL schema are included, but the live reservation feature is deliberately disabled by default.
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
-- WhatsApp ordering opens a prefilled chat; it does not submit an order to a backend, confirm availability, calculate delivery fees, collect payment, or guarantee fulfilment. The restaurant confirms these details directly.
+- The menu order action opens a prefilled email draft; it is not sent automatically and does not submit an order to a backend, confirm availability, calculate delivery fees, collect payment, or guarantee fulfilment. The customer must press Send, and the restaurant confirms these details directly.
 - The contact form remains a frontend-only preview and does not transmit or store data.
 - Sample menu data is stored locally in `src/data.js`.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
@@ -153,7 +153,7 @@ The API stores requests as `pending`; it does not confirm tables or send notific
 - [ ] Test every route and refresh each nested route directly on the production domain.
 - [ ] Test mobile menu open/close, keyboard navigation, skip link, and focus visibility.
 - [ ] Test menu category filters, empty search results, and search by description.
-- [ ] Add multiple dishes, change quantities, verify line totals/subtotal, and confirm the WhatsApp draft contains the correct item names, quantities and subtotal.
+- [ ] Add multiple dishes, change quantities, verify line totals/subtotal, and confirm the email draft contains the correct item names, quantities and subtotal.
 - [ ] Test reservation date/time, consent, disabled state, API validation, rate limiting and all error states.
 - [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
 - [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
