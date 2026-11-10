@@ -29,7 +29,9 @@ export function buildWhatsAppOrderMessage({
   if (fulfilment === 'delivery' && (safeAddress.length < 8 || safeAddress.length > 300)) return '';
 
   const lines = items.map(item => {
-    if (!item || typeof item.name !== 'string' || !item.name.trim()) return null;
+    if (!item || typeof item.name !== 'string') return null;
+    const safeItemName = cleanText(item.name).slice(0, 120);
+    if (!safeItemName) return null;
     if (!Number.isSafeInteger(item.quantity) || item.quantity < 1 || item.quantity > 99) return null;
     if (!Number.isSafeInteger(item.lineTotal) || item.lineTotal < 0) return null;
     return '• ' + safeItemName + ' × ' + item.quantity + ' — ৳' + item.lineTotal;
