@@ -32,7 +32,7 @@ export function buildWhatsAppOrderMessage({
     if (!item || typeof item.name !== 'string' || !item.name.trim()) return null;
     if (!Number.isSafeInteger(item.quantity) || item.quantity < 1 || item.quantity > 99) return null;
     if (!Number.isSafeInteger(item.lineTotal) || item.lineTotal < 0) return null;
-    return '• ' + item.name.trim().slice(0, 120) + ' × ' + item.quantity + ' — ৳' + item.lineTotal;
+    return '• ' + safeItemName + ' × ' + item.quantity + ' — ৳' + item.lineTotal;
   }).filter(Boolean);
 
   if (lines.length !== items.length) return '';
