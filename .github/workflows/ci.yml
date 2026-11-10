@@ -2,26 +2,42 @@ name: Validate website
 
 on:
   push:
-    branches: [main]
+    branches: ["**"]
   pull_request:
-    branches: [main]
+    branches: ["**"]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 24
       - name: Install dependencies
         run: npm install
-      - name: Run data integrity tests
+      - name: Audit production dependencies
+        run: npm audit --omit=dev
+      - name: Audit full dependency tree for high and critical vulnerabilities
+        run: npm audit --audit-level=high
+      - name: Run automated tests
         run: npm test
       - name: Build production bundle
         run: npm run build
+      - name: Verify generated routes and custom 404
+        run: npm run verify:routes
+      - name: Verify generated sitemap
+        run: npm run verify:sitemap
