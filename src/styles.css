@@ -507,3 +507,5 @@ html.js-enabled [data-reveal] {
 .whatsapp-order-button:disabled{opacity:.48;cursor:not-allowed}
 .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:600px){.fulfilment-options,.order-customer-fields{grid-template-columns:1fr}.order-customer-fields .delivery-address-field{grid-column:auto}.fulfilment-option{padding:15px}}
+
+.quantity-control button:disabled{opacity:.4;cursor:not-allowed}
