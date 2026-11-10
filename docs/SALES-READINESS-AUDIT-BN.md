@@ -67,13 +67,13 @@ A successful API response means **request received / pending**, not a confirmed 
 ### Security findings that remain release gates
 
 - The content-type guard has been tightened to accept `application/json` (including parameters such as charset) and reject lookalike media types such as `application/jsonp`; a regression test was added.
-- Origin validation currently depends on forwarded protocol and host headers. Verify the trusted Vercel proxy/header behaviour and canonical-host allowlist before enabling reservation submissions.
-- Rate limiting uses `x-real-ip`. Verify that this header is set by the trusted platform and cannot be supplied or spoofed by an untrusted client.
+- Vercel's official Request Headers documentation says `host` is the domain used by the visitor, `x-forwarded-host` mirrors it, and `x-forwarded-proto` carries the forwarded protocol. The API's origin comparison is consistent with these documented headers. If a separate proxy/CDN is placed in front of Vercel, re-check the full trusted-proxy chain and canonical host policy before enabling reservations.
+- Rate limiting uses `x-real-ip`. Vercel documents this as identical to its `x-forwarded-for` value and says it overwrites `x-forwarded-for` to prevent IP spoofing. This supports the current use on a direct Vercel deployment; an external proxy may cause Vercel to see the proxy IP unless a supported Trusted Proxy configuration is used.
 - The API requires `consent: true`, but the reviewed schema does not persist the privacy-notice version or consent timestamp.
 - Duplicate submissions are not protected by a durable idempotency key. A user retry or double submission could create more than one pending request.
 - There is no staff/admin interface, notification delivery, availability engine or operational review workflow.
 - The live database connection and schema migration have not been tested. Vercel metadata showed a `DATABASE_URL` variable entry, but its value was not read and no live query was performed.
-- The repository declares CSP, frame, content-type, referrer and permissions headers. The production header check recorded in PR #7 reported HSTS, but HSTS is not explicitly declared in the checked-in `vercel.json`; verify the effective headers on each client domain.
+- The repository declares CSP, frame, content-type, referrer and permissions headers. Vercel's Response Headers documentation says the platform automatically returns HSTS with a default `max-age=63072000`. Confirm the effective response headers on every client domain, especially if another proxy/CDN is introduced.
 - No penetration test, load test, accessibility audit or live data-retention test has been completed.
 
 ## 5. CI, SEO and maintainability changes in this audit branch
@@ -110,7 +110,13 @@ Before any payment release, implement and test backend session creation, server-
 
 The sales kit's introductory BDT 10,000–15,000 range is a scoped quotation recommendation, not a verified market average or guaranteed willingness-to-pay. Use it only for the limited starter scope with client-supplied approved content/assets. Quote CMS, live reservations, backend order management, server-delivered email, payment and ongoing maintenance separately after discovery.
 
-## 9. Release checklist
+## 9. Technical references
+
+- Vercel Request Headers: https://vercel.com/docs/headers/request-headers
+- Vercel Response Headers: https://vercel.com/docs/headers/response-headers
+- MDN X-Forwarded-For security guidance: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Forwarded-For
+
+## 10. Release checklist
 
 - [x] Production and Preview deployment metadata inspected.
 - [x] Product blueprint and client sales/delivery documents reviewed.
