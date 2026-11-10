@@ -10,6 +10,7 @@ A premium multi-cuisine restaurant website concept built with React, Vite, React
 ## Product and client delivery documents
 
 - [Verified product blueprint and roadmap](docs/PRODUCT-BLUEPRINT.md) — current implementation evidence, security gates, backend/database/email/reservation/order/payment roadmap and release criteria.
+- [Sales-readiness and technical audit](docs/SALES-READINESS-AUDIT-BN.md) — verified scope, backend/security findings, CI/SEO fixes and client release gates.
 
 All client-facing documents are templates. Fill in the actual scope and have both parties approve them before work starts.
 
@@ -73,6 +74,7 @@ Open the local URL printed by Vite.
 ```bash
 npm test
 npm run build
+npm run verify:sitemap
 npm run preview
 ```
 
@@ -105,6 +107,8 @@ The production output is generated in `dist/`.
 │   ├── data.js
 │   ├── main.jsx
 │   └── styles.css
+├── scripts/
+│   └── verify-sitemap.mjs
 ├── test/
 │   ├── contact-links.test.js
 │   ├── data.test.js
