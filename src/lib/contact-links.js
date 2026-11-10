@@ -14,7 +14,7 @@ function getWhatsAppDigits(value) {
 }
 
 export function buildContactLinks({ phone = '', email = '', whatsapp = '' } = {}) {
-  const phoneDigits = getDigits(phone);
+  const rawPhoneDigits = getDigits(phone);\n  const phoneDigits = rawPhoneDigits.length === 11 && rawPhoneDigits.startsWith('0') ? '88' + rawPhoneDigits.slice(1) : rawPhoneDigits;
   const normalizedEmail = typeof email === 'string' ? email.trim() : '';
   const whatsappDigits = getWhatsAppDigits(whatsapp);
   const validPhone = phoneDigits.length >= 7 && phoneDigits.length <= 15;
