@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "node --test",
     "verify:sitemap": "node scripts/verify-sitemap.mjs",
-    "verify:routes": "node scripts/verify-routes.mjs"
+    "verify:routes": "node scripts/verify-routes.mjs",
+    "verify:images": "node scripts/verify-image-assets.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
