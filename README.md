@@ -130,7 +130,7 @@ Replace all fictional/sample content with client-approved assets and information
 - The reservation API and PostgreSQL schema are included, but the live reservation feature is deliberately disabled by default.
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
-- WhatsApp ordering opens a prefilled request. The guest can choose pickup or request delivery and provide an address. It does not submit an order to a backend, verify delivery coverage, calculate fees/ETA, reserve stock, collect payment, or guarantee fulfilment. The restaurant must confirm all operational details and explicitly accept the order. Guests can select pickup or submit a delivery request with an address, but the restaurant must confirm service coverage, availability, fee, estimated time and final total before accepting the order.
+- WhatsApp ordering opens a prefilled request. The guest can choose pickup or request delivery and provide an address. It does not submit an order to a backend, verify delivery coverage, calculate fees/ETA, reserve stock, collect payment, or guarantee fulfilment. The restaurant must confirm all operational details and explicitly accept the order.
 - The contact form remains a frontend-only preview and does not transmit or store data.
 - Sample menu data is stored locally in `src/data.js`.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
@@ -153,7 +153,7 @@ The API stores requests as `pending`; it does not confirm tables or send notific
 - [ ] Test every route and refresh each nested route directly on the production domain.
 - [ ] Test mobile menu open/close, keyboard navigation, skip link, and focus visibility.
 - [ ] Test menu category filters, empty search results, and search by description.
-- [ ] Add multiple dishes, change quantities, verify line totals/subtotal, and confirm the WhatsApp draft contains the correct item names, quantities and subtotal.
+- [ ] Add multiple dishes, change quantities (including the 99-item limit), verify line totals/subtotal, and confirm the WhatsApp request contains the correct item names, quantities and food subtotal.\n- [ ] Select pickup and verify the pickup request wording. Select delivery and verify an address is required and included. Confirm the message clearly says delivery coverage, fee, ETA, availability and final total are subject to restaurant confirmation.\n- [ ] Test invalid name/phone/address, long text, control-character input, mismatched totals and an empty cart; no WhatsApp action should be enabled for invalid details.
 - [ ] Test reservation date/time, consent, disabled state, API validation, rate limiting and all error states.
 - [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
 - [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
