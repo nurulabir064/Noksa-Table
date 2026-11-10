@@ -21,6 +21,6 @@ test('gallery dialog exposes modal semantics and a keyboard close control', () =
 });
 
 test('gallery thumbnails have descriptive alternative text and native button controls', () => {
-  assert.match(app, /className="gallery-item"[^>]*aria-label=/);
+  assert.match(app, /aria-label=\{'View image: '\+image\.alt\}/);
   assert.match(app, /alt=\{image\.alt\}/);
 });
