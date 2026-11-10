@@ -38,7 +38,8 @@ function Menu(){
   const orderWhatsAppLink=buildContactLinks({whatsapp:siteConfig.whatsappNumber,message:orderMessage}).whatsapp;
   const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));
   const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));
-  const canPrepareOrder=order.items.length>0 && Boolean(orderMessage);\n  return <main id="main-content" className="page section-wrap menu-page">
+  const canPrepareOrder=order.items.length>0 && Boolean(orderMessage);
+  return <main id="main-content" className="page section-wrap menu-page">
     <div className="eyebrow">A THOUGHTFUL SELECTION</div>
     <h1 className="page-title">The <em>menu.</em></h1>
     <p className="page-intro">A little something for every appetite. Explore familiar favourites and house signatures.</p>
