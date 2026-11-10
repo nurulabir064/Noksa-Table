@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, NavLink, Route, Routes, useParams, useLocation } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight, Menu as MenuIcon, Search, X } from 'lucide-react'
 import { dishes, categories } from './data'
@@ -320,14 +320,46 @@ function Gallery(){
   ];
   const [selected,setSelected]=useState(null);
   const [category,setCategory]=useState('All');
+  const closeButtonRef=useRef(null);
+  const lightboxPanelRef=useRef(null);
+  const triggerRef=useRef(null);
   const categories=['All','Food','Drinks','Dessert','Interior'];
   const visibleImages=category==='All'?images:images.filter(image=>image.kind===category);
 
   useEffect(()=>{
     if(!selected)return;
-    const close=event=>{if(event.key==='Escape')setSelected(null)};
-    window.addEventListener('keydown',close);
-    return()=>window.removeEventListener('keydown',close);
+    const focusableSelector='button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown=event=>{
+      if(event.key==='Escape'){
+        setSelected(null);
+        return;
+      }
+      if(event.key!=='Tab')return;
+
+      const focusable=lightboxPanelRef.current?.querySelectorAll(focusableSelector);
+      if(!focusable?.length){
+        event.preventDefault();
+        return;
+      }
+
+      const first=focusable[0];
+      const last=focusable[focusable.length-1];
+      if(event.shiftKey&&document.activeElement===first){
+        event.preventDefault();
+        last.focus();
+      }else if(!event.shiftKey&&document.activeElement===last){
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener('keydown',handleKeyDown);
+    return()=>{
+      window.removeEventListener('keydown',handleKeyDown);
+      triggerRef.current?.focus();
+    };
   },[selected]);
 
   return (
@@ -344,7 +376,7 @@ function Gallery(){
       </div>
 
       <div className="gallery-grid">
-        {visibleImages.map((image,i)=><button type="button" className="gallery-item" key={image.id} onClick={()=>setSelected(image)} aria-label={'View image: '+image.alt}>
+        {visibleImages.map((image,i)=><button type="button" className="gallery-item" key={image.id} onClick={event=>{triggerRef.current=event.currentTarget;setSelected(image)}} aria-label={'View image: '+image.alt}>
           <img loading="lazy" decoding="async" width="1000" height="750" src={'https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85'} alt={image.alt}/>
           <span className="gallery-item-caption"><span>{image.kind}</span><strong>{image.alt}</strong></span>
         </button>)}
@@ -353,10 +385,10 @@ function Gallery(){
       <p className="sample-note gallery-demo-note">Demo photography is illustrative and is not a representation of the restaurant’s actual dishes or interior. Replace it with owner-approved, correctly matched photographs before a restaurant launch.</p>
 
       {selected&&<div className="gallery-lightbox" role="presentation" onClick={()=>setSelected(null)}>
-        <div className="gallery-lightbox-panel" role="dialog" aria-modal="true" aria-label={selected.alt} onClick={event=>event.stopPropagation()}>
-          <button type="button" className="gallery-lightbox-close" onClick={()=>setSelected(null)} aria-label="Close image">×</button>
+        <div ref={lightboxPanelRef} className="gallery-lightbox-panel" role="dialog" aria-modal="true" aria-label={selected.alt} aria-describedby="gallery-lightbox-caption" onClick={event=>event.stopPropagation()}>
+          <button ref={closeButtonRef} type="button" className="gallery-lightbox-close" onClick={()=>setSelected(null)} aria-label="Close image">×</button>
           <img src={'https://images.unsplash.com/'+selected.id+'?auto=format&fit=max&w=1800&q=90'} alt={selected.alt}/>
-          <p>{selected.alt}</p>
+          <p id="gallery-lightbox-caption">{selected.alt}</p>
         </div>
       </div>}
     </main>
