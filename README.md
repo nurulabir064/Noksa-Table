@@ -33,8 +33,8 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
 - Public phone / email / directions links appear only when approved contact details are configured
-- Menu cart with quantity controls and running subtotal; when an approved email recipient is configured, the order action opens a prefilled email draft for the visitor to review and send
-- Dish detail enquiry that opens a prefilled email draft; the visitor must review and press Send
+- Menu cart with quantity controls, food subtotal, guest pickup/delivery request choice, required customer contact details, and a WhatsApp draft addressed to the configured restaurant number
+- Dish detail actions add the selected item to the cart so guests choose pickup or request delivery before opening WhatsApp
 - Contact form that opens a prefilled email draft only when an approved recipient is configured; it does not send or store the message itself
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
@@ -63,7 +63,7 @@ Requirements: Node.js 24.x and npm.
 ```bash
 git clone https://github.com/nurulabir064/Noksa-Table.git
 cd Noksa-Table
-npm install
+npm ci
 npm run dev
 ```
 
@@ -136,7 +136,7 @@ Replace all fictional/sample content with client-approved assets and information
 - The reservation API and PostgreSQL schema are included, but the live reservation feature is deliberately disabled by default.
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
-- Menu/order enquiries use a prefilled email draft when a recipient is configured; the visitor must press Send in their own email app. This does not create a backend order, confirm availability, calculate delivery fees, collect payment, or guarantee fulfilment.
+- Menu order enquiries open a prefilled WhatsApp request. Guests can choose pickup or request delivery with an address. The restaurant must confirm delivery coverage, availability, fee, ETA, final total and acceptance. This does not create a backend order, reserve stock, dispatch delivery, collect payment, or guarantee fulfilment.
 - The contact form uses a mailto draft only; it does not transmit or store data through the website. The recipient remains unconfigured in this demo.
 - Sample menu data is stored locally in `src/data.js`.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
@@ -159,7 +159,7 @@ The API stores requests as `pending`; it does not confirm tables or send notific
 - [ ] Test every route and refresh each nested route directly on the production domain.
 - [ ] Test mobile menu open/close, keyboard navigation, skip link, and focus visibility.
 - [ ] Test menu category filters, empty search results, and search by description.
-- [ ] Add multiple dishes, change quantities, verify line totals/subtotal, and confirm the prefilled email draft contains the correct item names, quantities and subtotal; review the recipient and message before sending.
+- [ ] Add multiple dishes, change quantities (including the 99-item limit), verify line totals/subtotal and WhatsApp request content.\n- [ ] Select pickup and verify pickup request wording. Select delivery and verify address is required and included; delivery area, fee, ETA, availability and final total must remain subject to restaurant confirmation.\n- [ ] Test invalid name/phone/address, empty cart and mismatched subtotal; no WhatsApp action should be enabled.
 - [ ] Test reservation date/time, consent, disabled state, API validation, rate limiting and all error states.
 - [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
 - [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
