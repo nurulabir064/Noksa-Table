@@ -41,9 +41,9 @@ The current starter can be positioned for a limited restaurant website scope:
 - About and gallery content.
 - Client-approved public contact actions.
 - Cart quantity and subtotal calculation.
-- Prefilled WhatsApp order enquiry, subject to verified client configuration.
+- Prefilled email order enquiry, subject to verified public email configuration.
 
-A WhatsApp message is an enquiry/order request, not an accepted or confirmed order. The restaurant must confirm stock, fulfilment, final charges, and payment directly.
+Opening or sending an email draft is an enquiry, not an accepted or confirmed order. The customer must send the email, and the restaurant must confirm stock, fulfilment, final charges, and payment directly.
 
 ## 3. Explicit exclusions until separately implemented and accepted
 
@@ -60,7 +60,7 @@ A WhatsApp message is an enquiry/order request, not an accepted or confirmed ord
 ### A. Client configuration and content
 
 - Replace sample brand, venue, address, opening hours, map location, and all contact details with client-approved information.
-- Verify phone, email, WhatsApp and map destinations on real devices.
+- Verify phone, email and map destinations on real devices.
 - Obtain written approval for menu names, prices, descriptions, allergens and availability.
 - Confirm commercial rights for every image, font, logo and written asset.
 - Remove sample/demo wording only after the real information is approved.
@@ -71,7 +71,7 @@ A WhatsApp message is an enquiry/order request, not an accepted or confirmed ord
 - Test every route directly and after refresh.
 - Test navigation, keyboard access, Escape behavior, focus visibility and mobile menu.
 - Test menu search, filters, no-results state and invalid dish IDs.
-- Test cart add/remove/quantity changes, subtotal, empty cart and generated WhatsApp message.
+- Test cart add/remove/quantity changes, subtotal, empty cart and generated email draft.
 - Verify every public contact link.
 - Test narrow mobile, tablet, laptop and wide desktop.
 - Check console errors, network failures, missing images and broken links.
@@ -116,7 +116,7 @@ Use it only when the client supplies approved content and usable licensed images
 
 ## 7. Verification record and limitations
 
-The audit is based on repository file inspection, Vercel deployment/domain metadata, and GitHub Actions. Run #137 completed successfully for commit `5815ad5`: dependency installation, automated tests, and production build all passed.
+The audit is based on repository file inspection, Vercel deployment/domain metadata, and GitHub Actions. Run #137 completed successfully for commit `5815ad5`: dependency installation, automated tests, and production build all passed. A later CI run on commit `4f3ce20` also passed; the sitemap/CI updates on the current head are awaiting their own run.
 
 This is not a substitute for browser automation, manual device testing, live database integration, penetration testing, accessibility assessment, load testing, or a client acceptance session. The public website could not be independently inspected with the available browser retrieval, so visual and live interaction claims remain unverified.
 
