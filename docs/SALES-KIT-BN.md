@@ -32,7 +32,7 @@
 - Basic page metadata and deployment to an agreed hosting account
 - One production handover and short owner walkthrough
 
-**Template status:** the current NOKSHA TABLE repository is a visual/code starter. Client-specific contact details, real links, content, domain, and any requested integrations must be configured and tested before delivery. The current demo's Contact form is a preview only; it does not send or store messages. The Reservation page is a disabled UI preview; it does not accept real bookings.
+**Template status:** the current NOKSHA TABLE repository is a visual/code starter. Client-specific contact details, real links, content, domain, and any requested integrations must be configured and tested before delivery. The current demo's Contact form opens a prefilled email draft; the user must review and press Send. The website does not transmit or store the message. The Reservation page is a disabled UI preview; it does not accept real bookings.
 
 ### অন্তর্ভুক্ত নয়
 
@@ -95,7 +95,7 @@
 
 Demo: https://noksa-table.vercel.app
 
-Demo-টি fictional concept. Sample menu, price, venue imagery এবং Dhaka reference illustrative. Live demo-তে reservation service disabled; contact form message পাঠায় বা সংরক্ষণ করে না। তাই client-কে স্পষ্টভাবে বলুন: এটি design ও frontend capability দেখানোর demo, production-ready restaurant booking/order platform নয়।
+Demo-টি fictional concept. Sample menu, price, venue imagery এবং Dhaka reference illustrative. Live demo-তে reservation service disabled; contact form prefilled email draft খোলে; ব্যবহারকারী Send না করা পর্যন্ত message যায় না এবং website message সংরক্ষণ করে না। তাই client-কে স্পষ্টভাবে বলুন: এটি design ও frontend capability দেখানোর demo, production-ready restaurant booking/order platform নয়।
 
 ## 9. Proposal message template
 
