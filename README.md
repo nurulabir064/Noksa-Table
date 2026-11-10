@@ -30,8 +30,8 @@ All client-facing documents are templates. Fill in the actual scope and have bot
 - About and illustrative gallery pages
 - Reservation form connected to a gated Node.js API; remains disabled until database, privacy and operations configuration is complete
 - Verified phone / WhatsApp / email / directions links driven by public client configuration
-- Menu cart with quantity controls, running subtotal and a WhatsApp order message containing selected dish names, quantities and subtotal
-- Direct WhatsApp order action from each dish detail page
+- Menu cart with quantity controls, pickup/delivery request choice, customer details and a WhatsApp order request
+- Dish detail pages route guests to the cart to choose pickup or request delivery before contacting the restaurant
 - Contact form preview state with native browser validation
 - Accessible skip link, navigation labels, visible focus styles, live result/status announcements, and reduced-motion support
 - Route-specific prerendered HTML titles, descriptions, canonical URLs, Open Graph and Twitter metadata for every menu and content route
@@ -130,7 +130,7 @@ Replace all fictional/sample content with client-approved assets and information
 - The reservation API and PostgreSQL schema are included, but the live reservation feature is deliberately disabled by default.
 - The API has not been connected to a provisioned database in this project session; no customer data has been stored.
 - No admin dashboard, reservation notifications, table-capacity/availability engine, or confirmed-booking workflow exists yet. Do not enable reservation submissions until those operational pieces and the privacy/retention policy are ready.
-- WhatsApp ordering opens a prefilled chat; it does not submit an order to a backend, confirm availability, calculate delivery fees, collect payment, or guarantee fulfilment. The restaurant confirms these details directly.
+- WhatsApp ordering opens a prefilled request. The guest can choose pickup or request delivery and provide an address. It does not submit an order to a backend, verify delivery coverage, calculate fees/ETA, reserve stock, collect payment, or guarantee fulfilment. The restaurant must confirm all operational details and explicitly accept the order. Guests can select pickup or submit a delivery request with an address, but the restaurant must confirm service coverage, availability, fee, estimated time and final total before accepting the order.
 - The contact form remains a frontend-only preview and does not transmit or store data.
 - Sample menu data is stored locally in `src/data.js`.
 - Images are remote Unsplash URLs used for concept presentation; obtain appropriate commercial licenses or replace them with client-approved assets before paid delivery.
