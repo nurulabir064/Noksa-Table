@@ -27,7 +27,7 @@ if (!sitemap.includes('<urlset ') || actualUrls.length !== expectedUrls.length |
     unexpectedUrls.length ? 'Unexpected: ' + unexpectedUrls.join(', ') : '',
     actualUrls.length !== expectedUrls.length ? 'Expected ' + expectedUrls.length + ' URLs, found ' + actualUrls.length + '.' : '',
     uniqueUrls.size !== actualUrls.length ? 'Duplicate sitemap URLs were found.' : '',
-  ].filter(Boolean).join('\\n'));
+  ].filter(Boolean).join('\n'));
 }
 
 console.log('Sitemap verified: ' + actualUrls.length + ' unique application routes.');
