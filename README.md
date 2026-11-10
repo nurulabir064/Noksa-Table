@@ -87,23 +87,29 @@ The production output is generated in `dist/`.
 ├── db/
 │   └── schema.sql
 ├── public/
+│   ├── 404.html
 │   ├── favicon.svg
 │   ├── robots.txt
-│   └── sitemap.xml
+│   └── robots.txt
 ├── src/
 │   ├── components/
 │   │   └── ContactActions.jsx
 │   ├── config/
 │   │   └── site.js
 │   ├── lib/
+│   │   ├── cart.js
 │   │   ├── contact-links.js
 │   │   └── whatsapp-order.js
 │   ├── App.jsx
 │   ├── data.js
 │   ├── main.jsx
 │   └── styles.css
+├── scripts/
+│   ├── verify-routes.mjs
+│   └── verify-sitemap.mjs
 ├── test/
 │   ├── contact-links.test.js
+│   ├── cart.test.js
 │   ├── whatsapp-order.test.js
 │   ├── data.test.js
 │   ├── reservation-api.test.js
@@ -153,7 +159,9 @@ The API stores requests as `pending`; it does not confirm tables or send notific
 - [ ] Test every route and refresh each nested route directly on the production domain.
 - [ ] Test mobile menu open/close, keyboard navigation, skip link, and focus visibility.
 - [ ] Test menu category filters, empty search results, and search by description.
-- [ ] Add multiple dishes, change quantities (including the 99-item limit), verify line totals/subtotal, and confirm the WhatsApp request contains the correct item names, quantities and food subtotal.\n- [ ] Select pickup and verify the pickup request wording. Select delivery and verify an address is required and included. Confirm the message clearly says delivery coverage, fee, ETA, availability and final total are subject to restaurant confirmation.\n- [ ] Test invalid name/phone/address, long text, control-character input, mismatched totals and an empty cart; no WhatsApp action should be enabled for invalid details.
+- [ ] Add multiple dishes, change quantities (including the 99-item limit), verify line totals/subtotal, and confirm the WhatsApp request contains the correct item names, quantities and food subtotal.
+- [ ] Select pickup and verify the pickup request wording. Select delivery and verify an address is required and included. Confirm delivery coverage, fee, ETA, availability and final total are clearly subject to restaurant confirmation.
+- [ ] Test invalid name/phone/address, long text, control-character input, mismatched totals and an empty cart; no WhatsApp action should be enabled for invalid details.
 - [ ] Test reservation date/time, consent, disabled state, API validation, rate limiting and all error states.
 - [ ] Run a controlled database integration test and verify pending records can be securely reviewed and deleted.
 - [ ] Verify responsive layout at narrow mobile, tablet, laptop, and wide desktop widths.
