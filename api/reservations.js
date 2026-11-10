@@ -25,7 +25,8 @@ export default async function handler(req, res) {
     return respond(res, 403, { error: 'Request origin is not allowed.' });
   }
 
-  if (!req.headers['content-type']?.toLowerCase().includes('application/json')) {
+  const contentType = req.headers['content-type']?.split(';', 1)[0].trim().toLowerCase();
+  if (contentType !== 'application/json') {
     return respond(res, 415, { error: 'Content-Type must be application/json.' });
   }
 
@@ -68,6 +69,7 @@ export default async function handler(req, res) {
   const databaseUrl = process.env.DATABASE_URL;
   const rateLimitSecret = process.env.RATE_LIMIT_SECRET;
   const privacyPolicyUrl = process.env.PRIVACY_POLICY_URL;
+  const privacyPolicyVersion = process.env.PRIVACY_POLICY_VERSION;
   let hasApprovedPrivacyPolicy = false;
 
   try {
@@ -76,7 +78,7 @@ export default async function handler(req, res) {
     hasApprovedPrivacyPolicy = false;
   }
 
-  if (!databaseUrl || !rateLimitSecret || !hasApprovedPrivacyPolicy) {
+  if (!databaseUrl || !rateLimitSecret || !hasApprovedPrivacyPolicy || !/^[A-Za-z0-9._-]{1,40}$/.test(privacyPolicyVersion || '')) {
     return respond(res, 503, { error: 'Reservation service is not configured.' });
   }
 
@@ -115,20 +117,32 @@ export default async function handler(req, res) {
     }
 
     const requestCode = randomUUID();
-    await sql`
+    const requestFingerprint = createHash('sha256')
+      .update(JSON.stringify({ ...validation.data, privacyPolicyVersion }))
+      .digest('hex');
+    const result = await sql`
       INSERT INTO reservations (
-        request_code, customer_name, customer_email, customer_phone,
-        reservation_date, reservation_time, guest_count, customer_message
+        request_code, idempotency_key, request_fingerprint, customer_name, customer_email, customer_phone,
+        reservation_date, reservation_time, guest_count, customer_message,
+        consent_at, privacy_policy_version
       ) VALUES (
-        ${requestCode}, ${validation.data.name}, ${validation.data.email},
+        ${requestCode}, ${validation.data.idempotencyKey}, ${requestFingerprint}, ${validation.data.name}, ${validation.data.email},
         ${validation.data.phone}, ${validation.data.date}, ${validation.data.time},
-        ${validation.data.guestCount}, ${validation.data.message}
+        ${validation.data.guestCount}, ${validation.data.message}, NOW(), ${privacyPolicyVersion}
       )
+      ON CONFLICT (idempotency_key) DO UPDATE
+        SET idempotency_key = EXCLUDED.idempotency_key
+        WHERE reservations.request_fingerprint = EXCLUDED.request_fingerprint
+      RETURNING request_code
     `;
+    const savedRequestCode = result[0]?.request_code;
+    if (!savedRequestCode) {
+      return respond(res, 409, { error: 'This request key was already used with different details. Refresh the form and try again.' });
+    }
 
     return respond(res, 201, {
       message: 'Your reservation request was received. It is not confirmed until the restaurant contacts you.',
-      reference: requestCode,
+      reference: savedRequestCode,
       status: 'pending',
     });
   } catch {

@@ -49,6 +49,7 @@ const validBody = {
   message: '',
   website: '',
   consent: true,
+  idempotencyKey: '123e4567-e89b-42d3-a456-426614174000',
 };
 
 test('rejects unsupported HTTP methods', async () => {
@@ -84,6 +85,36 @@ test('requires JSON content type', async () => {
     },
   });
   assert.equal(response.statusCode, 415);
+});
+
+test('accepts JSON with charset but rejects JSONP media types', async () => {
+  const previous = process.env.RESERVATIONS_ENABLED;
+  process.env.RESERVATIONS_ENABLED = 'false';
+  try {
+    const withCharset = await callHandler({
+      headers: {
+        origin: 'https://noksa-table.example',
+        host: 'noksa-table.example',
+        'x-forwarded-proto': 'https',
+        'content-type': 'application/json; charset=utf-8',
+      },
+      body: validBody,
+    });
+    const jsonp = await callHandler({
+      headers: {
+        origin: 'https://noksa-table.example',
+        host: 'noksa-table.example',
+        'x-forwarded-proto': 'https',
+        'content-type': 'application/jsonp',
+      },
+      body: validBody,
+    });
+    assert.equal(withCharset.statusCode, 503);
+    assert.equal(jsonp.statusCode, 415);
+  } finally {
+    if (previous === undefined) delete process.env.RESERVATIONS_ENABLED;
+    else process.env.RESERVATIONS_ENABLED = previous;
+  }
 });
 
 test('rejects malformed JSON', async () => {

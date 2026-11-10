@@ -46,6 +46,7 @@ export function validateReservation(input, today = getDhakaToday(), currentTime 
       : Number.NaN;
   const message = typeof value.message === 'string' ? value.message.trim() : '';
   const website = typeof value.website === 'string' ? value.website.trim() : '';
+  const idempotencyKey = typeof value.idempotencyKey === 'string' ? value.idempotencyKey.trim() : '';
 
   if (name.length < 2 || name.length > 80 || /[\u0000-\u001F\u007F]/.test(name)) {
     errors.name = 'Enter a name between 2 and 80 characters.';
@@ -78,6 +79,10 @@ export function validateReservation(input, today = getDhakaToday(), currentTime 
     errors.message = 'Notes must be 1,000 characters or fewer.';
   }
 
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(idempotencyKey)) {
+    errors.idempotencyKey = 'Refresh the form and try again.';
+  }
+
   if (website.length > 0) {
     errors.website = 'Invalid submission.';
   }
@@ -88,6 +93,6 @@ export function validateReservation(input, today = getDhakaToday(), currentTime 
 
   return {
     success: true,
-    data: { name, email, phone, date, time, guestCount, message },
+    data: { name, email, phone, date, time, guestCount, message, idempotencyKey },
   };
 }

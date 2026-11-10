@@ -10,6 +10,7 @@ const validReservation = {
   time: '19:30',
   guestCount: '2',
   message: 'Window-side table if available.',
+  idempotencyKey: '123e4567-e89b-42d3-a456-426614174000',
 };
 
 test('accepts valid reservation details and normalizes values', () => {
@@ -58,4 +59,10 @@ test('rejects a time that has already passed today in Dhaka', () => {
 test('rejects boolean guest counts instead of coercing them to numbers', () => {
   const result = validateReservation({ ...validReservation, guestCount: true }, '2027-01-01');
   assert.ok(result.errors.guestCount);
+});
+
+test('requires a valid UUID v4 idempotency key', () => {
+  assert.equal(validateReservation(validReservation, '2027-01-01').success, true);
+  assert.ok(validateReservation({ ...validReservation, idempotencyKey: 'not-a-uuid' }, '2027-01-01').errors.idempotencyKey);
+  assert.ok(validateReservation({ ...validReservation, idempotencyKey: undefined }, '2027-01-01').errors.idempotencyKey);
 });

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, NavLink, Route, Routes, useParams, useLocation } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight, Menu as MenuIcon, Search, X } from 'lucide-react'
 import { dishes, categories } from './data'
@@ -194,7 +194,7 @@ function Home(){
         <div className="home-gallery-grid">
           <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85" alt="Warm contemporary restaurant interior" loading="lazy" decoding="async"/>
           <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=900&q=85" alt="Chicken fried rice served fresh" loading="lazy" decoding="async"/>
-          <img src="https://images.unsplash.com/photo-1513558161293-cdaf765edfd4?auto=format&fit=crop&w=900&q=85" alt="Refreshing fruit and mint mocktail" loading="lazy" decoding="async"/>
+          <img src="https://images.unsplash.com/photo-1755023033352-e780e7d85637?auto=format&fit=crop&w=900&q=85" alt="Refreshing fruit and mint mocktail" loading="lazy" decoding="async"/>
           <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=85" alt="Freshly prepared pasta" loading="lazy" decoding="async"/>
         </div>
       </section>
@@ -214,7 +214,7 @@ function Home(){
     </main>
   );
 }
-function Menu(){const [cat,setCat]=useState('All'),[q,setQ]=useState(''),[cart,setCart]=useState({});const normalizedQuery=q.trim().toLocaleLowerCase();const shown=useMemo(()=>dishes.filter(d=>(cat==='All'||d.category===cat)&&[d.name,d.category,d.description].some(value=>value.toLocaleLowerCase().includes(normalizedQuery))),[cat,normalizedQuery]);const order=getCartSummary(cart,dishes);const orderMessage=buildOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal});const orderEmailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Menu order enquiry — '+siteConfig.brandName,body:orderMessage});const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));return <main id="main-content" className="page section-wrap menu-page"><div className="eyebrow">A THOUGHTFUL SELECTION</div><h1 className="page-title">The <em>menu.</em></h1><p className="page-intro">Browse a considered mix of Chinese, Thai, Indian and Continental favourites, plus seafood, mocktails, desserts and easy-to-share combos.</p><div className="menu-tools"><div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(c=><button type="button" aria-pressed={cat===c} className={cat===c?'filter active':'filter'} key={c} onClick={()=>setCat(c)}>{c}</button>)}</div><label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={e=>setQ(e.target.value)} placeholder="Find a dish"/></label></div><p className="results-count" aria-live="polite">{shown.length} {shown.length===1?'dish':'dishes'} found</p><div className="dish-grid menu-grid" key={cat+"-"+q}>{shown.map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}</div>{!shown.length&&<p className="empty">No dishes match your search. Try another name, description, or category.</p>}<section className="order-summary" aria-labelledby="order-summary-title"><div><div className="eyebrow">YOUR SELECTION</div><h2 id="order-summary-title">Your order <em>so far.</em></h2></div>{order.items.length===0?<p className="empty-order">Choose a dish above to see your quantity and running total here.</p>:<><ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul><div className="order-total"><span>Subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div><p className="sample-note">Your selected dishes and subtotal will be added to an email draft addressed to the restaurant. The restaurant must confirm availability, delivery or pickup details, final charges and payment directly. This website does not process online payments.</p>{orderEmailLink?<a className="button button-dark order-email-button" href={orderEmailLink.href}>Prepare order email <ArrowRight size={16}/></a>:<Link className="button button-dark" to="/contact">Contact the restaurant <ArrowRight size={16}/></Link>}</>}</section><p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>{order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order"><div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div><a className="sticky-view-order" href="#order-summary">Review</a>{orderEmailLink?<a className="sticky-email" href={orderEmailLink.href}>Email order <ArrowRight size={15}/></a>:<Link className="sticky-email" to="/contact">Contact to order <ArrowRight size={15}/></Link>}</div>}</main>}
+function Menu(){const [cat,setCat]=useState('All'),[q,setQ]=useState(''),[cart,setCart]=useState({});const normalizedQuery=q.trim().toLocaleLowerCase();const shown=useMemo(()=>dishes.filter(d=>(cat==='All'||d.category===cat)&&[d.name,d.category,d.description].some(value=>value.toLocaleLowerCase().includes(normalizedQuery))),[cat,normalizedQuery]);const order=getCartSummary(cart,dishes);const orderMessage=buildOrderMessage({restaurantName:siteConfig.brandName,items:order.items,subtotal:order.subtotal});const orderEmailLink=buildEmailLink({email:siteConfig.publicEmail,subject:'Menu order enquiry — '+siteConfig.brandName,body:orderMessage});const addItem=id=>setCart(current=>updateCartQuantity(current,id,1));const removeItem=id=>setCart(current=>updateCartQuantity(current,id,-1));return <main id="main-content" className="page section-wrap menu-page"><div className="eyebrow">A THOUGHTFUL SELECTION</div><h1 className="page-title">The <em>menu.</em></h1><p className="page-intro">Browse a considered mix of Chinese, Thai, Indian and Continental favourites, plus seafood, mocktails, desserts and easy-to-share combos.</p><div className="menu-tools"><div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(c=><button type="button" aria-pressed={cat===c} className={cat===c?'filter active':'filter'} key={c} onClick={()=>setCat(c)}>{c}</button>)}</div><label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={e=>setQ(e.target.value)} placeholder="Find a dish"/></label></div><p className="results-count" aria-live="polite">{shown.length} {shown.length===1?'dish':'dishes'} found</p><div className="dish-grid menu-grid" key={cat+"-"+q}>{shown.map(d=><DishCard key={d.id} dish={d} quantity={cart[d.id]||0} onAdd={addItem} onRemove={removeItem}/>)}</div>{!shown.length&&<p className="empty">No dishes match your search. Try another name, description, or category.</p>}<section id="order-summary" className="order-summary" aria-labelledby="order-summary-title"><div><div className="eyebrow">YOUR SELECTION</div><h2 id="order-summary-title">Your order <em>so far.</em></h2></div>{order.items.length===0?<p className="empty-order">Choose a dish above to see your quantity and running total here.</p>:<><ul className="order-lines">{order.items.map(item=><li key={item.id}><span>{item.name} <small>× {item.quantity}</small></span><strong>৳{item.lineTotal}</strong></li>)}</ul><div className="order-total"><span>Subtotal · {order.totalQuantity} {order.totalQuantity===1?'item':'items'}</span><strong>৳{order.subtotal}</strong></div><p className="sample-note">Your selected dishes and subtotal will be added to an email draft addressed to the restaurant. The restaurant must confirm availability, delivery or pickup details, final charges and payment directly. This website does not process online payments.</p>{orderEmailLink?<a className="button button-dark order-email-button" href={orderEmailLink.href}>Prepare order email <ArrowRight size={16}/></a>:<Link className="button button-dark" to="/contact">Contact the restaurant <ArrowRight size={16}/></Link>}</>}</section><p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>{order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order"><div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div><a className="sticky-view-order" href="#order-summary">Review</a>{orderEmailLink?<a className="sticky-email" href={orderEmailLink.href}>Email order <ArrowRight size={15}/></a>:<Link className="sticky-email" to="/contact">Contact to order <ArrowRight size={15}/></Link>}</div>}</main>}
 function Detail(){
   const {id}=useParams();
   const dish=dishes.find(item=>item.id===id);
@@ -309,25 +309,57 @@ function Gallery(){
     {id:'photo-1473093295043-cdd812d0e601',alt:'Pasta served with a creamy sauce',kind:'Food'},
     {id:'photo-1599487488170-d11ec9c172f0',alt:'A platter of grilled tandoori-style food',kind:'Food'},
     {id:'photo-1559737558-2f5a35f4523b',alt:'Seafood platter prepared for sharing',kind:'Food'},
-    {id:'photo-1513558161293-cdaf765edfd4',alt:'A chilled fruit and mint mocktail',kind:'Drinks'},
-    {id:'photo-1536935338788846bb9981813',alt:'A strawberry and lime mocktail',kind:'Drinks'},
+    {id:'photo-1755023033352-e780e7d85637',alt:'A chilled blueberry and mint mocktail',kind:'Drinks'},
+    {id:'photo-1750224907018-c89edc4930be',alt:'A strawberry mojito with fresh mint',kind:'Drinks'},
     {id:'photo-1488477181946-6428a0291777',alt:'A strawberry crepe dessert with cream',kind:'Dessert'},
     {id:'photo-1533134242443-d4fd215305ad',alt:'A slice of classic cheesecake',kind:'Dessert'},
     {id:'photo-1559847844-5315695dadae',alt:'A Thai noodle dish served fresh',kind:'Food'},
     {id:'photo-1532550907401-a500c9a57435',alt:'Grilled chicken steak with sides',kind:'Food'},
     {id:'photo-1527477396000-e27163b481c2',alt:'Crispy chicken wings for sharing',kind:'Food'},
-    {id:'photo-1515003197210-e0cd7184f8b5',alt:'A colourful rice and curry plate',kind:'Food'}
+    {id:'photo-1775198178204-f127498a97a5',alt:'Thai basil stir-fry with rice',kind:'Food'}
   ];
   const [selected,setSelected]=useState(null);
   const [category,setCategory]=useState('All');
+  const closeButtonRef=useRef(null);
+  const lightboxPanelRef=useRef(null);
+  const triggerRef=useRef(null);
   const categories=['All','Food','Drinks','Dessert','Interior'];
   const visibleImages=category==='All'?images:images.filter(image=>image.kind===category);
 
   useEffect(()=>{
     if(!selected)return;
-    const close=event=>{if(event.key==='Escape')setSelected(null)};
-    window.addEventListener('keydown',close);
-    return()=>window.removeEventListener('keydown',close);
+    const focusableSelector='button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown=event=>{
+      if(event.key==='Escape'){
+        setSelected(null);
+        return;
+      }
+      if(event.key!=='Tab')return;
+
+      const focusable=lightboxPanelRef.current?.querySelectorAll(focusableSelector);
+      if(!focusable?.length){
+        event.preventDefault();
+        return;
+      }
+
+      const first=focusable[0];
+      const last=focusable[focusable.length-1];
+      if(event.shiftKey&&document.activeElement===first){
+        event.preventDefault();
+        last.focus();
+      }else if(!event.shiftKey&&document.activeElement===last){
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener('keydown',handleKeyDown);
+    return()=>{
+      window.removeEventListener('keydown',handleKeyDown);
+      triggerRef.current?.focus();
+    };
   },[selected]);
 
   return (
@@ -344,8 +376,9 @@ function Gallery(){
       </div>
 
       <div className="gallery-grid">
-        {visibleImages.map((image,i)=><button type="button" className="gallery-item" key={image.id} onClick={()=>setSelected(image)} aria-label={'View image: '+image.alt}>
-          <img loading="lazy" decoding="async" width="1000" height="750" src={'https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85'} alt={image.alt}/>
+        {visibleImages.map((image,i)=><button type="button" className="gallery-item" key={image.id} onClick={event=>{triggerRef.current=event.currentTarget;setSelected(image)}} aria-label={'View image: '+image.alt}>
+          <img loading="lazy" decoding="async" width="1000" height="750" src={'https://images.unsplash.com/'+image.id+'?auto=format&fit=crop&w=1000&q=85'} alt={image.alt} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/>
+          <span className="image-fallback" aria-hidden="true">Photo unavailable — replace this demo image before launch</span>
           <span className="gallery-item-caption"><span>{image.kind}</span><strong>{image.alt}</strong></span>
         </button>)}
       </div>
@@ -353,10 +386,11 @@ function Gallery(){
       <p className="sample-note gallery-demo-note">Demo photography is illustrative and is not a representation of the restaurant’s actual dishes or interior. Replace it with owner-approved, correctly matched photographs before a restaurant launch.</p>
 
       {selected&&<div className="gallery-lightbox" role="presentation" onClick={()=>setSelected(null)}>
-        <div className="gallery-lightbox-panel" role="dialog" aria-modal="true" aria-label={selected.alt} onClick={event=>event.stopPropagation()}>
-          <button type="button" className="gallery-lightbox-close" onClick={()=>setSelected(null)} aria-label="Close image">×</button>
-          <img src={'https://images.unsplash.com/'+selected.id+'?auto=format&fit=max&w=1800&q=90'} alt={selected.alt}/>
-          <p>{selected.alt}</p>
+        <div ref={lightboxPanelRef} className="gallery-lightbox-panel" role="dialog" aria-modal="true" aria-label={selected.alt} aria-describedby="gallery-lightbox-caption" onClick={event=>event.stopPropagation()}>
+          <button ref={closeButtonRef} type="button" className="gallery-lightbox-close" onClick={()=>setSelected(null)} aria-label="Close image">×</button>
+          <img src={'https://images.unsplash.com/'+selected.id+'?auto=format&fit=max&w=1800&q=90'} alt={selected.alt} onError={event=>{event.currentTarget.hidden=true;event.currentTarget.parentElement.classList.add('image-missing')}}/>
+          <span className="image-fallback" aria-hidden="true">Photo unavailable — replace this demo image before launch</span>
+          <p id="gallery-lightbox-caption">{selected.alt}</p>
         </div>
       </div>}
     </main>
@@ -365,11 +399,28 @@ function Gallery(){
 function getLocalDateValue(){const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Dhaka',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const values=Object.fromEntries(parts.map(part=>[part.type,part.value]));return values.year+'-'+values.month+'-'+values.day}
 function FormPage({reservation=false}){
   const [sent,setSent]=useState(false);
+  const [idempotencyKey,setIdempotencyKey]=useState(()=>{
+    if(!reservation)return '';
+    try{
+      const existing=sessionStorage.getItem('noksha-reservation-idempotency-key');
+      if(existing)return existing;
+      const generated=crypto.randomUUID();
+      sessionStorage.setItem('noksha-reservation-idempotency-key',generated);
+      return generated;
+    }catch{
+      return crypto.randomUUID();
+    }
+  });
   const [loading,setLoading]=useState(false);
   const [error,setError]=useState('');
-  const reservationEnabled=import.meta.env.VITE_RESERVATIONS_ENABLED==='true'
-    && Boolean(import.meta.env.VITE_PRIVACY_POLICY_URL);
   const privacyUrl=import.meta.env.VITE_PRIVACY_POLICY_URL;
+  const privacyPolicyVersion=import.meta.env.VITE_PRIVACY_POLICY_VERSION;
+  const hasSecurePrivacyNotice=(()=>{
+    try{return new URL(privacyUrl).protocol==='https:'}catch{return false}
+  })();
+  const reservationEnabled=import.meta.env.VITE_RESERVATIONS_ENABLED==='true'
+    && hasSecurePrivacyNotice
+    && Boolean(privacyPolicyVersion);
 
   async function handleSubmit(event){
     event.preventDefault();
@@ -416,12 +467,14 @@ function FormPage({reservation=false}){
           guestCount:formData.get('guestCount'),
           message:formData.get('message'),
           website:formData.get('website'),
-          consent:formData.get('consent')==='on'
+          consent:formData.get('consent')==='on',
+          idempotencyKey
         })
       });
       const result=await response.json();
       if(!response.ok)throw new Error(result.error||'We could not submit your request.');
       setSent(true);
+      try{sessionStorage.removeItem('noksha-reservation-idempotency-key')}catch{}
     }catch(err){
       setError(err instanceof Error?err.message:'A network error occurred. Please try again.');
     }finally{
@@ -437,7 +490,7 @@ function FormPage({reservation=false}){
       ? <div className="success" role="status" aria-live="polite">
           <h2>{reservation?'Request received.':'Email draft opened.'}</h2>
           <p>{reservation?'Your request is pending. The restaurant must contact you to confirm availability.':'Your email app should open with the recipient and message filled in. Review it and press Send to deliver it.'}</p>
-          <button type="button" className="under-link" onClick={()=>setSent(false)}>Start again</button>
+          <button type="button" className="under-link" onClick={()=>{setSent(false);if(reservation){const next=crypto.randomUUID();setIdempotencyKey(next);try{sessionStorage.setItem('noksha-reservation-idempotency-key',next)}catch{}}}}>Start again</button>
         </div>
       : <form className="contact-form" onSubmit={handleSubmit}>
           <label>Your name<input required name="name" autoComplete="name" maxLength="80" placeholder="Full name"/></label>

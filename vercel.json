@@ -23,10 +23,6 @@
     {
       "source": "/contact",
       "destination": "/contact/index.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ],
   "headers": [
@@ -55,5 +51,6 @@
         }
       ]
     }
-  ]
+  ],
+  "installCommand": "npm ci"
 }

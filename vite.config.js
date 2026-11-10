@@ -5,7 +5,7 @@ import { dishes } from './src/data.js'
 import { siteConfig } from './src/config/site.js'
 
 const siteUrl = siteConfig.siteUrl.replace(/\/+$/, '')
-const defaultImage = 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&h=630&q=85'
+const defaultImage = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&h=630&q=85'
 
 const pages = [
   {
@@ -100,6 +100,15 @@ function routeMetadataPages() {
             source: withPageMetadata(baseHtml, page),
           })
         }
+
+        const sitemap = [
+          '<?xml version="1.0" encoding="UTF-8"?>',
+          '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+          ...pages.map(page => '  <url><loc>' + siteUrl + (page.route === '/' ? '/' : page.route) + '</loc></url>'),
+          '</urlset>',
+          '',
+        ].join('\n')
+        this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap })
       },
     },
   }
