@@ -59,7 +59,7 @@ Phone বা email ফাঁকা থাকলে সংশ্লিষ্ট a
 ## 6. Contact বনাম form — গুরুত্বপূর্ণ পার্থক্য
 
 - Reusable contact actions (src/components/ContactActions.jsx) কেবল verified phone/email/directions link তৈরি করে। Email action একটি draft খোলে; এটি নিজে থেকে message পাঠায় না।
-- Contact form বর্তমানে demo preview; এটি message email করে না, database-এও রাখে না।
+- Contact form একটি prefilled email draft খোলে; ব্যবহারকারী Send না করা পর্যন্ত message যায় না এবং website message সংরক্ষণ করে না।
 - Reservation API/schema repository-তে থাকলেও reservation feature default-এ disabled। Database, privacy notice, staff workflow, notifications, availability/capacity rules, access control ও production E2E test ছাড়া enable করবেন না।
 - Client-এর যদি message form দরকার হয়, approved delivery channel (secure backend/email provider/CRM) implement করে success, failure, spam, rate limit, privacy ও retention test করুন। Frontend-only success screen-কে “message sent” বলবেন না।
 
