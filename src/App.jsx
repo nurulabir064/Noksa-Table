@@ -6,11 +6,45 @@ import { siteConfig } from './config/site.js'
 import ContactActions from './components/ContactActions.jsx'
 import { buildEmailLink, buildWhatsAppLink } from './lib/contact-links.js'
 import { buildOrderMessage } from './lib/order-message.js'
+import { buildReservationMessage } from './lib/reservation-message.js'
 import { getCartSummary, updateCartQuantity } from './lib/cart.js'
 
-function Header(){const [open,setOpen]=useState(false);const emailLink=buildEmailLink({email:siteConfig.publicEmail,subject:siteConfig.emailSubject,body:'Hello, I found NOKSHA TABLE online and would like to know more.'});useEffect(()=>{if(!open)return;const closeOnEscape=event=>{if(event.key==='Escape')setOpen(false)};window.addEventListener('keydown',closeOnEscape);return()=>window.removeEventListener('keydown',closeOnEscape)},[open]);return <><a className="skip-link" href="#main-content">Skip to content</a><header className="header"><Link className="brand" to="/"><span className="brand-mark">ন</span><span>{siteConfig.brandName}<small>{siteConfig.descriptor}</small></span></Link><button className="mobile-toggle" type="button" onClick={()=>setOpen(!open)} aria-label="Toggle navigation" aria-expanded={open} aria-controls="primary-navigation">{open?<X/>:<MenuIcon/>}</button><nav id="primary-navigation" aria-label="Primary navigation" className={open?'nav open':'nav'}>{[['/','Home'],['/menu','Menu'],['/about','Our Story'],['/gallery','Gallery'],['/contact','Contact']].map(([to,label])=><NavLink key={to} to={to} onClick={()=>setOpen(false)} end={to==='/'}>{label}</NavLink>)}{emailLink?<a className="nav-cta" href={emailLink.href} onClick={()=>setOpen(false)}>Email us <ArrowUpRight size={15}/></a>:<Link className="nav-cta" to="/contact" onClick={()=>setOpen(false)}>Contact us <ArrowUpRight size={15}/></Link>}</nav></header></>}
+function Header(){
+  const [open,setOpen]=useState(false);
+  const whatsappLink=buildWhatsAppLink({
+    phone:siteConfig.whatsappNumber,
+    message:'Hello, I found NOKSHA TABLE online and would like to make an enquiry.'
+  });
+  useEffect(()=>{
+    if(!open)return;
+    const closeOnEscape=event=>{if(event.key==='Escape')setOpen(false)};
+    window.addEventListener('keydown',closeOnEscape);
+    return()=>window.removeEventListener('keydown',closeOnEscape);
+  },[open]);
+  return <>
+    <a className="skip-link" href="#main-content">Skip to content</a>
+    <header className="header">
+      <Link className="brand" to="/">
+        <span className="brand-mark">ন</span>
+        <span>{siteConfig.brandName}<small>{siteConfig.descriptor}</small></span>
+      </Link>
+      <button className="mobile-toggle" type="button" onClick={()=>setOpen(!open)} aria-label="Toggle navigation" aria-expanded={open} aria-controls="primary-navigation">
+        {open?<X/>:<MenuIcon/>}
+      </button>
+      <nav id="primary-navigation" aria-label="Primary navigation" className={open?'nav open':'nav'}>
+        {[['/','Home'],['/menu','Menu'],['/about','Our Story'],['/gallery','Gallery'],['/reservation','Reservation'],['/contact','Contact']].map(([to,label])=>
+          <NavLink key={to} to={to} onClick={()=>setOpen(false)} end={to==='/'}>{label}</NavLink>
+        )}
+        {whatsappLink
+          ? <a className="nav-cta" href={whatsappLink.href} target="_blank" rel="noopener noreferrer" onClick={()=>setOpen(false)}>WhatsApp us <ArrowUpRight size={15}/></a>
+          : <Link className="nav-cta" to="/contact" onClick={()=>setOpen(false)}>Contact us <ArrowUpRight size={15}/></Link>}
+      </nav>
+    </header>
+  </>;
+}
 function Footer(){
   const emailLink = buildEmailLink({ email: siteConfig.publicEmail, subject: siteConfig.emailSubject });
+  const whatsappLink = buildWhatsAppLink({ phone: siteConfig.whatsappNumber, message: 'Hello, I would like to contact NOKSHA TABLE.' });
 
   return (
     <footer className="footer" data-reveal>
@@ -41,6 +75,7 @@ function Footer(){
 
         <div className="footer-column">
           <h3>Get in touch</h3>
+          {whatsappLink && <a href={whatsappLink.href} target="_blank" rel="noopener noreferrer">WhatsApp the restaurant <ArrowUpRight size={14}/></a>}
           <Link to="/contact">Contact the restaurant</Link>
           {emailLink && <a href={emailLink.href}>Email the restaurant <ArrowUpRight size={14}/></a>}
           <Link to="/menu">Start an order <ArrowUpRight size={14}/></Link>
@@ -104,9 +139,10 @@ function Home(){
     <main id="main-content">
       <section className="hero">
         <img className="hero-bg" fetchPriority="high" decoding="async" width="2000" height="1100"
-          src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=90"
-          alt="Warm contemporary restaurant dining room"/>
+          src="https://images.pexels.com/photos/29819295/pexels-photo-29819295.jpeg?auto=compress&cs=tinysrgb&w=2000"
+          alt="Elegant contemporary restaurant interior with warm ambient lighting"/>
         <div className="hero-shade"/>
+        <p className="hero-photo-credit">Interior photography: <a href="https://www.pexels.com/photo/elegant-modern-restaurant-interior-with-ambient-lighting-29819295/" target="_blank" rel="noopener noreferrer">Mustafa Fatemi / Pexels</a></p>
         <div className="hero-content">
           <span className="eyebrow light">THAI · CHINESE · INDIAN · CONTINENTAL & MORE</span>
           <h1>A world of<br/><em>flavour.</em><br/>One welcoming table.</h1>
@@ -154,7 +190,7 @@ function Home(){
           <Link className="under-link" to="/menu">View full menu <ArrowRight size={16}/></Link>
         </div>
         <div className="dish-grid">
-          {dishes.filter(d=>['thai-soup','chicken-fried-rice-combo','bbq-chicken-pizza','chicken-chow-mein'].includes(d.id)).map(d=><DishCard key={d.id} dish={d}/>)}
+          {dishes.filter(d=>['grilled-chicken-steak','mutton-biryani','butter-chicken','grilled-prawn-platter','classic-lasagna','thai-soup','bbq-chicken-pizza','japanese-sushi-roll'].includes(d.id)).map(d=><DishCard key={d.id} dish={d}/>)}
         </div>
       </section>
 
@@ -247,7 +283,7 @@ function Menu(){
   return <main id="main-content" className="page section-wrap menu-page">
     <div className="eyebrow">A THOUGHTFUL SELECTION</div>
     <h1 className="page-title">The <em>menu.</em></h1>
-    <p className="page-intro">Browse a considered mix of Chinese, Thai, Indian and Continental favourites, plus seafood, mocktails, desserts and easy-to-share combos.</p>
+    <p className="page-intro">Explore a course-led selection of small plates, soups and salads, Continental and Italian favourites, Chinese, Thai, Japanese and Indian dishes, Bangladeshi classics, seafood, desserts and handcrafted non-alcoholic drinks.</p>
     <div className="menu-tools">
       <div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(category=><button type="button" aria-pressed={cat===category} className={cat===category?'filter active':'filter'} key={category} onClick={()=>setCat(category)}>{category}</button>)}</div>
       <label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={event=>setQ(event.target.value)} placeholder="Find a dish"/></label>
@@ -288,7 +324,7 @@ function Menu(){
         {orderWhatsAppLink&&!canPrepareOrder&&<p className="order-validation-hint" role="status">Enter your name and a valid contact number{fulfilment==='delivery'?' and a complete delivery address':''} to continue.</p>}
       </>}
     </section>
-    <p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>
+    <p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability, final prices, ingredients and allergen information with the restaurant before ordering.</p>
     {order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order">
       <div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div>
       <a className="sticky-view-order" href="#order-summary">Review</a>
@@ -516,7 +552,22 @@ function FormPage({reservation=false}){
     }
 
     if(!reservationEnabled){
-      setError('Online reservation requests are not active yet. No personal details have been submitted.');
+      const formData=new FormData(form);
+      const message=buildReservationMessage({
+        name:formData.get('name'),
+        email:formData.get('email'),
+        phone:formData.get('phone'),
+        date:formData.get('date'),
+        time:formData.get('time'),
+        guestCount:formData.get('guestCount'),
+        notes:formData.get('message')
+      });
+      const whatsappLink=buildWhatsAppLink({phone:siteConfig.whatsappNumber,message});
+      if(!whatsappLink){
+        setError('WhatsApp reservation requests are unavailable until the restaurant number is configured.');
+        return;
+      }
+      window.location.assign(whatsappLink.href);
       return;
     }
 
@@ -563,22 +614,22 @@ function FormPage({reservation=false}){
         </div>
       : <form className="contact-form" onSubmit={handleSubmit}>
           <label>Your name<input required name="name" autoComplete="name" maxLength="80" placeholder="Full name"/></label>
-          <label>Email address<input required type="email" name="email" autoComplete="email" maxLength="254" placeholder="you@example.com"/></label>
+          <label>Email address<input required={!reservation||reservationEnabled} type="email" name="email" autoComplete="email" maxLength="254" placeholder="you@example.com (optional for WhatsApp requests)"/></label>
           {reservation&&<>
             <label>Phone number<input required type="tel" name="phone" autoComplete="tel" inputMode="tel" maxLength="25" placeholder="+880 1XXXXXXXXX"/></label>
             <div className="form-row">
               <label>Date<input required type="date" name="date" min={getLocalDateValue()}/></label>
               <label>Preferred time<input required type="time" name="time"/></label>
             </div>
-            <label>Number of guests<select name="guestCount" defaultValue="2" required><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option></select></label>
+            <label>Number of guests<select name="guestCount" defaultValue="2" required><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option><option value="7">7 guests</option><option value="8">8 guests</option><option value="9">9 guests</option><option value="10">10 guests</option><option value="11">11 guests</option><option value="12">12 guests</option></select></label>
             <label className="reservation-honeypot" aria-hidden="true">Leave this field empty<input name="website" tabIndex="-1" autoComplete="off"/></label>
           </>}
           <label>{reservation?'Additional notes (optional)':'Your message'}<textarea name="message" rows="4" maxLength={reservation?1000:2000} placeholder="Write your message..." required={!reservation}/></label>
           {reservation&&reservationEnabled&&<label className="consent-field"><input type="checkbox" name="consent" required/><span>I have read the <a href={privacyUrl}>privacy notice</a> and agree that my details may be used to respond to this reservation request.</span></label>}
-          {reservation&&!reservationEnabled&&<p className="sample-note">Online reservations are not enabled. This form will not send or store your personal details.</p>}
+          {reservation&&!reservationEnabled&&<p className="sample-note">This prepares a reservation request in WhatsApp. Review the details and press Send yourself. The restaurant must confirm availability; no booking is confirmed by this form.</p>}
           {error&&<p className="form-error" role="alert">{error}</p>}
-          <button className="button button-dark" type="submit" disabled={loading||(reservation&&!reservationEnabled)}>
-            {loading?'Submitting…':reservation?(reservationEnabled?'Send reservation request':'Reservations coming soon') :'Open email app'} <ArrowRight size={16}/>
+          <button className="button button-dark" type="submit" disabled={loading}>
+            {loading?'Submitting…':reservation?(reservationEnabled?'Send reservation request':'Continue to WhatsApp') :'Open email app'} <ArrowRight size={16}/>
           </button>
           <p className="sample-note">{reservation?'A request remains pending until the restaurant confirms it.' :'Your device needs an email app or browser mail handler configured. The message is not sent until you press Send.'}</p>
         </form>}
