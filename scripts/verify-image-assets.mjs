@@ -6,7 +6,7 @@ const galleryIds = [...gallerySection.matchAll(/id:'(photo-[^']+)'/g)].map(([, i
 const imageUrls = [
   ...dishes.map(({ image }) => image),
   ...galleryIds.map(id => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=800&q=70`),
-  'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=70',
+  'https://images.pexels.com/photos/29819295/pexels-photo-29819295.jpeg?auto=compress&cs=tinysrgb&w=2000',
   'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=70',
   'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=70',
 ];
