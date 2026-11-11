@@ -16,7 +16,7 @@ export function buildReservationMessage({
     'Hello ' + clean(restaurantName, 100) + ', I would like to request a table reservation.',
     '',
     'Name: ' + clean(name, 80),
-    'Email: ' + clean(email, 254),
+    clean(email, 254) ? 'Email: ' + clean(email, 254) : '',
     'Phone: ' + clean(phone, 25),
     'Preferred date: ' + clean(date, 10),
     'Preferred time: ' + clean(time, 5),
