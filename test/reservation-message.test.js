@@ -35,3 +35,17 @@ test('normalizes control characters and omits an empty optional note', () => {
   assert.doesNotMatch(message, /Additional notes:/);
   assert.equal(/[\u0000-\u0009\u000b-\u001f\u007f]/.test(message), false);
 });
+
+test('omits email when a guest uses the WhatsApp request without an email address', () => {
+  const message = buildReservationMessage({
+    name: 'Guest Three',
+    email: '',
+    phone: '+8801304302201',
+    date: '2026-12-03',
+    time: '18:30',
+    guestCount: '3',
+  });
+
+  assert.doesNotMatch(message, /Email:/);
+  assert.match(message, /Phone: \+8801304302201/);
+});
