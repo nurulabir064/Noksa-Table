@@ -8,9 +8,42 @@ import { buildEmailLink, buildWhatsAppLink } from './lib/contact-links.js'
 import { buildOrderMessage } from './lib/order-message.js'
 import { getCartSummary, updateCartQuantity } from './lib/cart.js'
 
-function Header(){const [open,setOpen]=useState(false);const emailLink=buildEmailLink({email:siteConfig.publicEmail,subject:siteConfig.emailSubject,body:'Hello, I found NOKSHA TABLE online and would like to know more.'});useEffect(()=>{if(!open)return;const closeOnEscape=event=>{if(event.key==='Escape')setOpen(false)};window.addEventListener('keydown',closeOnEscape);return()=>window.removeEventListener('keydown',closeOnEscape)},[open]);return <><a className="skip-link" href="#main-content">Skip to content</a><header className="header"><Link className="brand" to="/"><span className="brand-mark">ন</span><span>{siteConfig.brandName}<small>{siteConfig.descriptor}</small></span></Link><button className="mobile-toggle" type="button" onClick={()=>setOpen(!open)} aria-label="Toggle navigation" aria-expanded={open} aria-controls="primary-navigation">{open?<X/>:<MenuIcon/>}</button><nav id="primary-navigation" aria-label="Primary navigation" className={open?'nav open':'nav'}>{[['/','Home'],['/menu','Menu'],['/about','Our Story'],['/gallery','Gallery'],['/contact','Contact']].map(([to,label])=><NavLink key={to} to={to} onClick={()=>setOpen(false)} end={to==='/'}>{label}</NavLink>)}{emailLink?<a className="nav-cta" href={emailLink.href} onClick={()=>setOpen(false)}>Email us <ArrowUpRight size={15}/></a>:<Link className="nav-cta" to="/contact" onClick={()=>setOpen(false)}>Contact us <ArrowUpRight size={15}/></Link>}</nav></header></>}
+function Header(){
+  const [open,setOpen]=useState(false);
+  const whatsappLink=buildWhatsAppLink({
+    phone:siteConfig.whatsappNumber,
+    message:'Hello, I found NOKSHA TABLE online and would like to make an enquiry.'
+  });
+  useEffect(()=>{
+    if(!open)return;
+    const closeOnEscape=event=>{if(event.key==='Escape')setOpen(false)};
+    window.addEventListener('keydown',closeOnEscape);
+    return()=>window.removeEventListener('keydown',closeOnEscape);
+  },[open]);
+  return <>
+    <a className="skip-link" href="#main-content">Skip to content</a>
+    <header className="header">
+      <Link className="brand" to="/">
+        <span className="brand-mark">ন</span>
+        <span>{siteConfig.brandName}<small>{siteConfig.descriptor}</small></span>
+      </Link>
+      <button className="mobile-toggle" type="button" onClick={()=>setOpen(!open)} aria-label="Toggle navigation" aria-expanded={open} aria-controls="primary-navigation">
+        {open?<X/>:<MenuIcon/>}
+      </button>
+      <nav id="primary-navigation" aria-label="Primary navigation" className={open?'nav open':'nav'}>
+        {[['/','Home'],['/menu','Menu'],['/about','Our Story'],['/gallery','Gallery'],['/reservation','Reservation'],['/contact','Contact']].map(([to,label])=>
+          <NavLink key={to} to={to} onClick={()=>setOpen(false)} end={to==='/'}>{label}</NavLink>
+        )}
+        {whatsappLink
+          ? <a className="nav-cta" href={whatsappLink.href} target="_blank" rel="noopener noreferrer" onClick={()=>setOpen(false)}>WhatsApp us <ArrowUpRight size={15}/></a>
+          : <Link className="nav-cta" to="/contact" onClick={()=>setOpen(false)}>Contact us <ArrowUpRight size={15}/></Link>}
+      </nav>
+    </header>
+  </>;
+}
 function Footer(){
   const emailLink = buildEmailLink({ email: siteConfig.publicEmail, subject: siteConfig.emailSubject });
+  const whatsappLink = buildWhatsAppLink({ phone: siteConfig.whatsappNumber, message: 'Hello, I would like to contact NOKSHA TABLE.' });
 
   return (
     <footer className="footer" data-reveal>
@@ -41,6 +74,7 @@ function Footer(){
 
         <div className="footer-column">
           <h3>Get in touch</h3>
+          {whatsappLink && <a href={whatsappLink.href} target="_blank" rel="noopener noreferrer">WhatsApp the restaurant <ArrowUpRight size={14}/></a>}
           <Link to="/contact">Contact the restaurant</Link>
           {emailLink && <a href={emailLink.href}>Email the restaurant <ArrowUpRight size={14}/></a>}
           <Link to="/menu">Start an order <ArrowUpRight size={14}/></Link>
@@ -104,9 +138,10 @@ function Home(){
     <main id="main-content">
       <section className="hero">
         <img className="hero-bg" fetchPriority="high" decoding="async" width="2000" height="1100"
-          src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=90"
-          alt="Warm contemporary restaurant dining room"/>
+          src="https://images.pexels.com/photos/29819295/pexels-photo-29819295.jpeg?auto=compress&cs=tinysrgb&w=2000"
+          alt="Elegant contemporary restaurant interior with warm ambient lighting"/>
         <div className="hero-shade"/>
+        <p className="hero-photo-credit">Interior photography: <a href="https://www.pexels.com/photo/elegant-modern-restaurant-interior-with-ambient-lighting-29819295/" target="_blank" rel="noopener noreferrer">Pexels</a></p>
         <div className="hero-content">
           <span className="eyebrow light">THAI · CHINESE · INDIAN · CONTINENTAL & MORE</span>
           <h1>A world of<br/><em>flavour.</em><br/>One welcoming table.</h1>
@@ -466,6 +501,23 @@ function Gallery(){
   );
 }
 function getLocalDateValue(){const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Dhaka',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const values=Object.fromEntries(parts.map(part=>[part.type,part.value]));return values.year+'-'+values.month+'-'+values.day}
+function buildReservationRequestMessage({name,email,phone,date,time,guestCount,message}){
+  const clean=(value,limit)=>typeof value==='string'?value.replace(/[\\u0000-\\u001f\\u007f]/g,' ').replace(/\\s+/g,' ').trim().slice(0,limit):'';
+  return [
+    'Hello NOKSHA TABLE, I would like to request a table reservation.',
+    '',
+    'Name: '+clean(name,80),
+    'Email: '+clean(email,254),
+    'Phone: '+clean(phone,25),
+    'Preferred date: '+clean(date,10),
+    'Preferred time: '+clean(time,5),
+    'Guests: '+clean(guestCount,2),
+    clean(message,1000)?'Additional notes: '+clean(message,1000):'',
+    '',
+    'Please confirm table availability and any applicable reservation conditions. This is a request, not a confirmed booking.'
+  ].filter(Boolean).join('\\n');
+}
+
 function FormPage({reservation=false}){
   const [sent,setSent]=useState(false);
   const [idempotencyKey,setIdempotencyKey]=useState(()=>{
@@ -516,7 +568,22 @@ function FormPage({reservation=false}){
     }
 
     if(!reservationEnabled){
-      setError('Online reservation requests are not active yet. No personal details have been submitted.');
+      const formData=new FormData(form);
+      const message=buildReservationRequestMessage({
+        name:formData.get('name'),
+        email:formData.get('email'),
+        phone:formData.get('phone'),
+        date:formData.get('date'),
+        time:formData.get('time'),
+        guestCount:formData.get('guestCount'),
+        message:formData.get('message')
+      });
+      const whatsappLink=buildWhatsAppLink({phone:siteConfig.whatsappNumber,message});
+      if(!whatsappLink){
+        setError('WhatsApp reservation requests are unavailable until the restaurant number is configured.');
+        return;
+      }
+      window.location.assign(whatsappLink.href);
       return;
     }
 
@@ -575,10 +642,10 @@ function FormPage({reservation=false}){
           </>}
           <label>{reservation?'Additional notes (optional)':'Your message'}<textarea name="message" rows="4" maxLength={reservation?1000:2000} placeholder="Write your message..." required={!reservation}/></label>
           {reservation&&reservationEnabled&&<label className="consent-field"><input type="checkbox" name="consent" required/><span>I have read the <a href={privacyUrl}>privacy notice</a> and agree that my details may be used to respond to this reservation request.</span></label>}
-          {reservation&&!reservationEnabled&&<p className="sample-note">Online reservations are not enabled. This form will not send or store your personal details.</p>}
+          {reservation&&!reservationEnabled&&<p className="sample-note">This prepares a reservation request in WhatsApp. Review the details and press Send yourself. The restaurant must confirm availability; no booking is confirmed by this form.</p>}
           {error&&<p className="form-error" role="alert">{error}</p>}
-          <button className="button button-dark" type="submit" disabled={loading||(reservation&&!reservationEnabled)}>
-            {loading?'Submitting…':reservation?(reservationEnabled?'Send reservation request':'Reservations coming soon') :'Open email app'} <ArrowRight size={16}/>
+          <button className="button button-dark" type="submit" disabled={loading}>
+            {loading?'Submitting…':reservation?(reservationEnabled?'Send reservation request':'Continue to WhatsApp') :'Open email app'} <ArrowRight size={16}/>
           </button>
           <p className="sample-note">{reservation?'A request remains pending until the restaurant confirms it.' :'Your device needs an email app or browser mail handler configured. The message is not sent until you press Send.'}</p>
         </form>}
