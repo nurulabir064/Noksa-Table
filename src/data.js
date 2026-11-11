@@ -77,7 +77,7 @@ export const categories = [
   'Salads',
   'Italian',
   'Japanese',
-  'Sides',,
+  'Sides',
   'Starters',
   'Chinese',
   'Thai',
