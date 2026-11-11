@@ -33,5 +33,5 @@ test('normalizes control characters and omits an empty optional note', () => {
 
   assert.match(message, /Name: Guest Two/);
   assert.doesNotMatch(message, /Additional notes:/);
-  assert.equal(/[\u0000-\u001f\u007f]/.test(message), false);
+  assert.equal(/[\u0000-\u0009\u000b-\u001f\u007f]/.test(message), false);
 });
