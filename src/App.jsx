@@ -190,7 +190,7 @@ function Home(){
           <Link className="under-link" to="/menu">View full menu <ArrowRight size={16}/></Link>
         </div>
         <div className="dish-grid">
-          {dishes.filter(d=>['grilled-chicken-steak','basmati-kacchi','butter-chicken','grilled-prawn-platter','classic-lasagna','thai-soup','bbq-chicken-pizza','japanese-sushi-roll'].includes(d.id)).map(d=><DishCard key={d.id} dish={d}/>)}
+          {dishes.filter(d=>['grilled-chicken-steak','mutton-biryani','butter-chicken','grilled-prawn-platter','classic-lasagna','thai-soup','bbq-chicken-pizza','japanese-sushi-roll'].includes(d.id)).map(d=><DishCard key={d.id} dish={d}/>)}
         </div>
       </section>
 
