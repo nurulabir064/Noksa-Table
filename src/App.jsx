@@ -282,7 +282,7 @@ function Menu(){
   return <main id="main-content" className="page section-wrap menu-page">
     <div className="eyebrow">A THOUGHTFUL SELECTION</div>
     <h1 className="page-title">The <em>menu.</em></h1>
-    <p className="page-intro">Browse a considered mix of Chinese, Thai, Indian and Continental favourites, plus seafood, mocktails, desserts and easy-to-share combos.</p>
+    <p className="page-intro">Explore a course-led selection of small plates, soups and salads, Continental and Italian favourites, Chinese, Thai, Japanese and Indian dishes, Bangladeshi classics, seafood, desserts and handcrafted non-alcoholic drinks.</p>
     <div className="menu-tools">
       <div className="filters" role="group" aria-label="Filter dishes by category">{categories.map(category=><button type="button" aria-pressed={cat===category} className={cat===category?'filter active':'filter'} key={category} onClick={()=>setCat(category)}>{category}</button>)}</div>
       <label className="search"><Search size={17}/><input type="search" aria-label="Search menu dishes" value={q} onChange={event=>setQ(event.target.value)} placeholder="Find a dish"/></label>
