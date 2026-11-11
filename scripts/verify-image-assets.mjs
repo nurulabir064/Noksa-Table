@@ -6,7 +6,7 @@ const vercelConfig = JSON.parse(await readFile(new URL('../vercel.json', import.
 const csp = vercelConfig.headers?.flatMap(({ headers = [] }) => headers).find(({ key }) => key.toLowerCase() === 'content-security-policy')?.value || '';
 const imgSrc = csp.split(';').map(part => part.trim()).find(part => part.startsWith('img-src '));
 if (!imgSrc) throw new Error('Content-Security-Policy is missing an explicit img-src directive.');
-const allowedImageOrigins = new Set(imgSrc.split(/\\s+/).slice(1).filter(value => value.startsWith('https://')).map(value => new URL(value).origin));
+const allowedImageOrigins = new Set(imgSrc.split(/\s+/).slice(1).filter(value => value.startsWith('https://')).map(value => new URL(value).origin));
 const gallerySection = app.slice(app.indexOf('function Gallery()'), app.indexOf('function getLocalDateValue()'));
 const galleryIds = [...gallerySection.matchAll(/id:'(photo-[^']+)'/g)].map(([, id]) => id);
 const imageUrls = [
