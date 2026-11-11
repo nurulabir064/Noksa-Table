@@ -6,6 +6,7 @@ import { siteConfig } from './config/site.js'
 import ContactActions from './components/ContactActions.jsx'
 import { buildEmailLink, buildWhatsAppLink } from './lib/contact-links.js'
 import { buildOrderMessage } from './lib/order-message.js'
+import { buildReservationMessage } from './lib/reservation-message.js'
 import { getCartSummary, updateCartQuantity } from './lib/cart.js'
 
 function Header(){
@@ -501,23 +502,6 @@ function Gallery(){
   );
 }
 function getLocalDateValue(){const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Dhaka',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const values=Object.fromEntries(parts.map(part=>[part.type,part.value]));return values.year+'-'+values.month+'-'+values.day}
-function buildReservationRequestMessage({name,email,phone,date,time,guestCount,message}){
-  const clean=(value,limit)=>typeof value==='string'?value.replace(/[\u0000-\u001f\u007f]/g,' ').replace(/\s+/g,' ').trim().slice(0,limit):'';
-  return [
-    'Hello NOKSHA TABLE, I would like to request a table reservation.',
-    '',
-    'Name: '+clean(name,80),
-    'Email: '+clean(email,254),
-    'Phone: '+clean(phone,25),
-    'Preferred date: '+clean(date,10),
-    'Preferred time: '+clean(time,5),
-    'Guests: '+clean(guestCount,2),
-    clean(message,1000)?'Additional notes: '+clean(message,1000):'',
-    '',
-    'Please confirm table availability and any applicable reservation conditions. This is a request, not a confirmed booking.'
-  ].filter(Boolean).join('\n');
-}
-
 function FormPage({reservation=false}){
   const [sent,setSent]=useState(false);
   const [idempotencyKey,setIdempotencyKey]=useState(()=>{
@@ -569,14 +553,14 @@ function FormPage({reservation=false}){
 
     if(!reservationEnabled){
       const formData=new FormData(form);
-      const message=buildReservationRequestMessage({
+      const message=buildReservationMessage({
         name:formData.get('name'),
         email:formData.get('email'),
         phone:formData.get('phone'),
         date:formData.get('date'),
         time:formData.get('time'),
         guestCount:formData.get('guestCount'),
-        message:formData.get('message')
+        notes:formData.get('message')
       });
       const whatsappLink=buildWhatsAppLink({phone:siteConfig.whatsappNumber,message});
       if(!whatsappLink){
