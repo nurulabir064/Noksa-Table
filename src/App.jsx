@@ -502,7 +502,7 @@ function Gallery(){
 }
 function getLocalDateValue(){const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Dhaka',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const values=Object.fromEntries(parts.map(part=>[part.type,part.value]));return values.year+'-'+values.month+'-'+values.day}
 function buildReservationRequestMessage({name,email,phone,date,time,guestCount,message}){
-  const clean=(value,limit)=>typeof value==='string'?value.replace(/[\\u0000-\\u001f\\u007f]/g,' ').replace(/\\s+/g,' ').trim().slice(0,limit):'';
+  const clean=(value,limit)=>typeof value==='string'?value.replace(/[\u0000-\u001f\u007f]/g,' ').replace(/\s+/g,' ').trim().slice(0,limit):'';
   return [
     'Hello NOKSHA TABLE, I would like to request a table reservation.',
     '',
@@ -515,7 +515,7 @@ function buildReservationRequestMessage({name,email,phone,date,time,guestCount,m
     clean(message,1000)?'Additional notes: '+clean(message,1000):'',
     '',
     'Please confirm table availability and any applicable reservation conditions. This is a request, not a confirmed booking.'
-  ].filter(Boolean).join('\\n');
+  ].filter(Boolean).join('\n');
 }
 
 function FormPage({reservation=false}){
