@@ -324,7 +324,7 @@ function Menu(){
         {orderWhatsAppLink&&!canPrepareOrder&&<p className="order-validation-hint" role="status">Enter your name and a valid contact number{fulfilment==='delivery'?' and a complete delivery address':''} to continue.</p>}
       </>}
     </section>
-    <p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability and final prices before launch.</p>
+    <p className="sample-note">Demo menu: dish names, descriptions, photos and BDT prices are illustrative, not a live restaurant offer. Confirm availability, final prices, ingredients and allergen information with the restaurant before ordering.</p>
     {order.items.length>0&&<div className="sticky-order-bar" role="region" aria-label="Current order">
       <div><span>{order.totalQuantity} {order.totalQuantity===1?'item':'items'} in your order</span><strong>৳{order.subtotal}</strong></div>
       <a className="sticky-view-order" href="#order-summary">Review</a>
@@ -614,14 +614,14 @@ function FormPage({reservation=false}){
         </div>
       : <form className="contact-form" onSubmit={handleSubmit}>
           <label>Your name<input required name="name" autoComplete="name" maxLength="80" placeholder="Full name"/></label>
-          <label>Email address<input required type="email" name="email" autoComplete="email" maxLength="254" placeholder="you@example.com"/></label>
+          <label>Email address<input required={!reservation||reservationEnabled} type="email" name="email" autoComplete="email" maxLength="254" placeholder="you@example.com (optional for WhatsApp requests)"/></label>
           {reservation&&<>
             <label>Phone number<input required type="tel" name="phone" autoComplete="tel" inputMode="tel" maxLength="25" placeholder="+880 1XXXXXXXXX"/></label>
             <div className="form-row">
               <label>Date<input required type="date" name="date" min={getLocalDateValue()}/></label>
               <label>Preferred time<input required type="time" name="time"/></label>
             </div>
-            <label>Number of guests<select name="guestCount" defaultValue="2" required><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option></select></label>
+            <label>Number of guests<select name="guestCount" defaultValue="2" required><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option><option value="7">7 guests</option><option value="8">8 guests</option><option value="9">9 guests</option><option value="10">10 guests</option><option value="11">11 guests</option><option value="12">12 guests</option></select></label>
             <label className="reservation-honeypot" aria-hidden="true">Leave this field empty<input name="website" tabIndex="-1" autoComplete="off"/></label>
           </>}
           <label>{reservation?'Additional notes (optional)':'Your message'}<textarea name="message" rows="4" maxLength={reservation?1000:2000} placeholder="Write your message..." required={!reservation}/></label>
