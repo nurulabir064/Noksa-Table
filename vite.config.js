@@ -5,7 +5,7 @@ import { dishes } from './src/data.js'
 import { siteConfig } from './src/config/site.js'
 
 const siteUrl = siteConfig.siteUrl.replace(/\/+$/, '')
-const defaultImage = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&h=630&q=85'
+const defaultImage = 'https://images.pexels.com/photos/29819295/pexels-photo-29819295.jpeg?auto=compress&cs=tinysrgb&w=2000'
 
 const pages = [
   {
@@ -17,7 +17,7 @@ const pages = [
   {
     route: '/menu',
     title: 'Menu | ' + siteConfig.brandName,
-    description: 'Explore Thai, Chinese, Indian, Continental, seafood, Bengali favourites and mocktails at ' + siteConfig.brandName + '.',
+    description: 'Explore Continental, Italian, Thai, Chinese, Japanese, Indian and Bangladeshi classics, seafood, desserts and non-alcoholic drinks at ' + siteConfig.brandName + '.',
     image: defaultImage,
   },
   {
@@ -35,7 +35,7 @@ const pages = [
   {
     route: '/reservation',
     title: 'Reservation | ' + siteConfig.brandName,
-    description: 'View reservation request information for ' + siteConfig.brandName + '. Online booking is not active.',
+    description: 'Send a WhatsApp reservation request to ' + siteConfig.brandName + '. Restaurant confirmation is required.',
     image: defaultImage,
   },
   {
