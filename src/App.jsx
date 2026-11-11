@@ -142,7 +142,7 @@ function Home(){
           src="https://images.pexels.com/photos/29819295/pexels-photo-29819295.jpeg?auto=compress&cs=tinysrgb&w=2000"
           alt="Elegant contemporary restaurant interior with warm ambient lighting"/>
         <div className="hero-shade"/>
-        <p className="hero-photo-credit">Interior photography: <a href="https://www.pexels.com/photo/elegant-modern-restaurant-interior-with-ambient-lighting-29819295/" target="_blank" rel="noopener noreferrer">Pexels</a></p>
+        <p className="hero-photo-credit">Interior photography: <a href="https://www.pexels.com/photo/elegant-modern-restaurant-interior-with-ambient-lighting-29819295/" target="_blank" rel="noopener noreferrer">Mustafa Fatemi / Pexels</a></p>
         <div className="hero-content">
           <span className="eyebrow light">THAI · CHINESE · INDIAN · CONTINENTAL & MORE</span>
           <h1>A world of<br/><em>flavour.</em><br/>One welcoming table.</h1>
